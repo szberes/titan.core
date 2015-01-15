@@ -1,0 +1,145 @@
+EXECUTOR_LOGOPTIONS - TTCN Logger v2.2 options: TimeStampFormat:=Time; LogEntityName:=No; LogEventTypes:=Subcategories; SourceInfoFormat:=Stack; *.FileMask:=TESTCASE; *.ConsoleMask:=TESTCASE; LogFileSize:=0; LogFileNumber:=1; DiskFullAction:=Error
+EXECUTOR_RUNTIME - Connected to MC.
+EXECUTOR_RUNTIME - Executing test case tc_user in module EmergencyLoggingTest.
+TESTCASE_START EmergencyLoggingTest.ttcn:27 Test case tc_user started.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:27 Port internal_port was started.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:27 Port external_port was started.
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:28 Before the loop
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:29 Action: >>>>ACTION in tc_user, before the loop<<<<<
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 0
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 1
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 2
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 3
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 4
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 5
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 6
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 7
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 8
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 9
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 10
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 11
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 12
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 13
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:31 tc_user loop 14
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:33 Action: >>>>ACTION in tc_user, after the loop<<<<<
+VERDICTOP_SETVERDICT EmergencyLoggingTest.ttcn:34 setverdict(pass): none -> pass
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:35 This line reached last
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:35 Port internal_port was stopped.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:35 Port external_port was stopped.
+EXECUTOR_RUNTIME EmergencyLoggingTest.ttcn:35 Waiting for PTCs to finish.
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:35 Setting final verdict of the test case.
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:35 Local verdict of MTC: pass
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:35 No PTCs were created.
+TESTCASE_FINISH EmergencyLoggingTest.ttcn:35 Test case tc_user finished. Verdict: pass
+EXECUTOR_RUNTIME - Executing test case tc_PTC_create_EL in module EmergencyLoggingTest.
+TESTCASE_START EmergencyLoggingTest.ttcn:50 Test case tc_PTC_create_EL started.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:50 Port internal_port was started.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:50 Port external_port was started.
+PARALLEL_UNQUALIFIED EmergencyLoggingTest.ttcn:52 Creating new PTC with component type Titan_LogTestDefinitions.MTCType.
+PARALLEL_UNQUALIFIED EmergencyLoggingTest.ttcn:53 Creating new PTC with component type Titan_LogTestDefinitions.MTCType.
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:55 Last line before the DTE
+ERROR_UNQUALIFIED EmergencyLoggingTest.ttcn:56 Dynamic test case error: Assignment of an unbound integer value.
+VERDICTOP_SETVERDICT EmergencyLoggingTest.ttcn:56 setverdict(error): none -> error
+EXECUTOR_RUNTIME EmergencyLoggingTest.ttcn:56 Performing error recovery.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:56 Port internal_port was stopped.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:56 Port external_port was stopped.
+EXECUTOR_RUNTIME EmergencyLoggingTest.ttcn:56 Waiting for PTCs to finish.
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:56 Setting final verdict of the test case.
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:56 Local verdict of MTC: error
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:56 Local verdict of PTC with component reference 3: none (error -> error)
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:56 Local verdict of PTC with component reference 4: none (error -> error)
+TESTCASE_FINISH EmergencyLoggingTest.ttcn:56 Test case tc_PTC_create_EL finished. Verdict: error
+EXECUTOR_RUNTIME - Executing test case tc_user_EL in module EmergencyLoggingTest.
+TESTCASE_START EmergencyLoggingTest.ttcn:10 Test case tc_user_EL started.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:10 Port internal_port was started.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:10 Port external_port was started.
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:14 Before the loop
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:15 Action: >>>>ACTION in tc_user_EL, before the loop<<<<<
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 0
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 1
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 2
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 3
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 4
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 5
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 6
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 7
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 8
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 9
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 10
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 11
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 12
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 13
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 14
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:19 Action: >>>>ACTION in tc_user_EL, after the loop<<<<<
+VERDICTOP_SETVERDICT EmergencyLoggingTest.ttcn:20 setverdict(pass): none -> pass
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:21 This line is reached last
+ERROR_UNQUALIFIED EmergencyLoggingTest.ttcn:22 Dynamic test case error: Assignment of an unbound integer value.
+VERDICTOP_SETVERDICT EmergencyLoggingTest.ttcn:22 setverdict(error): pass -> error
+EXECUTOR_RUNTIME EmergencyLoggingTest.ttcn:22 Performing error recovery.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:22 Port internal_port was stopped.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:22 Port external_port was stopped.
+EXECUTOR_RUNTIME EmergencyLoggingTest.ttcn:22 Waiting for PTCs to finish.
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:22 Setting final verdict of the test case.
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:22 Local verdict of MTC: error
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:22 No PTCs were created.
+TESTCASE_FINISH EmergencyLoggingTest.ttcn:22 Test case tc_user_EL finished. Verdict: error
+EXECUTOR_RUNTIME - Executing test case tc_user_EL in module EmergencyLoggingTest.
+TESTCASE_START EmergencyLoggingTest.ttcn:10 Test case tc_user_EL started.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:10 Port internal_port was started.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:10 Port external_port was started.
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:14 Before the loop
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:15 Action: >>>>ACTION in tc_user_EL, before the loop<<<<<
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 0
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 1
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 2
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 3
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 4
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 5
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 6
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 7
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 8
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 9
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 10
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 11
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 12
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 13
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 14
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:19 Action: >>>>ACTION in tc_user_EL, after the loop<<<<<
+VERDICTOP_SETVERDICT EmergencyLoggingTest.ttcn:20 setverdict(pass): none -> pass
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:21 This line is reached last
+ERROR_UNQUALIFIED EmergencyLoggingTest.ttcn:22 Dynamic test case error: Assignment of an unbound integer value.
+VERDICTOP_SETVERDICT EmergencyLoggingTest.ttcn:22 setverdict(error): pass -> error
+EXECUTOR_RUNTIME EmergencyLoggingTest.ttcn:22 Performing error recovery.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:22 Port internal_port was stopped.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:22 Port external_port was stopped.
+EXECUTOR_RUNTIME EmergencyLoggingTest.ttcn:22 Waiting for PTCs to finish.
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:22 Setting final verdict of the test case.
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:22 Local verdict of MTC: error
+VERDICTOP_FINAL EmergencyLoggingTest.ttcn:22 No PTCs were created.
+TESTCASE_FINISH EmergencyLoggingTest.ttcn:22 Test case tc_user_EL finished. Verdict: error
+EXECUTOR_RUNTIME - Executing test case tc_user_EL in module EmergencyLoggingTest.
+TESTCASE_START EmergencyLoggingTest.ttcn:10 Test case tc_user_EL started.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:10 Port internal_port was started.
+PORTEVENT_STATE EmergencyLoggingTest.ttcn:10 Port external_port was started.
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:14 Before the loop
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:15 Action: >>>>ACTION in tc_user_EL, before the loop<<<<<
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 0
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 1
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 2
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 3
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 4
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 5
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 6
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 7
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 8
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 9
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 10
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 11
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 12
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 13
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:17 tc_user_EL loop 14
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:19 Action: >>>>ACTION in tc_user_EL, after the loop<<<<<
+VERDICTOP_SETVERDICT EmergencyLoggingTest.ttcn:20 setverdict(pass): none -> pass
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:21 This line is reached last
+ERROR_UNQUALIFIED EmergencyLoggingTest.ttcn:22 Dynamic test case error: Assignment of an unbound integer value.
+TESTCASE_FINISH EmergencyLoggingTest.ttcn:22 Test case tc_user_EL finished. Verdict: error

@@ -1,0 +1,142 @@
+<!--
+ Copyright (c) 2000-2014 Ericsson Telecom AB
+
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+ -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Language" content="en-us">
+<title>type</title>
+</head>
+<body bgcolor="#DAD3C5" vlink="#0094D2" link="#003258">
+<table align="left" border="0" cellspacing="0" cellpadding="0" valign=top>
+  <tr>
+    <td width=105 height=40><a href="https://projects.eclipse.org/projects/tools.titan"><img src="../images/titan_transparent.gif" border=0 width=105 height=40 align="left" alt="Titan"></a></td>
+  </tr>
+</table>
+<table border="0" align="right" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><a href="../titan_main.html" alt="contents"><img border="0" src="../images/ao.jpg" width="53" height="40"></a></td>
+    <td><a href="../titan_index.html" alt="index"><img border="0" src="../images/up.jpg" width="53" height="40"></a></td>
+    <td><a href="true.html" alt="previous"><img border="0" src="../images/left.jpg" width="53" height="40"></a></td>
+    <td><a href="unichar2char.html" alt="next"><img border="0" src="../images/right.jpg" width="53" height="40"></a></td>
+  </tr>
+</table>
+<p><br clear="all">
+</p>
+<hr>
+<h1>type</h1>
+<hr align="left" width="75%">
+<p>The keyword is used to specify user-defined structured types.
+<hr align="left" width="50%">
+<div align="center">
+<center>
+<table border="0" width="90%" bgcolor="#FFB599" cellpadding="4">
+  <tr>
+    <td width="100%">
+    <h3 align="center"><font face="Courier New" color="#003258" size="5"><b>type </b></font> ( <font face="Courier New" color="#003258" size="5"><b>record</b></font> | <font face="Courier New"
+      color="#003258" size="5"> <b>union</b></font> | <font face="Courier New" color="#003258" size="5"> <b>set</b></font> | <font face="Courier New" color="#003258" size="5"> <b>record of</b></font>
+    | <font face="Courier New" color="#003258" size="5"> <b>set of</b></font> | <font face="Courier New" color="#003258" size="5"> <b>enumerated</b></font> | <font face="Courier New" color="#003258"
+      size="5"> <b>port</b></font> | <font face="Courier New" color="#003258" size="5"> <b>component</b></font> ) <i>identifier&nbsp;</i> <font face="Courier New" color="#003258" size="5"> <b>{</b></font>
+    <i> body</i> <font face="Courier New" color="#003258" size="5"> <b>};</b></font></h3>
+    </td>
+  </tr>
+</table>
+</center>
+</div>
+<ul>
+  <li>
+  <p>The <font face="Courier New" color="#003258" size="4"><b>type</b></font> keyword introduces the type definition.</p>
+  </li>
+  <li>
+  <p><a href="record.html"><font face="Courier New" color="#003258" size="4"><b>record</b></font></a> denotes an ordered structured type.</p>
+  </li>
+  <li>
+  <p><a href="union.html"><font face="Courier New" color="#003258" size="4"><b>union</b></font></a> is a structure which can take one and only one of a finite number of known types.</p>
+  </li>
+  <li>
+  <p><a href="set.html"><font face="Courier New" color="#003258" size="4"><b>set</b></font></a> denotes an unordered structured type.</p>
+  </li>
+  <li>
+  <p><a href="record.html"><font face="Courier New" color="#003258" size="4"><b>record of</b></font></a> denotes a record the elements of which are all of the same type.</p>
+  </li>
+  <li>
+  <p><a href="set.html"><font face="Courier New" color="#003258" size="4"><b>set of</b></font></a> denotes a set the elements of which are all of the same type.</p>
+  </li>
+  <li>
+  <p><a href="enumerated.html"><font face="Courier New" color="#003258" size="4"><b>enumerated</b></font></a> stands for a type that take only a distinct named set of values.</p>
+  </li>
+  <li>
+  <p><a href="port.html"><font face="Courier New" color="#003258" size="4"><b>port</b></font></a> defines the messages or procedures allowed to pass the port in question.</p>
+  </li>
+  <li>
+  <p><a href="component.html"><font face="Courier New" color="#003258" size="4"><b>component</b></font></a> defines which ports are associated with a component.</p>
+  </li>
+  <li>
+  <p><i>identifier</i> is the&nbsp;name used to refer to the structured type. Must begin with a letter, may contain letters, numbers and underscore characters.</p>
+  </li>
+  <li>
+  <p><i>body</i> contains the type definition itself. Its content differs from type to type.</p>
+  </li>
+</ul>
+<hr align="left" width="75%" color="#0094D2">
+<p>Another use of the keyword is the subtype definition.</p>
+<ul>
+  <li>Subtypes define a new constrained type from an already existing parent type.</li>
+  <li>When no constraint is given, it is possible to define type aliases.</li>
+</ul>
+<hr align="left" width="50%" color="#0094D2">
+<div align="center">
+<center>
+<table border="0" width="90%" bgcolor="#FFB599" cellpadding="4">
+  <tr>
+    <td width="100%">
+    <h3 align="center"><font face="Courier New" color="#003258" size="5"><b>type</b></font> <i>parent_identifier</i>&nbsp; (<i>identifier&nbsp;</i> | <font face="Courier New" color="#003258"
+      size="5"> <b>address</b></font>) [<i>array_def</i>] [<font face="Courier New" color="#003258" size="5"><b>(</b></font><i>list</i><font face="Courier New" color="#003258" size="5"><b>)</b></font>]
+    [<i>length</i>] <font face="Courier New" color="#003258" size="5"><b>;</b></font> &nbsp;</h3>
+    </td>
+  </tr>
+</table>
+</center>
+</div>
+<ul>
+  <li>
+  <p>The <font face="Courier New" color="#003258" size="4"><b>type</b></font> keyword introduces the type definition.</p>
+  </li>
+  <li>
+  <p><i>parent_identifier</i> is the&nbsp;name used to refer to the parent type. Must begin with a letter, may contain letters, numbers and underscore characters.</p>
+  </li>
+  <li>
+  <p><i>identifier</i> is the&nbsp;name used to refer to the sub-type. Must begin with a letter, may contain letters, numbers and underscore characters.</p>
+  </li>
+  <li>
+  <p><a href="address.html"><font face="Courier New" color="#003258" size="4"><b>address</b></font></a> is a user defined type to allow addressing specific entities inside the
+  System Under Test.</p>
+  </li>
+  <li>
+  <p><i><a href="BNF.html#arraydef">array_def</a></i> restricts the indices of the parent type.</p>
+  </li>
+  <li>
+  <p><i><a href="BNF.html#allowedvalues">list</a></i> is a comma-separated enumeration of the allowed values out of the values defined for the parent type.</p>
+  </li>
+  <li>
+  <p><a href="length.html"> <font face="Courier New" color="#003258" size="4"><b>length</b></font></a> can be used with <font face="Courier New"><b>set of</b></font> and <font face="Courier New"><b>record
+  of</b></font> types to limit the number of the elements of the structured type in question.&nbsp;<br>
+  When the parent type is a&nbsp; basic string type, the keyword constraints the length of the string.</p>
+  </li>
+</ul>
+<hr align="left" width="50%">
+<p>Example 1:
+<p><font face="Courier New">type enumerated Example {tisdag, fredag, onsdag};</font>
+<p>The enumerated type called Example containing three elements is defined.</p>
+<p>Example 2:
+<p><font face="Courier New">type Ex_subt Example (tisdag, onsdag);</font>
+<p>The sub-type, called Ex_subt, may contain only two elements of the parent type (called Example).</p>
+<hr align="left" width="25%">
+<p><a HREF="BNF.html#typedef">BNF definition</a> of <font face="Courier New"> type</font></p>
+</body>
+</html>

@@ -1,0 +1,10 @@
+doxygen
+Install
+Makefile.personal
+.cproject
+.TITAN*
+*.o
+*.exe
+*.pdf
+META-INF
+build.properties

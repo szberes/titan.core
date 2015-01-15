@@ -1,0 +1,770 @@
+{
+	"definitions" : {
+		"General_Types" : {
+			"BIT1" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT10" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT11" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT12" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT12n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT14" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT14_24n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT14n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT15" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT15n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT15np" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT16" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT16_BO_LAST" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT16n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT1n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT1np" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT2" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT24" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT2n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT2np" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT3" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT31" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT32_BO_LAST" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT3n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT3np" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT4" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT4n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT4np" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT5" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT56" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT56n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT5n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT5np" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT6" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT6_BO_LAST" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT6n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT6np" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT7" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT7n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT7np" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT8" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT8n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT9" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"BIT9n" : {
+				"type" : "string",
+				"pattern" : "^[01]*$"
+			},
+			"CHAR4" : {
+				"type" : "string",
+				"subType" : "charstring"
+			},
+			"Dummy" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"HEX0_16" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"HEX0_18n" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"HEX1" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"HEX15n" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"HEX16n" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"HEX1_20n" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"HEX1_32" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"HEX1_34n" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"HEX24n" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"HEX4n" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"HEX5_16" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"HEX6n" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"HEX8n" : {
+				"type" : "string",
+				"pattern" : "^[0-9A-Fa-f]*$"
+			},
+			"INT1" : {
+				"type" : "integer"
+			},
+			"INT11b_BO_LAST" : {
+				"type" : "integer"
+			},
+			"INT12b_BO_LAST" : {
+				"type" : "integer"
+			},
+			"INT13b_BO_LAST" : {
+				"type" : "integer"
+			},
+			"INT13nbp" : {
+				"type" : "integer"
+			},
+			"INT14b_BO_LAST" : {
+				"type" : "integer"
+			},
+			"INT15nbp" : {
+				"type" : "integer"
+			},
+			"INT1b" : {
+				"type" : "integer"
+			},
+			"INT1nbp" : {
+				"type" : "integer"
+			},
+			"INT20b_BO_LAST" : {
+				"type" : "integer"
+			},
+			"INT2b" : {
+				"type" : "integer"
+			},
+			"INT2nbp" : {
+				"type" : "integer"
+			},
+			"INT31b_BO_LAST" : {
+				"type" : "integer"
+			},
+			"INT3b" : {
+				"type" : "integer"
+			},
+			"INT3nb" : {
+				"type" : "integer"
+			},
+			"INT3nbp" : {
+				"type" : "integer"
+			},
+			"INT4b" : {
+				"type" : "integer"
+			},
+			"INT4nb" : {
+				"type" : "integer"
+			},
+			"INT5b" : {
+				"type" : "integer"
+			},
+			"INT5nb" : {
+				"type" : "integer"
+			},
+			"INT5nbp" : {
+				"type" : "integer"
+			},
+			"INT6b" : {
+				"type" : "integer"
+			},
+			"INT7b" : {
+				"type" : "integer"
+			},
+			"INT8nb" : {
+				"type" : "integer"
+			},
+			"INT9nbp" : {
+				"type" : "integer"
+			},
+			"Integer_array" : {
+				"type" : "array",
+				"subType" : "record of",
+				"items" : {
+					"$ref" : "#/definitions/General_Types/Integers"
+				}
+			},
+			"Integers" : {
+				"type" : "array",
+				"subType" : "record of",
+				"items" : {
+					"type" : "integer"
+				}
+			},
+			"LIN1" : {
+				"type" : "integer"
+			},
+			"LIN2" : {
+				"type" : "integer"
+			},
+			"LIN2_BO_LAST" : {
+				"type" : "integer"
+			},
+			"LIN3_BO_LAST" : {
+				"type" : "integer"
+			},
+			"LIN4_BO_LAST" : {
+				"type" : "integer"
+			},
+			"OCT0" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT0n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT10" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT100n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT10n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT11" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT11n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT12" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT128n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT12n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT13" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT13n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT14" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT14n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT15" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT15n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT16" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT16n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT17" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT17n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT18" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT18n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT19" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT19n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1List" : {
+				"type" : "array",
+				"subType" : "record of",
+				"items" : {
+					"$ref" : "#/definitions/General_Types/OCT1"
+				}
+			},
+			"OCT1_112n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_12" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_127n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_128n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_12n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_15n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_16n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_172n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_18n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_20n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_24n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_260" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_32" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_32n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_34n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_3n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_46n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_4n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_50" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_50n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_5n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_6n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_7n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_8" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1_8n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT1n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT2" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT20" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT20n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT28n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT2List" : {
+				"type" : "array",
+				"subType" : "record of",
+				"items" : {
+					"$ref" : "#/definitions/General_Types/OCT2"
+				}
+			},
+			"OCT2n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT3" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT32" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT32n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT34" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT34n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT3List" : {
+				"type" : "array",
+				"subType" : "record of",
+				"items" : {
+					"$ref" : "#/definitions/General_Types/OCT3"
+				}
+			},
+			"OCT3_14n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT3_17n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT3_5n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT3_7n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT3_8" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT3_8n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT3n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT4" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT46" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT46n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT4List" : {
+				"type" : "array",
+				"subType" : "record of",
+				"items" : {
+					"$ref" : "#/definitions/General_Types/OCT4"
+				}
+			},
+			"OCT4_8n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT4n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT5" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT500n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT50n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT5List" : {
+				"type" : "array",
+				"subType" : "record of",
+				"items" : {
+					"$ref" : "#/definitions/General_Types/OCT5"
+				}
+			},
+			"OCT5n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT6" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT69n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT6List" : {
+				"type" : "array",
+				"subType" : "record of",
+				"items" : {
+					"$ref" : "#/definitions/General_Types/OCT6"
+				}
+			},
+			"OCT6n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT7" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT7List" : {
+				"type" : "array",
+				"subType" : "record of",
+				"items" : {
+					"$ref" : "#/definitions/General_Types/OCT7"
+				}
+			},
+			"OCT7n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT8" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT8n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT9" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCT9n" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCTN" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"OCTNn" : {
+				"type" : "string",
+				"pattern" : "^([0-9A-Fa-f][0-9A-Fa-f])*$"
+			},
+			"ProtocolList" : {
+				"type" : "array",
+				"subType" : "record of",
+				"items" : {
+					"$ref" : "#/definitions/General_Types/Protocols"
+				}
+			},
+			"Protocols" : {
+				"enum" : [
+					"mtp3",
+					"sccp",
+					"isup",
+					"bicc",
+					"qaal2",
+					"gcp",
+					"bssap",
+					"bssmap",
+					"ranap",
+					"dtap"
+				]
+			}
+		}
+	},
+	"anyOf" : [
+	]
+}

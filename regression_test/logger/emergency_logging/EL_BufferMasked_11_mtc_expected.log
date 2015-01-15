@@ -1,0 +1,74 @@
+TESTCASE_START EmergencyLoggingTest.ttcn:27 Test case tc_user started.
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:29 Action: >>>>ACTION in tc_user, before the loop<<<<<
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:33 Action: >>>>ACTION in tc_user, after the loop<<<<<
+TESTCASE_FINISH EmergencyLoggingTest.ttcn:35 Test case tc_user finished. Verdict: pass
+TESTCASE_START EmergencyLoggingTest.ttcn:50 Test case tc_PTC_create_EL started.
+TESTCASE_FINISH EmergencyLoggingTest.ttcn:56 Test case tc_PTC_create_EL finished. Verdict: error
+TESTCASE_START EmergencyLoggingTest.ttcn:10 Test case tc_user_EL started.
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:15 Action: >>>>ACTION in tc_user_EL, before the loop<<<<<
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:19 Action: >>>>ACTION in tc_user_EL, after the loop<<<<<
+TESTCASE_FINISH EmergencyLoggingTest.ttcn:22 Test case tc_user_EL finished. Verdict: error
+TESTCASE_START EmergencyLoggingTest.ttcn:10 Test case tc_user_EL started.
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:15 Action: >>>>ACTION in tc_user_EL, before the loop<<<<<
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:19 Action: >>>>ACTION in tc_user_EL, after the loop<<<<<
+TESTCASE_FINISH EmergencyLoggingTest.ttcn:22 Test case tc_user_EL finished. Verdict: error
+TESTCASE_START EmergencyLoggingTest.ttcn:10 Test case tc_user_EL started.
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:15 Action: >>>>ACTION in tc_user_EL, before the loop<<<<<
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:19 Action: >>>>ACTION in tc_user_EL, after the loop<<<<<
+TESTCASE_FINISH EmergencyLoggingTest.ttcn:22 Test case tc_user_EL finished. Verdict: error
+TESTCASE_START Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:47 Test case tc_action started.
+ACTION_UNQUALIFIED Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:48 Action: This is an action
+TESTCASE_FINISH Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 Test case tc_action finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:53 Test case tc_default started.
+TESTCASE_FINISH Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 Test case tc_default finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:71 Test case tc_error1 started.
+TESTCASE_FINISH Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 Test case tc_error1 finished. Verdict: error
+TESTCASE_START Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:81 Test case tc_ex_runtime started.
+TESTCASE_FINISH Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 Test case tc_ex_runtime finished. Verdict: none
+TESTCASE_START Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:119 Test case tc_function_rnd started.
+TESTCASE_FINISH Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 Test case tc_function_rnd finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:136 Test case tc_parallel_portconn started.
+TESTCASE_FINISH Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 Test case tc_parallel_portconn finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:152 Test case tc_parallel_portmap started.
+TESTCASE_FINISH Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 Test case tc_parallel_portmap finished. Verdict: none
+TESTCASE_START Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:182 Test case tc_portevent started.
+TESTCASE_FINISH Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:191 Test case tc_portevent finished. Verdict: none
+TESTCASE_START Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:207 Test case tc_timer started.
+TESTCASE_FINISH Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 Test case tc_timer finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:227 Test case tc_UserLog started.
+TESTCASE_FINISH Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 Test case tc_UserLog finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:250 Test case tc_matching started.
+TESTCASE_FINISH Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 Test case tc_matching finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:261 Test case tc_verdict started.
+TESTCASE_FINISH Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 Test case tc_verdict finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:287 Test case tc_encdec started.
+TESTCASE_FINISH Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 Test case tc_encdec finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:47 Test case tc_action started.
+ACTION_UNQUALIFIED Titan_LogTest.ttcn:48 Action: This is an action
+TESTCASE_FINISH Titan_LogTest.ttcn:49 Test case tc_action finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:53 Test case tc_default started.
+TESTCASE_FINISH Titan_LogTest.ttcn:65 Test case tc_default finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:71 Test case tc_error1 started.
+TESTCASE_FINISH Titan_LogTest.ttcn:74 Test case tc_error1 finished. Verdict: error
+TESTCASE_START Titan_LogTest.ttcn:81 Test case tc_ex_runtime started.
+TESTCASE_FINISH Titan_LogTest.ttcn:83 Test case tc_ex_runtime finished. Verdict: none
+TESTCASE_START Titan_LogTest.ttcn:119 Test case tc_function_rnd started.
+TESTCASE_FINISH Titan_LogTest.ttcn:124 Test case tc_function_rnd finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:136 Test case tc_parallel_portconn started.
+TESTCASE_FINISH Titan_LogTest.ttcn:148 Test case tc_parallel_portconn finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:152 Test case tc_parallel_portmap started.
+TESTCASE_FINISH Titan_LogTest.ttcn:162 Test case tc_parallel_portmap finished. Verdict: none
+TESTCASE_START Titan_LogTest.ttcn:182 Test case tc_portevent started.
+TESTCASE_FINISH Titan_LogTest.ttcn:191 Test case tc_portevent finished. Verdict: none
+TESTCASE_START Titan_LogTest.ttcn:207 Test case tc_timer started.
+TESTCASE_FINISH Titan_LogTest.ttcn:222 Test case tc_timer finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:227 Test case tc_UserLog started.
+TESTCASE_FINISH Titan_LogTest.ttcn:229 Test case tc_UserLog finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:261 Test case tc_verdict started.
+TESTCASE_FINISH Titan_LogTest.ttcn:263 Test case tc_verdict finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:250 Test case tc_matching started.
+TESTCASE_FINISH Titan_LogTest.ttcn:254 Test case tc_matching finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:287 Test case tc_encdec started.
+TESTCASE_FINISH Titan_LogTest.ttcn:291 Test case tc_encdec finished. Verdict: pass
+TESTCASE_START Titan_LogTest.ttcn:71 Test case tc_error1 started.
+TESTCASE_FINISH Titan_LogTest.ttcn:74 Test case tc_error1 finished. Verdict: error

@@ -1,0 +1,169 @@
+/******************************************************************************
+ * Copyright (c) 2000-2014 Ericsson Telecom AB
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
+module EmbedValues {
+modulepar boolean EmbedValues_verbose := false;
+#define verbose EmbedValues_verbose
+#include "../macros.ttcnin"
+
+type component EMB {}
+
+type record EmbProduct {
+  record of universal charstring embed_values,
+  universal charstring companyName,
+  universal charstring productColor,
+  universal charstring productName,
+  octetstring productId
+}
+with {
+  variant "embedValues"
+}
+
+
+DECLARE_XER_ENCODERS(EmbProduct, emb);
+DECLARE_EXER_ENCODERS(EmbProduct, emb);
+
+const EmbProduct embval := {
+  embed_values := {"My Company", "produces", "", "with ID", "which is very popular"},
+  companyName  := "ABC",
+  productColor := "red",
+  productName  := "shirt",
+  productId    := 'C119B6'O
+}
+
+const universal charstring str_emb_e :=
+"<EmbProduct>My Company<companyName>ABC</companyName>produces<productColor>red</productColor><productName>shirt</productName>with ID<productId>C119B6</productId>which is very popular</EmbProduct>\n";
+
+const universal charstring str_emb_b :=
+"<EmbProduct>\n" &
+"\t<embed_values>\n" &
+"\t\t<UNIVERSAL_CHARSTRING>My Company</UNIVERSAL_CHARSTRING>\n" &
+"\t\t<UNIVERSAL_CHARSTRING>produces</UNIVERSAL_CHARSTRING>\n" &
+"\t\t<UNIVERSAL_CHARSTRING/>\n" &
+"\t\t<UNIVERSAL_CHARSTRING>with ID</UNIVERSAL_CHARSTRING>\n" &
+"\t\t<UNIVERSAL_CHARSTRING>which is very popular</UNIVERSAL_CHARSTRING>\n" &
+"\t</embed_values>\n" &
+"\t<companyName>ABC</companyName>\n" &
+"\t<productColor>red</productColor>\n" &
+"\t<productName>shirt</productName>\n" &
+"\t<productId>C119B6</productId>\n" &
+"</EmbProduct>\n" &
+"\n";
+
+testcase encode_emb() runs on EMB
+{
+  CHECK_METHOD(bxer_enc_emb, embval, str_emb_b);
+  CHECK_METHOD(exer_enc_emb, embval, str_emb_e);
+}
+
+testcase decode_emb() runs on EMB
+{
+  var EmbProduct expected := embval;
+  CHECK_DECODE(bxer_dec_emb, str_emb_b, EmbProduct, expected);
+  CHECK_DECODE(exer_dec_emb, str_emb_e, EmbProduct, expected);
+}
+
+type record EmbedAllTypes {
+  record of universal charstring embed_values,
+  integer i,
+  float f,
+  boolean b,
+  bitstring bs,
+  hexstring hs,
+  octetstring os,
+  charstring cs,
+  universal charstring ucs,
+  enumerated { Big, Small } size,
+  record {
+    universal charstring name,
+    integer phonePrefix
+  } country,
+  record of bitstring bytes,
+  union {
+    universal charstring townName,
+    integer zipCode
+  } location
+} with {
+  variant "embedValues"
+}
+
+DECLARE_EXER_ENCODERS(EmbedAllTypes, emb_all);
+
+const EmbedAllTypes c_emb_all := { 
+  { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen" },
+  2,
+  7.1,
+  true,
+  '110101'B,
+  'ABC12'H,
+  'C119B6'O,
+  "nothing",
+  "something",
+  Small,
+  { "Hungary", 36 },
+  { '10011011'B, '11111111'B },
+  { townName := "London" }
+};
+
+const universal charstring str_emb_all := 
+"<EmbedAllTypes>one<i>2</i>two<f>7.100000</f>three<b>true</b>four<bs>110101</bs>five<hs>ABC12</hs>six<os>C119B6</os>seven<cs>nothing</cs>eight<ucs>something</ucs>nine<size>Small</size>ten<country><name>Hungary</name><phonePrefix>36</phonePrefix></country>eleven<bytes><BIT_STRING>10011011</BIT_STRING><BIT_STRING>11111111</BIT_STRING></bytes>twelve<location><townName>London</townName></location>thirteen</EmbedAllTypes>\n";
+
+testcase encode_emb_all() runs on EMB
+{
+  CHECK_METHOD(exer_enc_emb_all, c_emb_all, str_emb_all);
+}
+
+testcase decode_emb_all() runs on EMB
+{
+  CHECK_DECODE(exer_dec_emb_all, str_emb_all, EmbedAllTypes, c_emb_all);
+}
+
+type record EmbedAnyElem {
+  record of universal charstring embed_values,
+  integer id,
+  universal charstring anyElem,
+  octetstring bytes
+} with {
+  variant "embedValues";
+  variant (anyElem) "anyElement";
+}
+
+DECLARE_EXER_ENCODERS(EmbedAnyElem, emb_any);
+
+const EmbedAnyElem c_emb_any := { 
+  { "one", "two", "three", "four" },
+  2,
+  "<something/>",
+  'A1'O
+};
+
+const universal charstring str_emb_any := 
+"<EmbedAnyElem>one<id>2</id>two<something/>three<bytes>A1</bytes>four</EmbedAnyElem>\n";
+
+testcase encode_emb_any() runs on EMB
+{
+  CHECK_METHOD(exer_enc_emb_any, c_emb_any, str_emb_any);
+}
+
+testcase decode_emb_any() runs on EMB
+{
+  CHECK_DECODE(exer_dec_emb_any, str_emb_any, EmbedAnyElem, c_emb_any);
+}
+
+control {
+  execute(encode_emb());
+  execute(decode_emb());
+  execute(encode_emb_all());
+  execute(decode_emb_all());
+  execute(encode_emb_any());
+  execute(decode_emb_any());
+}
+
+}
+with {
+  encode "XML"
+}

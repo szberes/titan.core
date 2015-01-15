@@ -1,0 +1,83 @@
+/******************************************************************************
+ * Copyright (c) 2000-2014 Ericsson Telecom AB
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
+module types {
+// Types are kept separate to cut down on the size of the generated code
+// from the actual test (all_from*.ttcn, sapc.ttcn)
+
+type component A {
+  var RoI v_roi:={20,21,22};
+  var SoI v_soi:={20,21,22};
+}
+
+type record of integer RoI;
+type set    of integer SoI;
+type record of SoI RoSoI;
+type record of RoI RoRoI;
+type record of RoOS RoRoOS;
+type record of SoOS RoSoOS;
+
+type set of integer MySetOfType (0 .. 10);
+
+type record of charstring RoCS;
+type set of charstring CoCS;
+
+type record of octetstring RoOS;
+type set of octetstring SoOS;
+
+type record MyRecord {
+  integer i optional,
+  RoI     roi optional,
+  SoI     soi optional
+}
+
+type union MyUnion {
+  integer i,
+  RoI     roi,
+  SoI     soi
+} 
+
+type record of MyRecord RoMyRec;
+type record of MyUnion RoMyUnion;
+
+//==== Function Reference ====
+//this is just a dummy type to test all from for function references
+type function F_int2int(in integer pl_i) return integer;
+
+type record of F_int2int RoF_int2int;
+
+/* * * * * * * * sapc types * * * * * * * */
+
+type record CreateSAPCSubscription
+{
+    record of charstring pcBlacklistService_list
+};
+
+type record GetResponseSAPCSubscription
+{
+    record of charstring pcBlacklistService_list
+};
+
+/*
+type record MOD {
+  GetResponseSAPCSubscription getResponseSAPCSubscription
+}
+
+type record MOA {
+  MOD getMODefinition
+}
+
+type record GetResp {
+  MOA mOAttributes
+}
+
+type record CAI3gCommand {
+  GetResp getResponse
+}
+*/
+
+}

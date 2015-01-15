@@ -1,0 +1,1803 @@
+/******************************************************************************
+ * Copyright (c) 2000-2014 Ericsson Telecom AB
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
+
+//=========================================================================
+// References: (XSD_0)  XML Schema Part 0: Primer Second Edition
+//             (XSD_1)  XML Schema Part 1: Structures Second Edition
+//             (XSD_2)  XML Schema Part 2: Datatypes Second Edition
+//             (ETSI_9) ETSI ES 201 873-9 V4.1.2, The Testing and Test Control Notation version 3;
+//                      Part 9: Using XML schema with TTCN-3
+// Last modified: 2013-12-02 by ethbaat
+// Temporarily commented out: tc_complex_import_withSL_encDec fails on some platforms because of TR:HR88527
+
+module xmlTest_Testcases
+{
+
+//=========================================================================
+// Import Part
+//=========================================================================
+//import from XSD all;
+import from PIPEasp_Types all;
+import from PIPEasp_PortType all;
+import from PIPEasp_Templates all;
+import from xmlTest_Shell all;
+
+import from www_XmlTest_org_element_anyType_e all;
+import from www_XmlTest_org_complex_all_e all;
+import from www_XmlTest_org_complex_extension_e all;
+import from www_XmlTest_org_complex_restriction_e all;
+import from www_XmlTest_org_complex_import_e all;
+import from www_XmlTest_org_complex_any_e all;
+
+import from xmlTest_Functions_string all;
+import from xmlTest_Functions_complex1 all;
+import from xmlTest_Functions_complex2 all;
+import from xmlTest_Functions_complex all;
+import from xmlTest_Functions_element all;
+import from xmlTest_Functions_list all;
+
+
+//=========================================================================
+// Module Parameters
+//=========================================================================
+
+// Insert module parameters here if applicable!
+// You can use the module_param skeleton!
+
+//=========================================================================
+// Data Types
+//=========================================================================
+
+// Insert data type defintions here if applicable!
+// You can use the data_type skeleton!
+
+//=========================================================================
+// Signatures
+//=========================================================================
+
+// Insert signature definitions here if applicable!
+// You can use the signature skeleton!
+
+//=========================================================================
+//Port Types
+//=========================================================================
+
+// Insert port type defintions here if applicable!
+// You can use the port_type skeleton!
+
+//=========================================================================
+//Component Types
+//=========================================================================
+
+type component xmlTest_CT extends Shell_CT {}
+
+type component mtc_CT {}
+//=========================================================================
+// Constants
+//=========================================================================
+
+
+//=========================================================================
+// Templates
+//=========================================================================
+
+// Insert templates here if applicable!
+// You can use the template skeleton!
+
+//=========================================================================
+// Altsteps
+//=========================================================================
+
+// Insert altsteps here if applicable!
+// You can use the altstep skeleton!
+
+//=========================================================================
+// Functions
+//=========================================================================
+
+//=========================================================================
+// f_countDelimiters
+//=========================================================================
+function f_countDelimiters(in charstring pl_string, in charstring pl_delimiter, inout integer pl_counter) {
+  pl_counter:=0;
+  var integer pos:=0;
+  var integer vl_size:=lengthof(pl_string);
+  var integer vl_delimsize:=lengthof(pl_delimiter);
+  while(pos<vl_size) {
+    if( substr(pl_string,pos,vl_delimsize)==pl_delimiter) { pl_counter:=pl_counter+1}
+    pos:=pos+1;
+  }
+}//f_
+
+//=========================================================================
+// f_compareFiles
+//=========================================================================
+//pl_diffLimit: upper limit of acceptable diff lines. 4 means one acceptable difference
+function f_compareFiles(in charstring pl_file1, in charstring pl_file2, in integer pl_diffLimit) runs on xmlTest_CT {
+  var integer vl_expectedResult:=0
+  if(pl_diffLimit>0) { vl_expectedResult:=256; }
+  var boolean vl_success:=false;
+  f_shell_command("diff -w " & pl_file1  & " " & pl_file2,"",vl_expectedResult,vl_success);
+
+  if(v_ASP_PResult.code==0)
+  {
+    setverdict(pass);
+  }
+  else if(v_ASP_PResult.code==256) {
+    var integer vl_counter:=0;
+    f_countDelimiters(v_ASP_PResult.stdout,"\n",vl_counter);
+    log("Counted lines: ",vl_counter, " diffLimit: ", pl_diffLimit)
+    if(vl_counter>pl_diffLimit) {
+      setverdict(fail);
+    }
+  } else { //e.g 512: No such file or directory
+    log("Wrong result code: ",v_ASP_PResult.code, " Expected result code: ", vl_expectedResult)
+    setverdict(fail);
+  }
+}//f_
+
+
+//=========================================================================
+// Testcases
+//=========================================================================
+testcase tc_versionTest() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("compiler -v","",0)
+}
+
+testcase tc_xsd2ttcn_versionTest() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn -v","",0)
+}
+
+//simple records
+testcase tc_firstTrial() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn elements.xsd","",c_shell_successWithWarning)
+}
+
+// see http://www.w3.org/TR/xmlschema-0/ 2.1 The Purchase Order Schema
+// This tc is "passed" but it is generated into noTargetNaespace.ttcn
+testcase tc_secondTrial() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn po.xsd noTargetNamespace.xsd","",c_shell_successWithoutWarningAndError)
+}
+testcase tc_empty() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn empty.xsd","",c_shell_successWithoutWarningAndError);
+
+  if(getverdict==pass) {
+    f_compareFiles(
+      "www_XmlTest_org_empty_e.ttcn","www_XmlTest_org_empty.ttcn", c_numOfDiff_headerAndModuleName);
+  }
+}
+
+testcase tc_annotation() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn XmlTest_annotation.xsd","",c_shell_successWithoutWarningAndError);
+  if(getverdict==pass) {
+      f_compareFiles(
+      "www_XmlTest_org_annotation_e.ttcn","www_XmlTest_org_annotation.ttcn", c_numOfDiff_headerModNameAndNamespace);
+    }
+}
+
+testcase tc_annotation1() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn XmlTest_annotation1.xsd","",c_shell_successWithoutWarningAndError);
+}
+
+testcase tc_annotation2() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn XmlTest_annotation2.xsd","",c_shell_error);
+}
+
+//Incorrect version: 1.1
+testcase tc_version() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn XmlTest_version.xsd","",c_shell_successWithWarning);
+}
+
+//************************************
+// === Converter switch tests: ===
+//************************************
+// usage: xsd2ttcn [-cepstVwx] [-f file] schema.xsd ...
+//         or xsd2ttcn -v
+//
+// OPTIONS:
+//         -c:             disable the generation of comments in TTCN-3 modules
+//         -e:             disable the generation of encoding instructions in TTCN-3 modules
+//         -f file:        the XSD files are taken from file instead of the command line
+//         -p:             do not generate the UsefulTtcn3Types and XSD predefined modules
+//         -q:             quiet - disable the issue of status messages
+//         -s:             parse and validate only - no TTCN-3 module generation
+//         -t:             disable the generation of timing information in TTCN-3 modules
+//         -v:             show version information
+//         -w:             suppress warnings
+//         -x:             disable schema validation but generate TTCN-3 modules
+
+//TODO:Not ready yet
+testcase tc_options_c() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn -c XmlTest_annotation.xsd","",c_shell_successWithoutWarningAndError );
+  if(getverdict==pass) {
+    f_compareFiles("www_XmlTest_org_annotation_c_e.ttcn","www_XmlTest_org_annotation.ttcn", c_numOfDiff_headerModNameAndNamespace);
+  }
+}
+
+//         -e:             disable the generation of encoding instructions in TTCN-3 modules
+testcase tc_options_e() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn -e XmlTest_annotation.xsd","",c_shell_successWithoutWarningAndError );
+  if(getverdict==pass) {
+    f_compareFiles("www_XmlTest_org_annotation_e_e.ttcn","www_XmlTest_org_annotation.ttcn", c_numOfDiff_headerModNameAndNamespace);
+  }
+}
+
+//         -f file:        the XSD files are taken from file instead of the command line
+testcase tc_options_f() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn -f XmlTest_files1.txt","",c_shell_successWithoutWarningAndError );
+  if(getverdict==pass) {
+    f_compareFiles("www_XmlTest_org_annotation_e.ttcn","www_XmlTest_org_annotation.ttcn", c_numOfDiff_headerModNameAndNamespace);
+  }
+}
+
+//TODO: more filename in  XmlTest_files2.txt
+// testcase tc_options_f() runs on xmlTest_CT
+// {
+//   f_shellCommandWithVerdict("xsd2ttcn -f XmlTest_files1.txt","",c_shell_successWithoutWarningAndError );
+//   if(getverdict==pass) {
+//     f_compareFiles("www_XmlTest_org_annotation_e.ttcn)","www_XmlTest_org_annotation.ttcn)", c_numOfDiff_headerModNameAndNamespace);
+//   }
+// }
+
+//-p: do not generate the UsefulTtcn3Types and XSD predefined modules
+testcase tc_options_p() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("mv www_XmlTest_org_annotation.ttcn  tmp_www_XmlTest_org_annotation.ttcn","",c_shell_successWithoutWarningAndError );
+  f_shellCommandWithVerdict("mv XSD.ttcn  tmp_XSD.ttcn","",c_shell_successWithoutWarningAndError );
+  f_shellCommandWithVerdict("mv UsefulTtcn3Types.ttcn tmp_UsefulTtcn3Types.ttcn","",c_shell_successWithoutWarningAndError );
+
+  f_shellCommandWithVerdict("xsd2ttcn -p XmlTest_annotation.xsd","",c_shell_successWithoutWarningAndError );
+  if(getverdict==pass) {
+    f_shellCommandWithVerdict("ls www_XmlTest_org_annotation.ttcn", "",c_shell_successWithoutWarningAndError);
+    f_shellCommandWithVerdict("ls  XSD.ttcn", "",c_shell_error_noSuchFileOrDirectory );
+    f_shellCommandWithVerdict("ls  UsefulTtcn3Types.ttcn.ttcn","", c_shell_error_noSuchFileOrDirectory );
+  }
+
+  f_shellCommandWithVerdict("mv tmp_www_XmlTest_org_annotation.ttcn  www_XmlTest_org_annotation.ttcn","",c_shell_successWithoutWarningAndError );
+  f_shellCommandWithVerdict("mv tmp_XSD.ttcn  XSD.ttcn","",c_shell_successWithoutWarningAndError );
+  f_shellCommandWithVerdict("mv tmp_UsefulTtcn3Types.ttcn UsefulTtcn3Types.ttcn","",c_shell_successWithoutWarningAndError );
+}
+
+//-s: parse and validate only - no TTCN-3 module generation
+testcase tc_options_s() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("mv www_XmlTest_org_annotation.ttcn  tmp_www_XmlTest_org_annotation.ttcn","",c_shell_successWithoutWarningAndError );
+  f_shellCommandWithVerdict("mv XSD.ttcn  tmp_XSD.ttcn","",c_shell_successWithoutWarningAndError );
+  f_shellCommandWithVerdict("mv UsefulTtcn3Types.ttcn tmp_UsefulTtcn3Types.ttcn","",c_shell_successWithoutWarningAndError );
+
+  f_shellCommandWithVerdict("xsd2ttcn -s XmlTest_annotation.xsd","",c_shell_successWithoutWarningAndError );
+  //TODO:test if wrong xsd causes conversion error wit this switch
+
+  //test if www_XmlTest_org_annotation.ttcn.ttcn, XSD.ttcn and UsefulTtcn3Types.ttcn exist:
+  if(getverdict==pass) {
+    f_shellCommandWithVerdict("ls www_XmlTest_org_annotation.ttcn", "", c_shell_error_noSuchFileOrDirectory );
+    f_shellCommandWithVerdict("ls  XSD.ttcn", "",c_shell_error_noSuchFileOrDirectory );
+    f_shellCommandWithVerdict("ls  UsefulTtcn3Types.ttcn.ttcn","", c_shell_error_noSuchFileOrDirectory );
+  }
+  f_shellCommandWithVerdict("mv tmp_www_XmlTest_org_annotation.ttcn  www_XmlTest_org_annotation.ttcn","",c_shell_successWithoutWarningAndError );
+  f_shellCommandWithVerdict("mv tmp_XSD.ttcn  XSD.ttcn","",c_shell_successWithoutWarningAndError );
+  f_shellCommandWithVerdict("mv tmp_UsefulTtcn3Types.ttcn UsefulTtcn3Types.ttcn","",c_shell_successWithoutWarningAndError );
+}
+
+//Ready
+//         -t:             disable the generation of timing information in TTCN-3 modules
+testcase tc_options_t() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn -t  XmlTest_annotation.xsd","",c_shell_successWithoutWarningAndError );
+  if(getverdict==pass) {
+    f_compareFiles("www_XmlTest_org_annotation_t_e.ttcn","www_XmlTest_org_annotation.ttcn", c_numOfDiff_headerModNameAndNamespace);
+  }
+}
+
+//         -v:             show version information
+//TODO:Not ready yet
+testcase tc_options_v() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn -v","",c_shell_successWithoutWarningAndError );
+}
+
+//TODO:Not ready yet
+//         -q:             quiet - disable the issue of status messages
+testcase tc_options_V() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn -q XmlTest_annotation.xsd","",c_shell_successWithoutWarningAndError );
+}
+
+//TODO:Not ready yet
+//         -w:             suppress warnings
+testcase tc_options_w() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn -w XmlTest_annotation.xsd","",c_shell_successWithoutWarningAndError );
+}
+
+//TODO:Not ready yet
+//         -x:             disable schema validation but generate TTCN-3 modules
+testcase tc_options_x() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn -x XmlTest_annotation.xsd","",c_shell_successWithoutWarningAndError );
+}
+
+testcase tc_options_wrong() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn -H XmlTest_annotation.xsd","", c_shell_error);
+}
+
+testcase tc_options_missing() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn ","",c_shell_successWithoutWarningAndError );
+  //TODO: check the output
+}
+
+
+testcase tc_XmlTest_label() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn -x XmlTest_label.xsd","",c_shell_successWithoutWarningAndError );
+}
+
+testcase tc_XmlTest_definition() runs on xmlTest_CT
+{
+  f_shellCommandWithVerdict("xsd2ttcn -x XmlTest_definition.xsd","",c_shell_successWithoutWarningAndError );
+}
+//************************************
+//  Testcases_basedOnTtcnStandard9
+//************************************
+group Testcases_basedOnTtcnStandard9 {
+
+  //Passed
+  testcase tc_XmlTest_all() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn all.xsd","",c_shell_successWithoutWarningAndError);
+  }
+
+  //Passed
+  testcase tc_XmlTest_any_anyAttribute() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn any_anyAttribute.xsd","",c_shell_successWithoutWarningAndError);
+  }
+
+  //HQ73011
+  //Heading: XSD anyAtribute is inserted into a wrong place
+  //Passed
+  testcase tc_XmlTest_HQ73011() runs on xmlTest_CT
+  {
+  f_shellCommandWithVerdict("xsd2ttcn HQ73011.xsd","",c_shell_successWithoutWarningAndError);
+    if(getverdict==pass) {
+      f_compareFiles(
+        "urn_ietf_params_xml_ns_conference_info_e.ttcn","urn_ietf_params_xml_ns_conference_info.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }
+
+  //Passed
+  testcase tc_XmlTest_attributeGroup() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn attributeGroup.xsd","",c_shell_successWithoutWarningAndError);
+  }
+
+  //double schema definition - Validator Returns with Error, Passed
+  testcase tc_XmlTest_attribute_use_noTNS() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn attribute_use_noTNS.xsd","",c_shell_error);
+  }
+
+}//group
+
+//************************************
+//   Testcases based on W3C standards
+//************************************
+
+//******************************
+//    StringTest
+//******************************
+group StringTest {
+
+  //=== Correct string type definitions: ====
+  //TR HL21086 - whitespace preserve. TODO: standalone testcase
+  testcase tc_string() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn -z XmlTest_string.xsd","",c_shell_successWithoutWarningAndError)
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_string.ttcn",
+        "www_XmlTest_org_string_e.ttcn", c_numOfDiff_headerModNameAndNamespace);
+    }
+////////////////////////////////////////////
+//
+//    f_encDecTest_NameA();
+//    f_encDecTest_NameB();
+//    f_encDecTest_Non_empty_string();
+//    f_encDecTest_Type();
+//
+////////////////////////////////////////////
+  }
+
+  //Passed, TR: Hl21086 - Solved
+  testcase tc_string_withWhitespace() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn -z XmlTest_string_withWhitespace.xsd","",c_shell_successWithoutWarningAndError)
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_string_withWhitespace.ttcn",
+        "www_XmlTest_org_string_withWhitespace_e.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+    f_encDecTest_StringWhiteSpaceP();
+    f_encDecTest_StringWhiteSpaceR();
+    f_encDecTest_StringWhiteSpaceC();
+  }
+
+  //Passed, TR: HL26227 -Solved BUT rethink if variant part is well ordered or not!!
+  testcase tc_string_withEnum() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn -z XmlTest_string_withEnum.xsd","",c_shell_successWithoutWarningAndError)
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_string_withEnum.ttcn",
+        "www_XmlTest_org_string_withEnum_e.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+    f_encDecTest_StringEnum();
+  }
+  //TODO: Write length of child restriction tests based on tc_string!!!
+
+  //=== Length restriction tests ===
+
+
+
+  //=== Faulty String definitions: =========
+
+  //===length===
+  //TR: HL21257 --Solved
+  testcase tc_string_withPosLength() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_string_withPosLength.xsd","",c_shell_successWithoutWarningAndError);
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_string_withPosLength.ttcn",
+        "www_XmlTest_org_string_withPosLength_e.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }
+
+  //Passed, returs with error
+  testcase tc_string_withEmptyLength() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_string_withEmptyLength.xsd","",c_shell_error)
+  }
+
+  testcase tc_string_withNegativeLength() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_string_withNegativeLength.xsd","",c_shell_error)
+  }
+
+  //Passed
+  testcase tc_string_withFixedLength() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_string_withFixedLength.xsd","",c_shell_error)
+  }
+
+  //Passed
+  testcase tc_string_withFloatLength() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_string_withFloatLength.xsd","", c_shell_error)
+  }
+
+  //===minLength===
+  //Passed, TR: HL21690
+  testcase tc_string_withPosMinLength() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_string_withMinLength.xsd","",c_shell_successWithoutWarningAndError)
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_string_withMinLength.ttcn",
+        "www_XmlTest_org_string_withMinLength_e.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }
+
+  //Passed
+  testcase tc_string_withEmptyMin() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_string_withEmptyMin.xsd","",c_shell_error)
+  }
+
+  //Passed
+  testcase tc_string_withNegativeMin() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_string_withNegativeMin.xsd","",c_shell_error)
+  }
+
+  //===maxLength===
+  //Passed
+  testcase tc_string_withPosMax() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_string_withPosMax.xsd","",c_shell_successWithoutWarningAndError);
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_string_withPosMax_e.ttcn","www_XmlTest_org_string_withPosMax.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }
+
+  //Passed
+  testcase tc_string_withEmptyMax() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_string_withEmptyMax.xsd","",c_shell_error)
+  }
+
+  //Passed
+  testcase tc_string_withNegativeMax() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_string_withNegativeMax.xsd","",c_shell_error)
+  }
+  //=== minLength>maxLength
+  //Passed, TR:
+  testcase tc_string_withFaultyMinMaxLength() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_string_withFaultyMinMax.xsd","",c_shell_error)
+  }
+  //Passed
+  testcase tc_string_withOverDefinition() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_string_withOverDefinition.xsd","",c_shell_error)
+  }
+
+  testcase tc_string_withTypeAndBase() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_string_withTypeAndBase.xsd","",c_shell_error)
+  }
+}//StringTest
+
+//******************************
+//    BooleanTest
+//******************************
+group BooleanTest {
+
+  //TODO: check warning sending for not supported:features
+  testcase tc_boolean() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_boolean.xsd","",c_shell_successWithoutWarningAndError)
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_boolean_e.ttcn","www_XmlTest_org_boolean.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }
+}//BooleanTest
+
+
+//******************************
+//    DecimalTest
+//******************************
+group DecimalTest {
+
+  //Passed
+  testcase tc_decimal() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_decimal.xsd","",c_shell_successWithoutWarningAndError)
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_decimal_e.ttcn",
+        "www_XmlTest_org_decimal.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }
+
+  //!!!!!Length not supported!!!!
+  //   testcase tc_decimal_withLength() runs on xmlTest_CT {
+  //     f_shellCommandWithVerdict("xsd2ttcn  XmlTest_decimal_withLength.xsd","",c_shell_successWithoutWarningAndError)
+  //     if(getverdict==pass) {
+  //       f_compareFiles(
+  //         "www_XmlTest_org_decimal_withLength_e.ttcn",
+  //         "www_XmlTest_org_decimal_withLength.ttcn", c_numOfDiff_headerAndModuleName);
+  //     }
+  //   }
+
+  //TR: Generates integer limits instead of decimal
+  //TR: HL2715 -Solved
+  testcase tc_decimal_withMinMaxInclusive() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_decimal_withMinMaxInclusive.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_decimal_withMinMaxInclusive_e.ttcn",
+        "www_XmlTest_org_decimal_withMinMaxInclusive.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+  //TR21266 -Solved
+  testcase tc_decimal_withMinMaxExclusive() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_decimal_withMinMaxExclusive.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_decimal_withMinMaxExclusive_e.ttcn",
+        "www_XmlTest_org_decimal_withMinMaxExclusive.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+  //TR HL21296
+  testcase tc_decimal_withEnum() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_decimal_withEnum.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_decimal_withEnum_e.ttcn",
+        "www_XmlTest_org_decimal_withEnum.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }
+}//DecimalTest
+
+//******************************
+//    IntegerTest
+//    Based on (XSD_2)/3.3.13 and (ETSI_9)/6.1/Table1
+//******************************
+group IntegerTest {
+
+  testcase tc_integer() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_integer.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_integer_e.ttcn",
+        "www_XmlTest_org_integer.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+
+  }//tc_
+
+  //negative test
+  testcase tc_integer_empty1() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_integer_empty1.xsd","",c_shell_error)
+  }//tc_
+
+  //negative test
+  testcase tc_integer_withLength() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_integer_withLength.xsd","",c_shell_error)
+  }//tc_
+
+  //Ready, passed, TR:HL21694 -solved
+  testcase tc_integer_withEnum() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_integer_withEnum.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_integer_withEnum_e.ttcn","www_XmlTest_org_integer_withEnum.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+  //Passed
+  testcase tc_integer_withMinIncl() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_integer_withMinIncl.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_integer_withMinIncl_e.ttcn",
+        "www_XmlTest_org_integer_withMinIncl.ttcn",c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+  //Passed
+  testcase tc_integer_withMaxIncl() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_integer_withMaxIncl.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_integer_withMaxIncl_e.ttcn","www_XmlTest_org_integer_withMaxIncl.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+  //Passed
+  testcase tc_integer_withMinExcl() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_integer_withMinExcl.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_integer_withMinExcl_e.ttcn",
+        "www_XmlTest_org_integer_withMinExcl.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+  //Passed
+  testcase tc_integer_withMaxExcl() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_integer_withMaxExcl.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_integer_withMaxExcl_e.ttcn","www_XmlTest_org_integer_withMaxExcl.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+
+}//IntegerTest
+
+  //
+  testcase tc_simpleType_enum() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_simple_enum.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_simple_enum_e.ttcn","www_XmlTest_org_simple_enum.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+
+  }//tc_
+
+
+//******************************
+//    TimeTest
+//    Based on (XSD_2)/
+//******************************
+group TimeTest {
+
+  //Passed:
+  testcase tc_time() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_time.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_time_e.ttcn","www_XmlTest_org_time.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+  //Passed TR HL22058
+  testcase tc_time_withEnum() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_time_withEnum.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_time_withEnum_e.ttcn","www_XmlTest_org_time_withEnum.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+}//TimeTest
+
+group ListTest {
+  //converter
+  testcase tc_list_conv() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_list.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_list_e.ttcn","www_XmlTest_org_list.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+
+    // restrictions:length, minLength, maxLength, pattern, and  enumeration.
+  }//tc_
+
+  testcase tc_list_encDec() runs on xmlTest_CT {
+    f_encDecTest_StringList();
+  }//tc_
+
+  testcase tc_integerList() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_list_integer.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_list_integer_e.ttcn","www_XmlTest_org_list_integer.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+
+  }//tc_
+}//ListTest
+
+group UnionTest {
+  //TR:HL23577
+  testcase tc_union() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_union.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_union_e.ttcn","www_XmlTest_org_union.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+  
+  testcase tc_union_optional() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn  ETSI_CR5852_union.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "ETSI_CR5852_union_e.ttcn","ETSI_CR5852_union.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }
+
+}//UnionTest
+
+
+
+group ComplexType {
+
+  testcase tc_complex1() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_complex1.xsd","",c_shell_successWithoutWarningAndError)
+
+     if(getverdict==pass) {
+       f_compareFiles(
+        "www_XmlTest_org_complex1_e.ttcn","www_XmlTest_org_complex1.ttcn", c_numOfDiff_headerModNameAndNamespace);
+       f_encDecTest_InternationalPrice();
+     }
+  }//tc_
+
+  //TR: HL24977 -Solved
+  testcase tc_complex2() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_complex2.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_complex2_e.ttcn","www_XmlTest_org_complex2.ttcn", c_numOfDiff_headerModNameAndNamespace);
+    }
+    f_encDecTest_InternationalPrice2(); //TR: HL24977 -solved -Primer, 2.5.3 Empty Content
+    f_encDecTest_InternationalPrice3();
+    f_encDecTest_InternationalPrice4();
+  }//tc_
+
+  testcase tc_complex_simpleContent() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_complex_simpleContent.xsd","",c_shell_successWithoutWarningAndError)
+
+     if(getverdict==pass) {
+       f_compareFiles(
+        "www_XmlTest_org_complex_simpleContent_e.ttcn","www_XmlTest_org_complex_simpleContent.ttcn", c_numOfDiff_headerModNameAndNamespace);
+      f_encDecTest_ComplexTypeWithSimpleContent1();
+      f_encDecTest_ComplexTypeWithSimpleContent2();
+      f_encDecTest_ComplexTypeWithSimpleContent2_neg();
+     }
+  }//tc_
+
+  testcase tc_complex_mixed_conv() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_complex_mixed.xsd","",c_shell_successWithoutWarningAndError)
+
+     if(getverdict==pass) {
+       f_compareFiles(
+        "www_XmlTest_org_complex_mixed_e.ttcn","www_XmlTest_org_complex_mixed.ttcn", c_numOfDiff_headerAndModuleName);
+     }
+  }//tc_
+
+  //TR:HL29258
+  testcase tc_complex_mixed_encDec() runs on xmlTest_CT {
+     f_encDecTest_ComplexTypeWithMixed();
+  }//tc_
+
+
+  testcase tc_complex_choice_converter() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_complex_choice.xsd","",c_shell_successWithoutWarningAndError)
+
+     if(getverdict==pass) {
+       f_compareFiles(
+        "www_XmlTest_org_complex_choice_e.ttcn","www_XmlTest_org_complex_choice.ttcn", c_numOfDiff_headerAndModuleName);
+     }
+  }//tc_
+
+  //
+  testcase tc_complex_choice_encDec() runs on xmlTest_CT {
+    f_encDecTest_ComplexTypeWithChoice_1();
+    f_encDecTest_ComplexTypeWithChoice_2();
+    f_encDecTest_ComplexTypeWithChoice_3();
+    f_encDecTest_ComplexTypeWithChoice_4();
+    f_encDecTest_ComplexTypeWithChoice_5();
+    f_encDecTest_ComplexTypeWithChoice_6();
+    f_encDecTest_ComplexTypeWithChoice_7();
+    f_encDecTest_ComplexTypeWithChoice_8();
+    f_encDecTest_ComplexTypeWithChoice_9();
+    f_encDecTest_ComplexTypeWithChoice_10();
+  }//tc_
+
+  //Passed, TR: HL30830 -solved
+  testcase tc_complex_all_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn  XmlTest_complex_all.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_complex_all_e.ttcn","www_XmlTest_org_complex_all.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+  //HL29679
+  testcase tc_complex_all_emptySet_encDec() runs on xmlTest_CT {
+    var MySubjects1 vl_pdu:= {
+      order:={},
+      year:="2009",
+      english:=omit,
+      math:=omit,
+      physics:=omit,
+      chemistry:=omit
+    }
+    var charstring vl_expectedEncodedPdu:="<MySubjects1 Year='2009'/>\n\n";
+    f_encDecTest_ComplexTypeWithAll_MySubject1(vl_pdu,vl_expectedEncodedPdu,vl_pdu);
+  }//tc_
+
+  testcase tc_complex_all_fullSet_encDec() runs on xmlTest_CT {
+    var  MySubjects1 vl_pdu:= {
+      order:={math,english,chemistry, physics},
+      year:="2009",
+      english:="Advanced Group 1",
+      math:="Beginners 1",
+      physics:="Mechanics 1",
+      chemistry:="CH2"
+    }
+    var charstring vl_expectedEncodedPdu:=
+      "<MySubjects1 Year='2009'>\n\t<Math>Beginners 1</Math>\n\t<English>Advanced Group 1</English>\n\t<Chemistry>CH2</Chemistry>\n\t<Physics>Mechanics 1</Physics>\n</MySubjects1>\n\n"
+    f_encDecTest_ComplexTypeWithAll_MySubject1(vl_pdu,vl_expectedEncodedPdu,vl_pdu);
+  }//tc_
+
+  testcase tc_complex_all_subSet_encDec() runs on xmlTest_CT {
+    var  MySubjects1 vl_pdu:= {
+      order:={math,english,chemistry},
+      year:="2009",
+      english:="Advanced Group 1",
+      math:="Beginners 1",
+      physics:=omit,
+      chemistry:="CH2"
+    },
+    vl_expectedPdu:={
+      order:={math,english},
+      year:="2009",
+      english:="Advanced Group 1",
+      math:="Beginners 1",
+      physics:=omit,
+      chemistry:=omit
+    };
+    var charstring vl_expectedEncodedPdu:=
+      "<MySubjects1 Year='2009'>\n\t<Math>Beginners 1</Math>\n\t<English>Advanced Group 1</English>\n\t<Chemistry>CH2</Chemistry>\n</MySubjects1>\n\n"
+      f_encDecTest_ComplexTypeWithAll_MySubject1(vl_pdu,vl_expectedEncodedPdu,vl_pdu);
+  }//tc_
+
+  testcase tc_complex_all_inconsistentSet_encDec() runs on xmlTest_CT {
+    f_encDecTest_ComplexTypeWithAll_inconsistentSet();
+  }//tc_
+
+  //positive testcase for group "all". The type has no optional field (element).The input is correct
+  testcase tc_complex_all_noOptional_pos_encDec() runs on xmlTest_CT {
+    var  MySubjects2 vl_pdu:= {
+      year:="2009",
+      subject:= {
+        order:={math,english,chemistry, physics,history},
+
+        english:="Advanced Group 1",
+        math:="Beginners 1",
+        physics:="Mechanics 1",
+        chemistry:="CH2",
+        history:="H1"
+      }
+    }
+    var charstring vl_expectedEncodedPdu:=
+      "<MySubjects2 Year='2009'>\n\t<Math>Beginners 1</Math>\n\t<English>Advanced Group 1</English>\n\t<Chemistry>CH2</Chemistry>\n\t<Physics>Mechanics 1</Physics>\n\t<History>H1</History>\n</MySubjects2>\n\n";
+      f_encDecTest_ComplexTypeWithAll_MySubject2(vl_pdu,vl_expectedEncodedPdu,vl_pdu,0);
+  }//tc_
+
+  //Negative testcase for group "all". The type has no optional field (element).
+  //The input is not correct: value of one field (history) is missing
+  //Passed, TR: HL32978
+  testcase tc_complex_all_noOptional_neg1_encDec() runs on xmlTest_CT {
+    var  MySubjects2 vl_pdu:= {
+      year:="2009",
+      subject:= {
+        order:={math,english,chemistry, physics,history},
+        english:="Advanced Group 1",
+        math:="Beginners 1",
+        physics:="Mechanics 1",
+        chemistry:="CH2"
+        //history:="H1"
+      }
+    }
+    var  MySubjects2 vl_expectedDecodedPdu:= {
+      year:="2009",
+      subject:= {
+        order:={math,english,chemistry, physics,history},
+        english:="Advanced Group 1",
+        math:="Beginners 1",
+        physics:="Mechanics 1",
+        chemistry:="CH2",
+        history:=""
+      }
+    }
+    var charstring vl_expectedEncodedPdu:="<MySubjects2 Year='2009'>\n\t<Math>Beginners 1</Math>\n\t<English>Advanced Group 1</English>\n\t<Chemistry>CH2</Chemistry>\n\t<Physics>Mechanics 1</Physics>\n\t<History/>\n</MySubjects2>\n\n"
+      f_encDecTest_ComplexTypeWithAll_MySubject2(vl_pdu,vl_expectedEncodedPdu,vl_expectedDecodedPdu,0);
+  }//tc_
+
+  //Negative testcase for group "all". The type has no optional field (element).
+  //The input is not correct: value of one field (history) and its place in order-list is missing.
+  // ***Less elements of record of order than required***
+  //expectation: error report at encoding, returning 1 at decoding
+  //Passed, TR: HL32978
+  testcase tc_complex_all_noOptional_neg2_encDec() runs on xmlTest_CT {
+    var  MySubjects2 vl_pdu:= {
+      year:="2009",
+      subject:= {
+        order:={math,english,chemistry, physics},
+        english:="Advanced Group 1",
+        math:="Beginners 1",
+        physics:="Mechanics 1",
+        chemistry:="CH2"
+        //history:="H1"
+      }
+    }
+    var  MySubjects2 vl_expectedDecodedPdu:= {
+      year:="2009",
+      subject:= {
+        order:={math,english,chemistry, physics},
+        english:="Advanced Group 1",
+        math:="Beginners 1",
+        physics:="Mechanics 1",
+        chemistry:="CH2",
+        history:=""
+      }
+    }
+    var charstring vl_expectedEncodedPdu:="<MySubjects2 Year='2009'/>\n\n"; //expecting error report!!!
+      //"<MySubjects2 Year='2009'>\n\t<Math>Beginners 1</Math>\n\t<English>Advanced Group 1</English>\n\t<Chemistry>CH2</Chemistry>\n\t<Physics>Mechanics 1</Physics>\n</MySubjects2>\n\n"
+      f_encDecTest_ComplexTypeWithAll_MySubject2(vl_pdu,vl_expectedEncodedPdu,vl_expectedDecodedPdu,1);
+  }//tc_
+
+  //Negative testcase for group "all". The type has no optional field (element).
+  //The input is not correct: order three times contains "math", Physics and history are missing.
+  //expectation: error report at encoding,  returning 1 at decoding
+  //Passed,  TR: HL32978
+  testcase tc_complex_all_noOptional_neg3_encDec() runs on xmlTest_CT {
+    var  MySubjects2 vl_pdu:= {
+      year:="2009",
+      subject:= {
+        order:={math,english,chemistry,math,math},
+        english:="Advanced Group 1",
+        math:="Beginners 1",
+        physics:="Mechanics 1",
+        chemistry:="CH2"
+        //history:="H1"
+      }
+    }
+    var charstring vl_expectedEncodedPdu:="<MySubjects2 Year='2009'/>\n\n"; //expecting error report!!!
+      //"<MySubjects2 Year='2009'>\n\t<Math>Beginners 1</Math>\n\t<English>Advanced Group 1</English>\n\t<Chemistry>CH2</Chemistry>\n\t<Physics>Mechanics 1</Physics>\n</MySubjects2>\n\n"
+      f_encDecTest_ComplexTypeWithAll_MySubject2(vl_pdu,vl_expectedEncodedPdu,vl_pdu,1);
+  }//tc_
+
+
+  //=========================================================================
+  //  tc_complex_all_noOptional_empty_encDec
+  //=========================================================================
+  //Negative testcase for group "all". The type has no optional field (element).
+  //The input is not correct: value of all the fields and their place in order-list is missing
+  //expectation: error report at encoding
+  //Passed,  TR: HL32978
+  testcase tc_complex_all_noOptional_empty_encDec() runs on xmlTest_CT {
+    var  MySubjects2 vl_pdu:= {
+      year:="2009",
+      subject:= {
+        order:={ }
+        //english:="Advanced Group 1",
+        //math:="Beginners 1",
+        //physics:="Mechanics 1",
+        //chemistry:="CH2"
+        //history:="H1"
+      }
+    }
+    var charstring vl_expectedEncodedPdu:="<MySubjects2 Year='2009'/>\n\n"; //expecting error report!!!
+      f_encDecTest_ComplexTypeWithAll_MySubject2(vl_pdu,vl_expectedEncodedPdu,vl_pdu,1);
+  }//tc_
+
+  //=========================================================================
+  //  tc_complex_minOccursMaxOccurs
+  //=========================================================================
+  //Old name: tc_XmlTest_minOccursMaxOccurs
+  ////TR (ethgry): HL10386
+  testcase tc_complex_minOccursMaxOccurs() runs on xmlTest_CT
+  {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_minOccursMaxOccurs.xsd","",c_shell_successWithoutWarningAndError);
+    if(getverdict==pass) {
+       f_compareFiles(
+        "www_XmlTest_org_complex_minOccursMaxOccurs_e.ttcn","www_XmlTest_org_complex_minOccursMaxOccurs.ttcn", c_numOfDiff_headerAndModuleName);
+     }
+  }
+
+
+  testcase tc_complex_extension_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_extension.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_complex_extension_e.ttcn","www_XmlTest_org_complex_extension.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+  testcase tc_complex_extension_encDec() runs on xmlTest_CT
+  {
+    var MySubjects3Extension vl_pdu:={
+      semester:="Autumn",
+      year:="2009",
+      english:="B1",
+      math:=omit,
+      physics:="Optics",
+      chemistry:=omit,
+      arts:="Impressionism"
+    }
+    var charstring vl_expectedEncodedPdu:=
+      "<MySubjects3Extension Semester='Autumn' Year='2009'>\n\t<English>B1</English>\n\t<Physics>Optics</Physics>\n\t<Arts>Impressionism</Arts>\n</MySubjects3Extension>\n\n";
+    f_encDecTest_ComplexTypeWithExtension_MySubject3(vl_pdu,vl_expectedEncodedPdu, vl_pdu);
+  }
+
+  testcase tc_complex_restriction_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_restriction.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_complex_restriction_e.ttcn","www_XmlTest_org_complex_restriction.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+  testcase tc_complex_restriction_encDec() runs on xmlTest_CT
+  {
+    var MySubjects4Restriction vl_pdu:={
+      year:="2009",
+      english:="B1",
+      math:="Combinatorics 1"
+    }
+    var charstring vl_expectedEncodedPdu:= "<MySubjects4Restriction Year='2009'>\n\t<English>B1</English>\n\t<Math>Combinatorics 1</Math>\n</MySubjects4Restriction>\n\n";
+    f_encDecTest_ComplexTypeWithExtension_MySubject4(vl_pdu,vl_expectedEncodedPdu, vl_pdu);
+  }
+  //TR: HL32948, Solved
+  testcase tc_complex_restriction_neg1_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_restriction_neg1.xsd","",c_shell_error);
+  }//tc_
+
+  //TR: HL32948, Solved
+  testcase tc_complex_restriction_neg2_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_restriction_neg2.xsd","",c_shell_error);
+  }//tc_
+
+  //not supported:
+  testcase tc_complex_unique_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_unique.xsd","",c_shell_successWithWarning);
+  }//tc_
+
+  //Positive test: The including and the included schema are in the same namespace
+  testcase tc_complex_include_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_include.xsd XmlTest_complex_include1.xsd","",c_shell_successWithoutWarningAndError);
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_complex_include1_e.ttcn","www_XmlTest_org_complex_include.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+  //=========================================================================
+  //  tc_complex_include_neg1_converter
+  //=========================================================================
+  //Negative test: The including and the included schema are not in the same namespace
+  testcase tc_complex_include_neg1_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_include.xsd XmlTest_complex_include2.xsd","",c_shell_error);
+  }//tc_
+
+  //=========================================================================
+  //  tc_complex_import_pos1_converter
+  //=========================================================================
+  //Positive test: The including and the included schema are in different namespaces (import and include)
+  testcase tc_complex_import_pos1_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_import_pos.xsd XmlTest_complex_include1.xsd","",c_shell_successWithoutWarningAndError);
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_complex_import_e.ttcn","www_XmlTest_org_complex_import.ttcn", c_numOfDiff_headerModNameAndImport);
+
+      f_compareFiles(
+       "www_XmlTest_org_complex_include2_e.ttcn","www_XmlTest_org_complex_include.ttcn", c_numOfDiff_headerModNameAndImport);
+    }
+  }//tc_
+
+  //=========================================================================
+  //  tc_complex_import_pos2_converter
+  //=========================================================================
+  //Pos test: Checks if the converter can choose the file having the correct namespace
+  //The types are the same in the 2nd and the 3rd file but only the 3rd have the namespace having prefix in the first file
+  testcase tc_complex_import_pos2_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_import_pos.xsd XmlTest_complex_include2.xsd XmlTest_complex_include1.xsd","",c_shell_successWithoutWarningAndError);
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_complex_import_e.ttcn","www_XmlTest_org_complex_import.ttcn", c_numOfDiff_headerModNameAndNamespace);
+
+      f_compareFiles(
+       "www_XmlTest_org_complex_include2_e.ttcn","www_XmlTest_org_complex_include.ttcn", c_numOfDiff_headerModNameAndNamespace);
+    }
+  }//tc_
+
+  //=========================================================================
+  //  tc_complex_import_neg1_converter
+  //=========================================================================
+  //Negative test: The importing and the imported schema are in different namespaces, but the first file contains unknown type
+  //If the type checking is switched off the testcase fails.
+  testcase tc_complex_import_neg1_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_import_neg1.xsd XmlTest_complex_include1.xsd","",c_shell_error);
+  }//tc_
+
+  //=========================================================================
+  //  tc_complex_import_withSL_converter
+  //=========================================================================
+  //Positive test: The importing schema contains the namespace and the schema location of the imported schema.
+  testcase tc_complex_import_withSL_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_import_withSchemaLocation.xsd XmlTest_complex_include1.xsd","",c_shell_successWithoutWarningAndError);
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_complex_import_e.ttcn","www_XmlTest_org_complex_import.ttcn", c_numOfDiff_headerModNameAndNamespace+4);
+    }
+  }//tc_
+
+  //=========================================================================
+  //  tc_complex_import_withSL_encDec
+  //=========================================================================
+  // TODO: fix HR88527
+  testcase tc_complex_import_withSL_encDec() runs on xmlTest_CT {
+    var PurchaseReportImport pl_pdu:= {
+      period :="P3M",
+      periodEnding :="1999-12-31",
+      regions:= {
+        zip_list :={
+          {
+            code:=95819,
+            part_list:= {
+              {
+                number:="872-AA",
+                quantity:=1
+              },
+              {
+                number:="926-AA",
+                quantity:=2
+              }
+            }
+          }
+        }
+      },
+      parts :={
+        part_list:= {
+          {
+            number:="872-AA",
+            base:="Lawnmower"
+          },
+          {
+            number:="926-AA",
+            base:="Baby Monitor"
+          }
+        }
+      }
+    }
+    var charstring pl_expectedEncodedPdu:="<imp:purchaseReportImport xmlns:imp='www.XmlTest.org/complex_import' xmlns:r='www.XmlTest.org/complex_include' period='P3M' periodEnding='1999-12-31'>\n\t<imp:regions>\n\t\t<r:zip code='95819'>\n\t\t\t<r:part number='872-AA' quantity='1'/>\n\t\t\t<r:part number='926-AA' quantity='2'/>\n\t\t</r:zip>\n\t</imp:regions>\n\t<imp:parts>\n\t\t<r:part number='872-AA'>Lawnmower</r:part>\n\t\t<r:part number='926-AA'>Baby Monitor</r:part>\n\t</imp:parts>\n</imp:purchaseReportImport>\n\n";
+    //see http://www.w3.org/TR/xmlschema-0/#quartelyReport !
+    f_encDecTest_PurchaseReportImport(pl_pdu,pl_expectedEncodedPdu,pl_pdu);
+  }//tc_
+
+  //=========================================================================
+  //  tc_complex_import_nameCollision_converter
+  //=========================================================================
+  //imports the same type from different namespaces
+  testcase tc_complex_import_nameCollision_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_import_AB.xsd XmlTest_complex_import_A.xsd XmlTest_complex_import_B.xsd","",c_shell_successWithoutWarningAndError);
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_complex_import_A_e.ttcn","www_XmlTest_org_complex_import_A.ttcn", c_numOfDiff_headerAndModuleName);
+      f_compareFiles(
+        "www_XmlTest_org_complex_import_B_e.ttcn","www_XmlTest_org_complex_import_B.ttcn", c_numOfDiff_headerAndModuleName);
+      f_compareFiles(
+        "www_XmlTest_org_complex_import_AB_e.ttcn","www_XmlTest_org_complex_import_AB.ttcn", 10+c_numOfDiff_headerModNameAndImport);
+    }
+  }//tc_
+
+  //=========================================================================
+  //  tc_complex_import_nameCollision2_converter
+  //=========================================================================
+  //imports the same type from different namespaces
+  testcase tc_complex_import_nameCollision2_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_import_AB.xsd XmlTest_complex_import_B.xsd XmlTest_complex_import_A.xsd","",c_shell_successWithoutWarningAndError);
+  }//tc_
+
+  //=========================================================================
+  //  tc_complex_any_pos_converter
+  //=========================================================================
+  testcase tc_complex_any_pos_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_complex_any.xsd","",c_shell_successWithoutWarningAndError);
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_complex_any_e.ttcn","www_XmlTest_org_complex_any.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+
+  //=========================================================================
+  //  tc_complex_any_pos1_encDec
+  //  Failed, TR: HL37887
+  //=========================================================================
+  testcase tc_complex_any_pos1_encDec() runs on xmlTest_CT {
+
+    var ElementContainingXhtml_1 vl_pdu := {
+      firstField:="1st field",
+      elem_list:= {
+        "<table xmlns=\"http://www.w3.org/1999/xhtml\" border=\"0\" width=\"100%\">\n      <tr><td>95819</td><td> </td><td> </td></tr>\n    </table>"
+      },
+      thirdField:="3rd field"
+    }
+    var charstring  vl_expectedEncodedPdu:="<r1:ElementContainingXhtml_1 xmlns:r1='www.XmlTest.org/complex_any'>\n\t<r1:FirstField>1st field</r1:FirstField>\n\t<table xmlns=\"http://www.w3.org/1999/xhtml\" border=\"0\" width=\"100%\">\n      <tr><td>95819</td><td> </td><td> </td></tr>\n    </table>\n\t<r1:ThirdField>3rd field</r1:ThirdField>\n</r1:ElementContainingXhtml_1>\n\n";
+    f_encDecTest_ElementContainingXhtml_1(vl_pdu,vl_expectedEncodedPdu, vl_pdu);
+  }//tc_
+
+  //=========================================================================
+  //  tc_complex_any_pos2_encDec
+  //=========================================================================
+  testcase tc_complex_any_pos2_encDec() runs on xmlTest_CT {
+
+    var ElementContainingXhtml_2 vl_pdu := {
+      elem_list:= {
+        "<table xmlns=\"http://www.w3.org/1999/xhtml\" border=\"0\" width=\"100%\">\n      <tr><td>95819</td><td> </td><td> </td></tr>\n    </table>"
+      }
+    }
+    var charstring  vl_expectedEncodedPdu:=
+        "<r1:ElementContainingXhtml_2 xmlns:r1='www.XmlTest.org/complex_any'>\n\t<table xmlns=\"http://www.w3.org/1999/xhtml\" border=\"0\" width=\"100%\">\n      <tr><td>95819</td><td> </td><td> </td></tr>\n    </table>\n</r1:ElementContainingXhtml_2>\n\n";
+    f_encDecTest_ElementContainingXhtml_2(vl_pdu,vl_expectedEncodedPdu, vl_pdu);
+  }//tc_
+
+  //=========================================================================
+  //  tc_complex_any_pos3_encDec
+  //  Failed, TR: HL37887
+  //=========================================================================
+  testcase tc_complex_any_pos3_encDec() runs on xmlTest_CT {
+
+    var ElementContainingXhtml_1 vl_pdu :=
+      {
+        firstField := "1st field",
+        elem_list := {
+          "<table xmlns=\"http://www.w3.org/1999/xhtml\" border=\"0\" width=\"100%\">\n      <tr><td>95819</td><td> </td><td> </td></tr>\n    </table>",
+          "<second xmlns=\"http://www.w3.org/1999/xhtml\" element=\"rabbit\"/>" },
+        thirdField := "3rd field"
+    }
+
+    var charstring  vl_expectedEncodedPdu:="<r1:ElementContainingXhtml_1 xmlns:r1='www.XmlTest.org/complex_any'>\n\t<r1:FirstField>1st field</r1:FirstField>\n\t<table xmlns=\"http://www.w3.org/1999/xhtml\" border=\"0\" width=\"100%\">\n      <tr><td>95819</td><td> </td><td> </td></tr>\n    </table>\n\t<second xmlns=\"http://www.w3.org/1999/xhtml\" element=\"rabbit\"/>\n\t<r1:ThirdField>3rd field</r1:ThirdField>\n</r1:ElementContainingXhtml_1>\n\n";
+    f_encDecTest_ElementContainingXhtml_1(vl_pdu,vl_expectedEncodedPdu, vl_pdu);
+  }//tc_
+
+}//complexTypes
+
+//=========================================================================
+//   group Elements
+//=========================================================================
+group Elements{
+
+    //Passed
+  testcase tc_element_anyType_converter() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_element_anyType.xsd","",c_shell_successWithoutWarningAndError)
+
+     if(getverdict==pass) {
+       f_compareFiles(
+        "www_XmlTest_org_element_anyType_e.ttcn","www_XmlTest_org_element_anyType.ttcn", c_numOfDiff_headerAndModuleName);
+     }
+  }//tc_
+
+  //Passed TR: Hl29679
+  testcase tc_element_anyType_empty_encDec() runs on xmlTest_CT {
+    var Anything1 vl_pdu:= { attr:={},elem_list:={}};
+    var charstring vl_expectedEncodedPdu:="<ns31:anything1 xmlns:ns31='www.XmlTest.org/element_anyType'/>\n\n"
+    f_encDecTest_Anything1(vl_pdu, vl_expectedEncodedPdu,vl_pdu);
+  }//tc_
+
+  //Passed
+  testcase tc_element_anyType_attrOnly_encDec() runs on xmlTest_CT {
+    var Anything1 vl_pdu:= { attr:={"name=\"First\""},elem_list:={}};
+    var charstring vl_expectedEncodedPdu:=
+    "<ns31:anything1 xmlns:ns31='www.XmlTest.org/element_anyType' name=\"First\"/>\n\n";
+    f_encDecTest_Anything1(vl_pdu,vl_expectedEncodedPdu,vl_pdu);
+  }//tc_
+
+  testcase tc_element_anyType_2attrOnly_encDec() runs on xmlTest_CT {
+    var Anything1 vl_pdu:= { attr:={"name=\"Hunor\"","nationality=\"HU\""},elem_list:={}};
+    var charstring vl_expectedEncodedPdu:=
+    "<ns31:anything1 xmlns:ns31='www.XmlTest.org/element_anyType' name=\"Hunor\" nationality=\"HU\"/>\n\n";
+    f_encDecTest_Anything1(vl_pdu,vl_expectedEncodedPdu,vl_pdu);
+  }//tc_
+
+  //Passed, TR: HL29711
+  testcase tc_element_anyType_elemOnly_encDec() runs on xmlTest_CT {
+    var Anything1 vl_pdu:= { attr:={ }, elem_list:={"<MyElement1/>", "<MyElement2></MyElement2>"} };
+    var charstring vl_expectedEncodedPdu:=
+      "<ns31:anything1 xmlns:ns31='www.XmlTest.org/element_anyType'>\n\t<MyElement1/>\n\t<MyElement2></MyElement2>\n</ns31:anything1>\n\n"
+    var Anything1 vl_expectedDecodedPdu:= { attr:={ }, elem_list:={"<MyElement1/>", "<MyElement2/>"} };
+    f_encDecTest_Anything1(vl_pdu,vl_expectedEncodedPdu,vl_expectedDecodedPdu);
+  }//tc_
+
+  testcase tc_element_anyType_encDec() runs on xmlTest_CT {
+    var Anything1 vl_pdu:= {
+      attr:={"name=\"Hunor\"","nationality=\"HU\""},
+      elem_list:={"<MyElement1/>", "<MyElement2></MyElement2>"} };
+    var charstring vl_expectedEncodedPdu:=
+      "<ns31:anything1 xmlns:ns31='www.XmlTest.org/element_anyType' name=\"Hunor\" nationality=\"HU\">\n\t<MyElement1/>\n\t<MyElement2></MyElement2>\n</ns31:anything1>\n\n";
+    var Anything1 vl_expectedDecodedPdu:= {
+      attr:={"name=\"Hunor\"","nationality=\"HU\""},
+      elem_list:={"<MyElement1/>", "<MyElement2/>"}
+    };
+    f_encDecTest_Anything1(vl_pdu,vl_expectedEncodedPdu,vl_expectedDecodedPdu);
+  }//tc_
+
+  //===============================================================
+  //  tc_element_anyType_deeper_encDec
+  //===============================================================
+  testcase tc_element_anyType_deeper_encDec() runs on xmlTest_CT {
+    var Anything1 vl_pdu:= {
+      attr:={"name=\"Hunor\"","nationality=\"HU\""},
+      elem_list:={"<MyElement1>\n\t<Level2>\n\t<Level3_1>Great</Level3_1>\n\t<Level3_2>Britain</Level3_2>\n\t</Level2>\n</MyElement1>", "<MyElement2><Level2>Goddag</Level2>\n</MyElement2>"} };
+
+    var charstring vl_expectedEncodedPdu:=
+      "<ns31:anything1 xmlns:ns31='www.XmlTest.org/element_anyType' name=\"Hunor\" nationality=\"HU\">\n\t<MyElement1>\n\t<Level2>\n\t<Level3_1>Great</Level3_1>\n\t<Level3_2>Britain</Level3_2>\n\t</Level2>\n</MyElement1>\n\t<MyElement2><Level2>Goddag</Level2>\n</MyElement2>\n</ns31:anything1>\n\n"
+      f_encDecTest_Anything1(vl_pdu,vl_expectedEncodedPdu,vl_pdu);
+  }//tc_
+
+
+  type record of charstring charstringList;
+
+  //===============================================================
+  // tc_element_anyType_longer_encDec
+  //===============================================================
+  testcase tc_element_anyType_longer_encDec() runs on xmlTest_CT {
+    var charstringList vl_elementList:= {
+        "<MyElement1>\n\t<Level2>\n\t<Level3_1>Great</Level3_1>\n\t<Level3_2>Britain</Level3_2>\n\t</Level2>\n</MyElement1>",
+        "<MyElement2><Level2>Goddag</Level2>\n</MyElement2>",
+        "<MyElement3><Level2>Goddag</Level2>\n</MyElement3>",
+        "<MyElement4><Level2>Goddag</Level2>\n</MyElement4>"
+    };
+    var Anything1 vl_pdu:= {
+      attr:={
+        "name=\"Hunor\"",
+        "nationality=\"HU\""
+      },
+      elem_list:={ }
+    };
+
+    var charstring vl_expectedEncodedPdu:=
+      "<ns31:anything1 xmlns:ns31='www.XmlTest.org/element_anyType' name=\"Hunor\" nationality=\"HU\">\n";
+
+    for(var integer i:=0;i<sizeof(vl_elementList);i:=i+1){
+      vl_pdu.elem_list[i]:=vl_elementList[i];
+      vl_expectedEncodedPdu:=vl_expectedEncodedPdu & "\t" & vl_elementList[i] & "\n";
+    }
+    vl_expectedEncodedPdu:=vl_expectedEncodedPdu & "</ns31:anything1>\n\n"
+
+    f_encDecTest_Anything1(vl_pdu,vl_expectedEncodedPdu,vl_pdu);
+  }//tc_
+
+
+  //===============================================================
+  //  tc_element_recOfElements_converter
+  //===============================================================
+  //Passed: TR: HL27438, Old name:tc_element_recOfElements_defaultAttr_converter
+  testcase tc_element_recOfElements_converter() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_element_recordOfElements.xsd","",c_shell_successWithoutWarningAndError)
+
+     if(getverdict==pass) {
+       f_compareFiles(
+        "www_XmlTest_org_element_recordOfElements_e.ttcn","www_XmlTest_org_element_recordOfElements.ttcn", c_numOfDiff_headerModNameAndNamespace);
+     }
+  }//tc_
+
+  //Passed, old name: tc_element_recOfElements
+  testcase tc_element_recOfElements_encDec() runs on xmlTest_CT {
+      f_encDecTest_PersonInfo1();
+      f_encDecTest_PersonInfo2();
+      f_encDecTest_PersonInfo2_omitOptionals();
+//      }
+  }//tc_
+
+  //Passed, TR HL27452
+  testcase tc_element_recOfElements_defaultAttr_encDec() runs on xmlTest_CT {
+      f_encDecTest_PersonInfo2_defaultAttribute();
+  }//tc_
+
+  //Passed: TR:27484
+  testcase tc_element_recOfElements_defaultElement() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_element_recordOfElements.xsd","",c_shell_successWithoutWarningAndError)
+
+     if(getverdict==pass) {
+       f_compareFiles(
+        "www_XmlTest_org_element_recordOfElements_e.ttcn","www_XmlTest_org_element_recordOfElements.ttcn", c_numOfDiff_headerModNameAndNamespace);
+      f_encDecTest_PersonInfo1_defaultElement();
+     }
+  }//tc_
+
+  //Passed
+  testcase tc_element_recOfElements_minMaxOccurs() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_element_recordOfElements4.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_element_recordOfElements4_e.ttcn","www_XmlTest_org_element_recordOfElements4.ttcn", c_numOfDiff_headerModNameAndNamespace);
+      f_encDecTest_PersonInfo4();
+    }
+  }//tc_
+
+   //Passed, TR:HL28010
+   testcase tc_element_recOfElements_maxOccursInfinity_converter() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_element_recordOfElements3.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_element_recordOfElements3_e.ttcn","www_XmlTest_org_element_recordOfElements3.ttcn", c_numOfDiff_headerModNameAndNamespace);
+    }
+
+  }//tc_
+
+  //Passed, TR: HL28024
+  testcase tc_element_recOfElements_maxOccursInfinity_encoderDecoder() runs on xmlTest_CT {
+
+    f_encDecTest_PersonInfo3();
+  }//tc_
+
+  testcase tc_element_recOfElements_anonymousType_conv() runs on xmlTest_CT {
+
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_element_recordOfElements5.xsd","",c_shell_successWithoutWarningAndError)
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "www_XmlTest_org_element_recordOfElements5_e.ttcn","www_XmlTest_org_element_recordOfElements5.ttcn", c_numOfDiff_headerModNameAndNamespace);
+    }
+
+  }//tc_
+
+  testcase tc_element_recOfElements_anonymousType_encDec() runs on xmlTest_CT {
+   f_encDecTest_PersonInfo5();
+  }//tc_
+
+
+  //========================================================
+  // tc_element_nameInheritance_conv
+  // Checks if name of named (aliased) type is not inherited
+  //========================================================
+  testcase tc_element_nameInheritance_conv() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_element_nameInheritance.xsd","",c_shell_successWithoutWarningAndError);
+  }//tc_
+
+  //========================================
+  // tc_element_nameInheritance_encDec
+  // Checks if name of named (aliased) type is not inherited
+  //========================================
+  //TR HL49978
+  testcase tc_element_nameInheritance_encDec() runs on xmlTest_CT {
+    f_encDecTest_nameInheritance();
+  }//tc_
+
+  //========================================
+  // tc_element_Tgc_encDec
+  // Checks if name of named (aliased) type is not inherited
+  //========================================
+  //TR HL49978
+  testcase tc_element_Tgc_encDec() runs on xmlTest_CT {
+    f_encDecTest_Tgc();
+  }//tc_
+
+  //"Abstract" and "substitutionGroup" are not supported. Therefore converter sends WARNINGs
+  testcase tc_element_abstract_conv() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn XmlTest_element_abstract.xsd","",c_shell_successWithWarning);
+  }//tc_
+
+  testcase tc_element_nillable_converter() runs on xmlTest_CT {
+    f_shellCommandWithVerdict("xsd2ttcn -z XmlTest_imsike.xsd","",c_shell_successWithoutWarningAndError );
+
+    if(getverdict==pass) {
+      f_compareFiles(
+        "XmlTest_imsike_e.ttcn","XmlTest_imsike.ttcn", c_numOfDiff_headerAndModuleName);
+    }
+  }//tc_
+
+  //IndividualTrigger, nile="false"
+  testcase tc_element_nillable_IndividualTrigger_nilFalse_encDec() runs on xmlTest_CT {
+    f_encDecTest_IndividualTrigger1();
+  }//tc_
+
+  //IndividualTrigger, nil="true"
+  testcase tc_element_nillable_IndividualTrigger_nilTrue_encDec() runs on xmlTest_CT {
+    f_encDecTest_IndividualTrigger2(); //empty record
+  }//tc_
+
+  //Isp, nil="false"
+  testcase tc_element_nillable_Isp_nilFalse_encDec() runs on xmlTest_CT {
+    f_encDecTest_Isp1();
+  }//tc_
+
+  //Isp, nil="true"
+  testcase tc_element_nillable_Isp_nilTrue_encDec() runs on xmlTest_CT {
+    f_encDecTest_Isp2();
+  }//tc_
+
+  //RemarkNillable, nil="false"
+  testcase tc_element_nillable_RemarkNillable_nilFalse_encDec() runs on xmlTest_CT {
+    f_encDecTest_RemarkNillable1();
+  }//tc_
+
+  //RemarkNillable, nil="true"
+  testcase tc_element_nillable_RemarkNillable_nilTrue_encDec() runs on xmlTest_CT {
+    f_encDecTest_RemarkNillable2();
+  }//tc_
+
+}//Element
+
+//=========================================================================
+// Control
+//=========================================================================
+
+control {
+  execute(tc_versionTest());//Passed
+  execute(tc_xsd2ttcn_versionTest());//Passed
+  //====My tcs====
+  execute(tc_firstTrial());//Passed
+  execute(tc_secondTrial());//Passed
+  execute(tc_empty()); //Passed, TR:
+  //appended to increase coverage:
+
+  execute(tc_annotation());
+  execute(tc_annotation1());
+  execute(tc_annotation2());
+  //option tests:
+  execute(tc_version());
+  execute(tc_options_c());
+  execute(tc_options_e());
+  execute(tc_options_f());
+  execute(tc_options_p());
+  execute(tc_options_s());
+  execute(tc_options_t());
+  execute(tc_options_v());
+  execute(tc_options_V());
+  execute(tc_options_w());
+  execute(tc_options_x());
+  execute(tc_options_wrong());
+  execute(tc_options_missing());
+  //===LABEL and DEFINITION - unknown but used tags
+
+  //===ttcn standard===
+  execute(tc_XmlTest_all());//Passed
+  execute(tc_XmlTest_any_anyAttribute());//Passed
+  execute(tc_XmlTest_HQ73011());//Passed
+  execute(tc_XmlTest_attributeGroup());//Passed
+  execute(tc_XmlTest_attribute_use_noTNS());//Passed
+
+  //===W3C standard===
+
+  //===String===
+  execute(tc_string()); //passed
+  execute(tc_string_withWhitespace());//Check it once again if encoder or decoder transform "content" !!!
+  execute(tc_string_withEnum());//Passed, TR: HL26227
+  execute(tc_string_withPosLength());//TR: HL21257,
+  execute(tc_string_withEmptyLength()); //TR: HL20441, Solved
+  execute(tc_string_withNegativeLength());//Passed
+  execute(tc_string_withFixedLength());  //Passed
+  execute(tc_string_withFloatLength()); //passed ???
+  execute(tc_string_withPosMinLength()); //Passed, TR: HL21690
+  execute(tc_string_withEmptyMin());//Passed
+  execute(tc_string_withNegativeMin());//Passed
+  execute(tc_string_withPosMax())//Passed
+  execute(tc_string_withEmptyMax());//Passed
+  execute(tc_string_withNegativeMax());//Passed
+  execute(tc_string_withFaultyMinMaxLength());//Passed, TR: TODO
+  execute(tc_string_withOverDefinition()); //TR: HL25948, Solved
+  execute(tc_string_withTypeAndBase());//Passed
+  //===Boolean===
+  execute(tc_boolean());//Passed
+  //===Decimal===
+  execute(tc_decimal());//Passed
+  //execute(tc_decimal_withLength()); length not supported
+  execute(tc_decimal_withMinMaxInclusive());//TR: HL20715
+  execute(tc_decimal_withMinMaxExclusive());//Passed TR: HL21166 -solved
+  execute(tc_decimal_withEnum());           //Passed,TR HL21196 -solved
+  //===Integer===
+  execute(tc_integer());//Passed
+  execute(tc_integer_empty1());//Passed
+  execute(tc_integer_withEnum());   //Passed, TR:HL21694 -solved
+  execute(tc_integer_withMinIncl());//Passed
+  execute(tc_integer_withMaxIncl());//Passed
+  execute(tc_integer_withMinExcl());//Passed
+  execute(tc_integer_withMaxExcl());//Passed
+  //===Time===
+  execute(tc_time());//passed
+  execute(tc_time_withEnum());//Passed TR HL22058
+  //==list===
+  execute(tc_list_conv()); //Passed
+  execute(tc_list_encDec());//Passed
+  execute(tc_integerList());//Passed
+
+  //===simpleType enum====
+  execute(tc_simpleType_enum());//Passed
+  //===union===
+  execute(tc_union());//TR:HL23577
+  execute(tc_union_optional());//CR_TR18883
+  //===complex===
+  execute(tc_complex1()); //Passed
+  execute(tc_complex2());//TR: HL24977
+  execute(tc_complex_simpleContent());
+  execute(tc_complex_mixed_conv()); //Passed
+  execute(tc_complex_mixed_encDec()); //TR:HL29258 - Rejected. Reason: Not supported feature, TODO:Write CR!!
+
+  execute(tc_complex_choice_converter());//Passed
+  execute(tc_complex_choice_encDec());//Passed
+
+  execute(tc_complex_all_converter());//Passed
+  execute(tc_complex_all_emptySet_encDec());//Passed
+  execute(tc_complex_all_fullSet_encDec());//Passed
+  execute(tc_complex_all_subSet_encDec());//Passed
+  execute(tc_complex_all_inconsistentSet_encDec());//Passed
+  execute(tc_complex_all_noOptional_pos_encDec()); //Passed
+  execute(tc_complex_all_noOptional_neg1_encDec());  //Error,  TR: HL32978
+  execute(tc_complex_all_noOptional_neg2_encDec());  //Failed, TR: HL32978
+  execute(tc_complex_all_noOptional_neg3_encDec());  //Failed, TR: HL32978
+  execute(tc_complex_all_noOptional_empty_encDec()); //Failed, TR: HL32978
+  execute(tc_complex_minOccursMaxOccurs());  //Passed, TR (ethgry): HL10386
+  execute(tc_complex_extension_converter()); //TR HL32505
+  execute(tc_complex_extension_encDec());    //Passed
+  execute(tc_complex_restriction_converter()); //Failed, TR HL32896
+
+
+
+
+//  execute(tc_complex_restriction_encDec());
+
+
+
+
+  execute(tc_complex_restriction_neg1_converter());//TR: HL32948
+  execute(tc_complex_restriction_neg2_converter());//TR: HL32948
+  execute(tc_complex_unique_converter());
+  execute(tc_complex_include_converter());
+  execute(tc_complex_include_neg1_converter());
+  execute(tc_complex_import_pos1_converter());
+  execute(tc_complex_import_pos2_converter());
+  execute(tc_complex_import_neg1_converter());
+  execute(tc_complex_import_withSL_converter());//SchemaLocation
+  //execute(tc_complex_import_withSL_encDec());
+  execute(tc_complex_import_nameCollision_converter());
+  execute(tc_complex_import_nameCollision2_converter());
+  execute(tc_complex_any_pos_converter());
+  execute(tc_complex_any_pos1_encDec()); //Failed, TR: HL37887
+  execute(tc_complex_any_pos2_encDec());
+  execute(tc_complex_any_pos3_encDec());//failed, TR:
+  //===element===
+  execute(tc_element_anyType_converter());//Passed
+  execute(tc_element_anyType_empty_encDec());//Passed TR: HL29679
+  execute(tc_element_anyType_attrOnly_encDec());//Passed
+  execute(tc_element_anyType_2attrOnly_encDec());//Passed
+  execute(tc_element_anyType_elemOnly_encDec());//Passed, TR: HL29711
+  execute(tc_element_anyType_encDec());//Passed, HL29711
+  execute(tc_element_anyType_deeper_encDec());
+  execute(tc_element_anyType_longer_encDec());
+  execute(tc_element_recOfElements_converter()); //Passed: TR: HL27438
+  execute(tc_element_recOfElements_encDec());//Passed
+  execute(tc_element_recOfElements_defaultAttr_encDec());//Passed, TR HL27452
+  execute(tc_element_recOfElements_defaultElement());//Passed: TR:27484
+  execute(tc_element_recOfElements_maxOccursInfinity_converter());//Passed, TR:HL28010
+  execute(tc_element_recOfElements_maxOccursInfinity_encoderDecoder());//Passed, TR: HL2802
+  execute(tc_element_recOfElements_anonymousType_conv());
+  execute(tc_element_recOfElements_anonymousType_encDec());
+
+  execute(tc_element_nameInheritance_conv());
+  execute(tc_element_nameInheritance_encDec());//TR HL49978
+  execute(tc_element_Tgc_encDec());//TR HL49978
+  execute(tc_element_abstract_conv()); //Not supported features
+  execute(tc_element_nillable_converter());
+  execute(tc_element_nillable_IndividualTrigger_nilFalse_encDec());
+  execute(tc_element_nillable_IndividualTrigger_nilTrue_encDec());
+  execute(tc_element_nillable_Isp_nilFalse_encDec());
+  execute(tc_element_nillable_Isp_nilTrue_encDec());
+  execute(tc_element_nillable_RemarkNillable_nilFalse_encDec());
+  execute(tc_element_nillable_RemarkNillable_nilTrue_encDec());
+}
+
+} with {
+  extension "version R1A02"; // a prerelease version
+  extension "requiresTITAN R1C01";
+} // end of module

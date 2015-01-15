@@ -1,0 +1,326 @@
+/******************************************************************************
+ * Copyright (c) 2000-2014 Ericsson Telecom AB
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
+module TtemplateOctetstr {
+type component templateOctetstr_mycomp {};
+type record templateOctetstr_rec {
+ octetstring x1,
+ octetstring x2,
+ octetstring x3 optional };
+template templateOctetstr_rec templateOctetstr_tSpec :={ //specific values
+ x1:='00AA'O,
+ x2:='01AA'O,
+ x3:='10AA'O };
+template templateOctetstr_rec templateOctetstr_tList :={ //specific value and value list
+ x1:='00AA'O,
+ x2:=('01AA'O,'01AB'O,'11AC'O),
+ x3:='10AA'O };
+template templateOctetstr_rec templateOctetstr_tComp :={ //specific value and compl. list
+ x1:='00AA'O,
+ x2:=complement ('11'O,'0A'O,'1BC0'O),
+ x3:='10AA'O };
+template templateOctetstr_rec templateOctetstr_tOmit :={ //omitting values
+ x1:='00AA'O,
+ x2:='01AA'O,
+ x3:=omit } ;
+template templateOctetstr_rec templateOctetstr_tAny :={ //specific and any value
+ x1:='00AA'O,
+ x2:='01AA'O,
+ x3:=? } ;
+template templateOctetstr_rec templateOctetstr_tAnyorNone :={ //specific and AnyorNone value
+ x1:='00AA'O,
+ x2:='01AA'O,
+ x3:=* };
+template templateOctetstr_rec templateOctetstr_tLength1 :={ //specific value and fix length
+ x1:='00AA'O,
+ x2:='01AA'O,
+ x3:=* length(3) };
+template templateOctetstr_rec templateOctetstr_tLength2 :={ //specific value and length (range)
+ x1:='00AA'O,
+ x2:='01AA'O,
+ x3:=? length(2..4) };
+template templateOctetstr_rec templateOctetstr_tLength3 :={ //specific value and length (range, infinity)
+ x1:='00AA'O,
+ x2:='01AA'O,
+ x3:=? length(2..infinity) };
+template templateOctetstr_rec templateOctetstr_tIfpresent :={ //specific value and ifpresent
+ x1:='00AA'O,
+ x2:='01AA'O,
+ x3:='10AA'O ifpresent };
+template templateOctetstr_rec templateOctetstr_tLengthIfp :={ //specific value and length (range) and IfPresent
+ x1:='00AA'O,
+ x2:='01AA'O,
+ x3:=? length(2..4) ifpresent};
+template templateOctetstr_rec templateOctetstr_tAnyEl :={ //specific value and any element inside value
+ x1:='00AA'O,
+ x2:='01AA'O,
+ x3:='10?'O } ;
+template templateOctetstr_rec templateOctetstr_tAnyorNoneEl :={ //specific value and Any number of elements or none inside value
+ x1:='00AA'O,
+ x2:='01AA'O,
+ x3:='10*'O };
+
+testcase templateOctetstrSpec() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2;		//specific value
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:='10AA'O };
+x2:={ x1:='00BC'O,  x2:='01AA'O,  x3:='10AA'O };
+//match
+if (match(x1,templateOctetstr_tSpec)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match
+if (not(match(x2,templateOctetstr_tSpec))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateOctetstrList() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2,x3;		//value list
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:='10AA'O };
+x2:={ x1:='00AA'O,  x2:='00'O,  x3:='10AA'O };
+x3:={ x1:='1D'O,  x2:='01AA'O,  x3:='10AA'O };
+//match
+if (match(x1,templateOctetstr_tList)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: out of list
+if (not(match(x2,templateOctetstr_tList))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateOctetstr_tList))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateOctetstrComp() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2,x3;		//complemented list
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:='10AA'O };
+x2:={ x1:='00AA'O,  x2:='0A'O,  x3:='10AA'O };
+x3:={ x1:='11AA'O,  x2:='01AA'O,  x3:='10AA'O };
+//match
+if (match(x1,templateOctetstr_tComp)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: in the list
+if (not(match(x2,templateOctetstr_tComp))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateOctetstr_tComp))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateOctetstrOmit() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2,x3;		//omitting value
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:=omit };
+x2:={ x1:='00AA'O,  x2:='01AA'O,  x3:='AB'O };
+x3:={ x1:='00DE'O,  x2:='01AA'O,  x3:=omit };
+//match
+if (match(x1,templateOctetstr_tOmit)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: not omitted
+if (not(match(x2,templateOctetstr_tOmit))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateOctetstr_tOmit))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateOctetstrAny() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2,x3;		//any value
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:='ABCD'O };
+x2:={ x1:='00AA'O,  x2:='01AA'O,  x3:=omit };
+x3:={ x1:='0A'O,  x2:='01AA'O,  x3:='ABCD'O };
+//match
+if (match(x1,templateOctetstr_tAny)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: field omitted
+if (not(match(x2,templateOctetstr_tAny))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateOctetstr_tAny))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateOctetstrAnyorNone() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2,x3;		//AnyorNone value
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:=omit };
+x2:={ x1:='00AA'O,  x2:='01AA'O,  x3:='10AB'O };
+x3:={ x1:='1C'O,  x2:='01AA'O,  x3:=omit };
+//match: omitted
+if (match(x1,templateOctetstr_tAnyorNone)) {setverdict(pass);}
+ else {setverdict(fail);}
+//match: value
+if (match(x2,templateOctetstr_tAnyorNone)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateOctetstr_tAnyorNone))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateOctetstrLength1() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2,x3,x4;		//length(fix)
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:='11AABC'O };
+x2:={ x1:='00AA'O,  x2:='01AA'O,  x3:=omit };
+x3:={ x1:='00AA'O,  x2:='01AA'O,  x3:='1D'O };
+x4:={ x1:='001A'O,  x2:='01AA'O,  x3:='11AABB'O };
+//match: proper length
+if (match(x1,templateOctetstr_tLength1)) {setverdict(pass);}
+ else {setverdict(fail);}
+//match: omitted
+if (match(x2,templateOctetstr_tLength1)) {setverdict(pass);}
+ else {setverdict(fail);}
+// no match: not proper length
+if (not(match(x3,templateOctetstr_tLength1))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x4,templateOctetstr_tLength1))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateOctetstrLength2() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2,x3;		//length (range)
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:='11AABB'O };
+x2:={ x1:='00AA'O,  x2:='01AA'O,  x3:='1C'O };
+x3:={ x1:='001A'O,  x2:='01AA'O,  x3:='11AABB'O };
+//match
+if (match(x1,templateOctetstr_tLength2)) {setverdict(pass);}
+ else {setverdict(fail);}
+// no match: not proper length
+if (not(match(x2,templateOctetstr_tLength2))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateOctetstr_tLength2))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateOctetstrLength3() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2,x3;		//length (range, infinity)
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:='11AABB'O };
+x2:={ x1:='00AA'O,  x2:='01AA'O,  x3:='1C'O };
+x3:={ x1:='001A'O,  x2:='01AA'O,  x3:='11AABB'O };
+//match
+if (match(x1,templateOctetstr_tLength3)) {setverdict(pass);}
+ else {setverdict(fail);}
+// no match: not proper length
+if (not(match(x2,templateOctetstr_tLength3))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateOctetstr_tLength3))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateOctetstrIfpresent() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2,x3,x4;		//ifpresent
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:='10AA'O };
+x2:={ x1:='00AA'O,  x2:='01AA'O,  x3:=omit };
+x3:={ x1:='00AA'O,  x2:='01AA'O,  x3:='00AA'O };
+x4:={ x1:='00'O,  x2:='01AA'O,  x3:=omit };
+//match: present and match
+if (match(x1,templateOctetstr_tIfpresent)) {setverdict(pass);}
+ else {setverdict(fail);}
+//match: not present
+if (match(x2,templateOctetstr_tIfpresent)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: present and not match
+if (not(match(x3,templateOctetstr_tIfpresent))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x4,templateOctetstr_tIfpresent))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateOctetstrLengthIfp() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2,x3,x4;	      //length(fix), ifpresent
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:='11AABC'O };
+x2:={ x1:='00AA'O,  x2:='01AA'O,  x3:=omit };
+x3:={ x1:='00AA'O,  x2:='01AA'O,  x3:='1D'O };
+x4:={ x1:='001A'O,  x2:='01AA'O,  x3:='11AABB'O };
+//match: proper length
+if (match(x1,templateOctetstr_tLengthIfp)) {setverdict(pass);}
+ else {setverdict(fail);}
+//match: omitted
+if (match(x2,templateOctetstr_tLengthIfp)) {setverdict(pass);}
+ else {setverdict(fail);}
+// no match: not proper length
+if (not(match(x3,templateOctetstr_tLengthIfp))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x4,templateOctetstr_tLengthIfp))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateOctetstrAnyEl() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2,x3,x4,x5;	      //any element
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:='10AA'O };
+x2:={ x1:='00AA'O,  x2:='01AA'O,  x3:='10'O };
+x3:={ x1:='00AA'O,  x2:='01AA'O,  x3:='10AABB'O };
+x4:={ x1:='00AA'O,  x2:='01AA'O,  x3:='1BAA'O };
+x5:={ x1:='0A'O,  x2:='01AA'O,  x3:='10AA'O };
+//match
+if (match(x1,templateOctetstr_tAnyEl)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: no element
+if (not(match(x2,templateOctetstr_tAnyEl))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: two element
+if (not(match(x3,templateOctetstr_tAnyEl))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: wrong element
+if (not(match(x4,templateOctetstr_tAnyEl))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x5,templateOctetstr_tAnyEl))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateOctetstrAnyorNoneEl() runs on templateOctetstr_mycomp {
+var templateOctetstr_rec x1,x2,x3,x4,x5;	      //Any numb. of elements or none
+x1:={ x1:='00AA'O,  x2:='01AA'O,  x3:='10'O };
+x2:={ x1:='00AA'O,  x2:='01AA'O,  x3:='10AA'O };
+x3:={ x1:='00AA'O,  x2:='01AA'O,  x3:='10AABB'O };
+x4:={ x1:='00AA'O,  x2:='01AA'O,  x3:='11AA'O };
+x5:={ x1:='1A'O,  x2:='01AA'O,  x3:='10AA'O };
+//match: no element
+if (match(x1,templateOctetstr_tAnyorNoneEl)) {setverdict(pass);}
+ else {setverdict(fail);}
+//match: one element
+if (match(x2,templateOctetstr_tAnyorNoneEl)) {setverdict(pass);}
+ else {setverdict(fail);}
+//match: two element
+if (match(x3,templateOctetstr_tAnyorNoneEl)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: wrong element
+if (not(match(x4,templateOctetstr_tAnyorNoneEl))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x5,templateOctetstr_tAnyorNoneEl))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase CR_TR00018474() runs on templateOctetstr_mycomp {
+  // Indexing of string template variables.
+  var template octetstring vto1 := 'ABBAABBA'O
+  var template octetstring vto2 := 'AABB??*'O  // It's a pattern, cannot be indexed.
+  vto1[0] := 'BB'O
+  if (match('BBBAABBA'O, vto1)) { setverdict(pass) } else { setverdict(fail) }
+  vto1[0] := 'BB'O  // Indexed assignment notation cannot be used here.
+  vto1[1] := 'BA'O  // Still works, nothing special.
+  if (match('BBBAABBA'O, vto1)) { setverdict(pass) } else { setverdict(fail) }
+}
+
+control {
+ execute(templateOctetstrSpec());
+ execute(templateOctetstrList());
+ execute(templateOctetstrComp());
+ execute(templateOctetstrOmit());
+ execute(templateOctetstrAny());
+ execute(templateOctetstrAnyorNone());
+ execute(templateOctetstrLength1());
+ execute(templateOctetstrLength2());
+ execute(templateOctetstrLength3());
+ execute(templateOctetstrIfpresent());
+ execute(templateOctetstrLengthIfp());
+ execute(templateOctetstrAnyEl());
+ execute(templateOctetstrAnyorNoneEl());
+ execute(CR_TR00018474());
+}
+}

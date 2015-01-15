@@ -1,0 +1,5 @@
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:55 Last line before the DTE
+ERROR_UNQUALIFIED EmergencyLoggingTest.ttcn:56 Dynamic test case error: Assignment of an unbound integer value.
+VERDICTOP_SETVERDICT EmergencyLoggingTest.ttcn:20 setverdict(pass): none -> pass
+USER_UNQUALIFIED EmergencyLoggingTest.ttcn:21 This line is reached last
+ERROR_UNQUALIFIED EmergencyLoggingTest.ttcn:22 Dynamic test case error: Assignment of an unbound integer value.

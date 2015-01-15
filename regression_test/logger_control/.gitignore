@@ -1,0 +1,9 @@
+compile
+*.d
+TitanLoggerControl.ttcn
+TitanLoggerControl.ttcn.lnk
+TitanLoggerControl.??
+logcontrol.??
+logcontrol
+logcontrol.exe
+*.log

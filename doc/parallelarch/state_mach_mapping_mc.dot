@@ -1,0 +1,48 @@
+///////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2000-2014 Ericsson Telecom AB
+// All rights reserved. This program and the accompanying materials
+// are made available under the terms of the Eclipse Public License v1.0
+// which accompanies this distribution, and is available at
+// http://www.eclipse.org/legal/epl-v10.html
+///////////////////////////////////////////////////////////////////////////////
+/* state machine of port mappings as seen by the MC */
+
+digraph state_mach_mapping_mc {
+  // states
+  node [fontsize=16];
+  // start state (invisible)
+  START [style=invis];
+
+  // durable states
+  node[shape=box,style="filled,rounded"];
+  IDLE;
+  MAPPED;
+
+  // transient states
+  node[shape=box,style=rounded];
+  MAPPING;
+  UNMAPPING;
+
+  // edges
+  edge [fontsize=12];
+  START -> IDLE [arrowtail=odot];
+
+  // state transitions for map() operation
+  IDLE -> MAPPING [label="MAP_REQ/\nMAP"];
+  MAPPING -> MAPPED [label="MAPPED/\nMAP_ACK"];
+  MAPPED -> MAPPED [label="MAP_REQ/\nMAP_ACK"];
+  MAPPING -> MAPPING [label="MAP_REQ/\n-"];
+  UNMAPPING -> UNMAPPING [label="MAP_REQ/\nERROR"];
+
+  // state transitions for unmap() operation
+  MAPPED -> UNMAPPING [label="UNMAP_REQ/\nUNMAP"];
+  UNMAPPING -> IDLE [label="UNMAPPED or\ncomponent terminates/\nUNMAP_ACK"];
+  IDLE -> IDLE [label="UNMAP_REQ/\nUNMAP_ACK"];
+  MAPPING -> MAPPING [label="UNMAP_REQ/\nERROR"];
+  UNMAPPING -> UNMAPPING [label="UNMAP_REQ/\n-"];
+
+  // handling of mapping-related errors
+  edge [fontsize=12,style=dashed];
+  MAPPING -> IDLE [label="component terminates/\n-"];
+  MAPPED -> IDLE [label="UNMAPPED or\ncomponent terminates/\n-"];
+}

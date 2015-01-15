@@ -1,0 +1,450 @@
+###############################################################################
+# Copyright (c) 2000-2014 Ericsson Telecom AB
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+###############################################################################
+Appended logs:
+18:32:33.209653 EXECUTOR_COMPONENT - TTCN-3 Parallel Test Component started on tcclab5. Component reference: 3, component type: Titan_LogTestDefinitions.MTCType2. Version: 1.8.pl5.
+18:32:33.209755 EXECUTOR_LOGOPTIONS - TTCN Logger v2.2 options: TimeStampFormat:=Time; LogEntityName:=No; LogEventTypes:=Subcategories; SourceInfoFormat:=Stack; *.FileMask:=ACTION | DEFAULTOP_DEACTIVATE | DEFAULTOP_EXIT | DEFAULTOP_UNQUALIFIED | ERROR | EXECUTOR | FUNCTION | PARALLEL | TESTCASE | PORTEVENT | STATISTICS | TIMEROP | USER | VERDICTOP | WARNING | MATCHING | DEBUG; *.ConsoleMask:=ERROR | TESTCASE | STATISTICS; LogFileSize:=0; LogFileNumber:=1; DiskFullAction:=Error
+18:32:33.209901 EXECUTOR_RUNTIME - Connected to MC.
+18:32:33.209938 PARALLEL_PTC - Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType2 inside testcase tc_parallel_portconn.
+18:32:33.209973 PORTEVENT_STATE - Port internal_port was started.
+18:32:33.209994 PARALLEL_PTC - Component type Titan_LogTestDefinitions.MTCType2 was initialized.
+18:32:33.268811 PORTEVENT_UNQUALIFIED - Port internal_port is waiting for connection from 4:internal_port on UNIX pathname /tmp/ttcn3-portconn-7902a01d.
+18:32:33.268942 PORTEVENT_UNQUALIFIED - Port internal_port has accepted the connection from 4:internal_port.
+18:32:33.269108 PARALLEL_PTC - Starting function f_behavior(true).
+18:32:33.269155 PORTEVENT_MCSEND Titan_LogTest.ttcn:10 Sent on internal_port to 4 charstring : "This is the sent message"
+18:32:33.269196 TIMEROP_START Titan_LogTest.ttcn:11 Start timer t: 0.5 s
+18:32:33.269420 PORTEVENT_MQUEUE Titan_LogTest.ttcn:12 Message enqueued on internal_port from 4 charstring : "This is the sent message" id 1
+18:32:33.269459 MATCHING_MCUNSUCC Titan_LogTest.ttcn:13 Matching on port internal_port "This is the sent message" with "This" unmatched: First message in the queue does not match the template: 
+18:32:33.269498 MATCHING_MCSUCCESS Titan_LogTest.ttcn:14 Matching on port internal_port succeeded: "This is the sent message" with * matched
+18:32:33.269523 PORTEVENT_MCRECV Titan_LogTest.ttcn:14 Receive operation on port internal_port succeeded, message from 4: charstring : "This is the sent message" id 1
+18:32:33.269546 PORTEVENT_MQUEUE Titan_LogTest.ttcn:14 Message with id 1 was extracted from the queue of internal_port.
+18:32:33.269561 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:14 setverdict(pass): none -> pass
+18:32:33.269582 PARALLEL_PTC - Function f_behavior finished. PTC terminates.
+18:32:33.269598 PARALLEL_PTC - Terminating component type Titan_LogTestDefinitions.MTCType2.
+18:32:33.269611 TIMEROP_STOP - Stop timer t: 0.5 s
+18:32:33.269624 PORTEVENT_UNQUALIFIED - Removing unterminated connection between port internal_port and 4:internal_port.
+18:32:33.269663 PORTEVENT_STATE - Port internal_port was stopped.
+18:32:33.269678 PARALLEL_PTC - Component type Titan_LogTestDefinitions.MTCType2 was shut down inside testcase tc_parallel_portconn.
+18:32:33.269702 VERDICTOP_FINAL - Final verdict of PTC: pass
+18:32:33.269812 EXECUTOR_RUNTIME - Disconnected from MC.
+18:32:33.269829 EXECUTOR_COMPONENT - TTCN-3 Parallel Test Component finished.
+18:32:33.268275 EXECUTOR_COMPONENT - TTCN-3 Parallel Test Component started on tcclab5. Component reference: 4, component type: Titan_LogTestDefinitions.MTCType2. Version: 1.8.pl5.
+18:32:33.268374 EXECUTOR_LOGOPTIONS - TTCN Logger v2.2 options: TimeStampFormat:=Time; LogEntityName:=No; LogEventTypes:=Subcategories; SourceInfoFormat:=Stack; *.FileMask:=ACTION | DEFAULTOP_DEACTIVATE | DEFAULTOP_EXIT | DEFAULTOP_UNQUALIFIED | ERROR | EXECUTOR | FUNCTION | PARALLEL | TESTCASE | PORTEVENT | STATISTICS | TIMEROP | USER | VERDICTOP | WARNING | MATCHING | DEBUG; *.ConsoleMask:=ERROR | TESTCASE | STATISTICS; LogFileSize:=0; LogFileNumber:=1; DiskFullAction:=Error
+18:32:33.268483 EXECUTOR_RUNTIME - Connected to MC.
+18:32:33.268519 PARALLEL_PTC - Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType2 inside testcase tc_parallel_portconn.
+18:32:33.268552 PORTEVENT_STATE - Port internal_port was started.
+18:32:33.268571 PARALLEL_PTC - Component type Titan_LogTestDefinitions.MTCType2 was initialized.
+18:32:33.268877 PORTEVENT_UNQUALIFIED - Port internal_port has established the connection with 3:internal_port using transport type UNIX.
+18:32:33.269265 PORTEVENT_MQUEUE - Message enqueued on internal_port from 3 charstring : "This is the sent message" id 1
+18:32:33.269296 PARALLEL_PTC - Starting function f_behavior(false).
+18:32:33.269335 PORTEVENT_MCSEND Titan_LogTest.ttcn:10 Sent on internal_port to 3 charstring : "This is the sent message"
+18:32:33.269363 TIMEROP_START Titan_LogTest.ttcn:11 Start timer t: 0.5 s
+18:32:33.269747 PORTEVENT_UNQUALIFIED Titan_LogTest.ttcn:12 Connection of port internal_port to 3:internal_port was closed unexpectedly by the peer.
+18:32:33.269768 PORTEVENT_UNQUALIFIED Titan_LogTest.ttcn:12 Port internal_port was disconnected from 3:internal_port.
+18:32:33.773339 TIMEROP_TIMEOUT Titan_LogTest.ttcn:18 Timeout t: 0.5 s
+18:32:33.773369 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:19 setverdict(pass): none -> pass
+18:32:33.773398 PARALLEL_PTC - Function f_behavior finished. PTC terminates.
+18:32:33.773417 PARALLEL_PTC - Terminating component type Titan_LogTestDefinitions.MTCType2.
+18:32:33.773435 PORTEVENT_MQUEUE - Message with id 1 was extracted from the queue of internal_port.
+18:32:33.773455 PORTEVENT_STATE - Port internal_port was stopped.
+18:32:33.773467 PARALLEL_PTC - Component type Titan_LogTestDefinitions.MTCType2 was shut down inside testcase tc_parallel_portconn.
+18:32:33.773495 VERDICTOP_FINAL - Final verdict of PTC: pass
+18:32:33.773548 EXECUTOR_RUNTIME - Disconnected from MC.
+18:32:33.773567 EXECUTOR_COMPONENT - TTCN-3 Parallel Test Component finished.
+18:32:34.009799 EXECUTOR_COMPONENT - TTCN-3 Parallel Test Component started on tcclab5. Component reference: 5, component type: Titan_LogTestDefinitions.MTCTypeExternal. Version: 1.8.pl5.
+18:32:34.009923 EXECUTOR_LOGOPTIONS - TTCN Logger v2.2 options: TimeStampFormat:=Time; LogEntityName:=No; LogEventTypes:=Subcategories; SourceInfoFormat:=Stack; *.FileMask:=ACTION | DEFAULTOP_DEACTIVATE | DEFAULTOP_EXIT | DEFAULTOP_UNQUALIFIED | ERROR | EXECUTOR | FUNCTION | PARALLEL | TESTCASE | PORTEVENT | STATISTICS | TIMEROP | USER | VERDICTOP | WARNING | MATCHING | DEBUG; *.ConsoleMask:=ERROR | TESTCASE | STATISTICS; LogFileSize:=0; LogFileNumber:=1; DiskFullAction:=Error
+18:32:34.010130 EXECUTOR_RUNTIME - Connected to MC.
+18:32:34.010175 PARALLEL_PTC - Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCTypeExternal inside testcase tc_parallel_portmap.
+18:32:34.010223 PORTEVENT_STATE - Port external_port was started.
+18:32:34.010255 PARALLEL_PTC - Component type Titan_LogTestDefinitions.MTCTypeExternal was initialized.
+18:32:34.010353 WARNING_UNQUALIFIED - Warning: This is a Warning in the port
+18:32:34.010376 DEBUG_UNQUALIFIED - This is a TTCN_DEBUG log in the port
+18:32:34.010392 WARNING_UNQUALIFIED - This is a TTCN_WARNING log in the port
+18:32:34.010406 ERROR_UNQUALIFIED - This is a TTCN_ERROR log in the port
+18:32:34.010439 DEBUG_UNQUALIFIED - This is a log_event
+18:32:34.010457 PORTEVENT_UNQUALIFIED - Port external_port was mapped to system:external_port.
+18:32:34.010661 PORTEVENT_UNQUALIFIED - Port external_port was unmapped from system:external_port.
+18:32:34.010841 PARALLEL_PTC - Kill was requested from MC. Terminating idle PTC.
+18:32:34.010860 PARALLEL_PTC - Terminating component type Titan_LogTestDefinitions.MTCTypeExternal.
+18:32:34.010892 PORTEVENT_STATE - Port external_port was stopped.
+18:32:34.010907 PARALLEL_PTC - Component type Titan_LogTestDefinitions.MTCTypeExternal was shut down inside testcase tc_parallel_portmap.
+18:32:34.010939 VERDICTOP_FINAL - Final verdict of PTC: none
+18:32:34.011054 EXECUTOR_RUNTIME - Disconnected from MC.
+18:32:34.011080 EXECUTOR_COMPONENT - TTCN-3 Parallel Test Component finished.
+18:32:34.152014 EXECUTOR_COMPONENT - TTCN-3 Parallel Test Component started on tcclab5. Component reference: 6, component type: Titan_LogTestDefinitions.MTCTypeExternal. Version: 1.8.pl5.
+18:32:34.152106 EXECUTOR_LOGOPTIONS - TTCN Logger v2.2 options: TimeStampFormat:=Time; LogEntityName:=No; LogEventTypes:=Subcategories; SourceInfoFormat:=Stack; *.FileMask:=ACTION | DEFAULTOP_DEACTIVATE | DEFAULTOP_EXIT | DEFAULTOP_UNQUALIFIED | ERROR | EXECUTOR | FUNCTION | PARALLEL | TESTCASE | PORTEVENT | STATISTICS | TIMEROP | USER | VERDICTOP | WARNING | MATCHING | DEBUG; *.ConsoleMask:=ERROR | TESTCASE | STATISTICS; LogFileSize:=0; LogFileNumber:=1; DiskFullAction:=Error
+18:32:34.152289 EXECUTOR_RUNTIME - Connected to MC.
+18:32:34.152327 PARALLEL_PTC - Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCTypeExternal inside testcase tc_portevent.
+18:32:34.152443 PORTEVENT_STATE - Port external_port was started.
+18:32:34.152463 PARALLEL_PTC - Component type Titan_LogTestDefinitions.MTCTypeExternal was initialized.
+18:32:34.152496 WARNING_UNQUALIFIED - Warning: This is a Warning in the port
+18:32:34.152512 DEBUG_UNQUALIFIED - This is a TTCN_DEBUG log in the port
+18:32:34.152523 WARNING_UNQUALIFIED - This is a TTCN_WARNING log in the port
+18:32:34.152534 ERROR_UNQUALIFIED - This is a TTCN_ERROR log in the port
+18:32:34.152559 DEBUG_UNQUALIFIED - This is a log_event
+18:32:34.152572 PORTEVENT_UNQUALIFIED - Port external_port was mapped to system:external_port.
+18:32:34.152877 PARALLEL_PTC - Starting function f_behavior_send_rec().
+18:32:34.152937 PORTEVENT_MMSEND Titan_LogTest.ttcn:26 Sent on external_port to system charstring : "This is the sent message"
+18:32:34.152957 PARALLEL_PTC - Function f_behavior_send_rec finished. PTC terminates.
+18:32:34.152971 PARALLEL_PTC - Terminating component type Titan_LogTestDefinitions.MTCTypeExternal.
+18:32:34.152988 PORTEVENT_UNQUALIFIED - Removing unterminated mapping between port external_port and system:external_port.
+18:32:34.153003 PORTEVENT_UNQUALIFIED - Port external_port was unmapped from system:external_port.
+18:32:34.153032 PORTEVENT_STATE - Port external_port was stopped.
+18:32:34.153047 PARALLEL_PTC - Component type Titan_LogTestDefinitions.MTCTypeExternal was shut down inside testcase tc_portevent.
+18:32:34.153075 VERDICTOP_FINAL - Final verdict of PTC: none
+18:32:34.153756 EXECUTOR_RUNTIME - Disconnected from MC.
+18:32:34.153780 EXECUTOR_COMPONENT - TTCN-3 Parallel Test Component finished.
+18:32:32.464326 EXECUTOR_RUNTIME - TTCN-3 Host Controller started on tcclab5. Version: 1.8.pl5.
+18:32:32.464389 EXECUTOR_LOGOPTIONS - TTCN Logger v2.2 options: TimeStampFormat:=Time; LogEntityName:=No; LogEventTypes:=Subcategories; SourceInfoFormat:=Stack; *.FileMask:=ACTION | DEFAULTOP_DEACTIVATE | DEFAULTOP_EXIT | DEFAULTOP_UNQUALIFIED | ERROR | EXECUTOR | FUNCTION | PARALLEL | TESTCASE | PORTEVENT | STATISTICS | TIMEROP | USER | VERDICTOP | WARNING | MATCHING | DEBUG; *.ConsoleMask:=ERROR | TESTCASE | STATISTICS; LogFileSize:=0; LogFileNumber:=1; DiskFullAction:=Error
+18:32:32.465071 EXECUTOR_UNQUALIFIED - The address of MC was set to tcclab5.tccnet.eth.ericsson.se[172.31.21.9]:0.
+18:32:32.465148 EXECUTOR_UNQUALIFIED - The local IP address of the control connection to MC is 172.31.21.9.
+18:32:32.465171 EXECUTOR_RUNTIME - Connected to MC.
+18:32:32.465191 EXECUTOR_UNQUALIFIED - This host supports UNIX domain sockets for local communication.
+18:32:32.467313 EXECUTOR_CONFIGDATA - Processing configuration data received from MC.
+18:32:32.468163 EXECUTOR_CONFIGDATA - Module Titan_LogTest has the following parameters: { tsp_cfgBoolean := true }
+18:32:32.468187 EXECUTOR_RUNTIME - Initializing module TitanLoggerApi.
+18:32:32.468201 EXECUTOR_RUNTIME - Initialization of module TitanLoggerApi finished.
+18:32:32.468213 EXECUTOR_RUNTIME - Initializing module Titan_LogTest.
+18:32:32.468226 EXECUTOR_RUNTIME Titan_LogTest.ttcn:0 Initializing module Titan_LogTestDefinitions.
+18:32:32.468244 EXECUTOR_RUNTIME Titan_LogTest.ttcn:0 Initialization of module Titan_LogTestDefinitions finished.
+18:32:32.468268 EXECUTOR_RUNTIME - Initialization of module Titan_LogTest finished.
+18:32:32.468307 EXECUTOR_CONFIGDATA - Configuration data was processed successfully.
+18:32:32.468636 EXECUTOR_RUNTIME - MTC was created. Process id: 23951.
+18:32:33.152097 PARALLEL_PTC - PTC was created. Component reference: 3, component type: Titan_LogTestDefinitions.MTCType2, testcase name: tc_parallel_portconn, process id: 23964.
+18:32:33.210233 PARALLEL_PTC - PTC was created. Component reference: 4, component type: Titan_LogTestDefinitions.MTCType2, testcase name: tc_parallel_portconn, process id: 23965.
+18:32:33.953506 PARALLEL_PTC - PTC with component reference 3 finished. Process statistics: { process id: 23964, terminated normally, exit status: 0, user time: 0.000000 s, system time: 0.000000 s, maximum resident set size: 0, integral resident set size: 0, page faults not requiring physical I/O: 397, page faults requiring physical I/O: 0, swaps: 0, block input operations: 0, block output operations 8, messages sent: 0, messages received: 0, signals received: 0, voluntary context switches: 13, involuntary context switches: 0 }
+18:32:33.953556 PARALLEL_PTC - PTC with component reference 4 finished. Process statistics: { process id: 23965, terminated normally, exit status: 0, user time: 0.004000 s, system time: 0.000000 s, maximum resident set size: 0, integral resident set size: 0, page faults not requiring physical I/O: 384, page faults requiring physical I/O: 0, swaps: 0, block input operations: 0, block output operations 8, messages sent: 0, messages received: 0, signals received: 0, voluntary context switches: 14, involuntary context switches: 0 }
+18:32:33.953747 PARALLEL_PTC - PTC was created. Component reference: 5, component type: Titan_LogTestDefinitions.MTCTypeExternal, testcase name: tc_parallel_portmap, process id: 23968.
+18:32:34.095400 PARALLEL_PTC - PTC with component reference 5 finished. Process statistics: { process id: 23968, terminated normally, exit status: 0, user time: 0.000000 s, system time: 0.000000 s, maximum resident set size: 0, integral resident set size: 0, page faults not requiring physical I/O: 360, page faults requiring physical I/O: 0, swaps: 0, block input operations: 0, block output operations 8, messages sent: 0, messages received: 0, signals received: 0, voluntary context switches: 12, involuntary context switches: 0 }
+18:32:34.095604 PARALLEL_PTC - PTC was created. Component reference: 6, component type: Titan_LogTestDefinitions.MTCTypeExternal, testcase name: tc_portevent, process id: 23971.
+18:32:34.930627 PARALLEL_PTC - PTC with component reference 6 finished. Process statistics: { process id: 23971, terminated normally, exit status: 0, user time: 0.000000 s, system time: 0.000000 s, maximum resident set size: 0, integral resident set size: 0, page faults not requiring physical I/O: 368, page faults requiring physical I/O: 0, swaps: 0, block input operations: 0, block output operations 8, messages sent: 0, messages received: 0, signals received: 0, voluntary context switches: 10, involuntary context switches: 7 }
+18:32:34.930687 EXECUTOR_RUNTIME - Exit was requested from MC. Terminating HC.
+18:32:34.930810 EXECUTOR_RUNTIME - Disconnected from MC.
+18:32:34.930829 EXECUTOR_RUNTIME - TTCN-3 Host Controller finished.
+18:32:32.507826 EXECUTOR_COMPONENT - TTCN-3 Main Test Component started on tcclab5. Version: 1.8.pl5.
+18:32:32.507959 EXECUTOR_LOGOPTIONS - TTCN Logger v2.2 options: TimeStampFormat:=Time; LogEntityName:=No; LogEventTypes:=Subcategories; SourceInfoFormat:=Stack; *.FileMask:=ACTION | DEFAULTOP_DEACTIVATE | DEFAULTOP_EXIT | DEFAULTOP_UNQUALIFIED | ERROR | EXECUTOR | FUNCTION | PARALLEL | TESTCASE | PORTEVENT | STATISTICS | TIMEROP | USER | VERDICTOP | WARNING | MATCHING | DEBUG; *.ConsoleMask:=ERROR | TESTCASE | STATISTICS; LogFileSize:=0; LogFileNumber:=1; DiskFullAction:=Error
+18:32:32.508098 EXECUTOR_RUNTIME - Connected to MC.
+18:32:32.508521 PARALLEL_UNQUALIFIED - Executing control part of module Titan_LogTest.
+18:32:32.508585 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:294 Starting external command `echo Titan_LogTest'.
+18:32:32.550870 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:294 External command `echo Titan_LogTest' was executed successfully (exit status: 0).
+18:32:32.550948 STATISTICS_UNQUALIFIED Titan_LogTest.ttcn:294 Execution of control part in module Titan_LogTest started.
+18:32:32.551037 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:47 Starting external command `echo Titan_LogTest.tc_action'.
+18:32:32.592777 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:47 External command `echo Titan_LogTest.tc_action' was executed successfully (exit status: 0).
+18:32:32.592859 TESTCASE_START Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:47 Test case tc_action started.
+18:32:32.592905 PARALLEL_PTC Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:47 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType inside testcase tc_action.
+18:32:32.592945 PORTEVENT_STATE Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:47 Port internal_port was started.
+18:32:32.592970 PORTEVENT_STATE Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:47 Port external_port was started.
+18:32:32.592986 PARALLEL_PTC Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:47 Component type Titan_LogTestDefinitions.MTCType was initialized.
+18:32:32.593006 ACTION_UNQUALIFIED Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:48 Action: This is an action
+18:32:32.593035 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 setverdict(pass): none -> pass
+18:32:32.593067 PARALLEL_PTC Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 Terminating component type Titan_LogTestDefinitions.MTCType.
+18:32:32.593089 PORTEVENT_STATE Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 Port internal_port was stopped.
+18:32:32.593106 PORTEVENT_STATE Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 Port external_port was stopped.
+18:32:32.593122 PARALLEL_PTC Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 Component type Titan_LogTestDefinitions.MTCType was shut down inside testcase tc_action.
+18:32:32.593140 EXECUTOR_RUNTIME Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 Waiting for PTCs to finish.
+18:32:32.593194 VERDICTOP_FINAL Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 Setting final verdict of the test case.
+18:32:32.593216 VERDICTOP_FINAL Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 Local verdict of MTC: pass
+18:32:32.593240 VERDICTOP_FINAL Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 No PTCs were created.
+18:32:32.593256 TESTCASE_FINISH Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 Test case tc_action finished. Verdict: pass
+18:32:32.593288 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 Starting external command `echo Titan_LogTest.tc_action pass'.
+18:32:32.642552 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:296->Titan_LogTest.ttcn:49 External command `echo Titan_LogTest.tc_action pass' was executed successfully (exit status: 0).
+18:32:32.642659 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:53 Starting external command `echo Titan_LogTest.tc_default'.
+18:32:32.692644 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:53 External command `echo Titan_LogTest.tc_default' was executed successfully (exit status: 0).
+18:32:32.692727 TESTCASE_START Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:53 Test case tc_default started.
+18:32:32.692767 PARALLEL_PTC Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:53 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType inside testcase tc_default.
+18:32:32.692790 PORTEVENT_STATE Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:53 Port internal_port was started.
+18:32:32.692807 PORTEVENT_STATE Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:53 Port external_port was started.
+18:32:32.692822 PARALLEL_PTC Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:53 Component type Titan_LogTestDefinitions.MTCType was initialized.
+18:32:32.692845 TIMEROP_START Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:56 Start timer t: 0.1 s
+18:32:32.692885 TIMEROP_START Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:58 Start timer t1: 0.2 s
+18:32:32.792885 TIMEROP_TIMEOUT Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:60->Titan_LogTest.ttcn:37 Timeout t: 0.1 s
+18:32:32.792908 DEFAULTOP_EXIT Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:60 Default with id 1 (altstep as_1) finished. Skipping current alt statement or receiving operation.
+18:32:32.792930 DEFAULTOP_DEACTIVATE Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:64 Default with id 1 (altstep as_1) was deactivated.
+18:32:32.792947 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 setverdict(pass): none -> pass
+18:32:32.792964 PARALLEL_PTC Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 Terminating component type Titan_LogTestDefinitions.MTCType.
+18:32:32.792982 PORTEVENT_STATE Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 Port internal_port was stopped.
+18:32:32.792998 PORTEVENT_STATE Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 Port external_port was stopped.
+18:32:32.793013 PARALLEL_PTC Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 Component type Titan_LogTestDefinitions.MTCType was shut down inside testcase tc_default.
+18:32:32.793031 EXECUTOR_RUNTIME Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 Waiting for PTCs to finish.
+18:32:32.793078 VERDICTOP_FINAL Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 Setting final verdict of the test case.
+18:32:32.793097 VERDICTOP_FINAL Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 Local verdict of MTC: pass
+18:32:32.793113 VERDICTOP_FINAL Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 No PTCs were created.
+18:32:32.793130 TESTCASE_FINISH Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 Test case tc_default finished. Verdict: pass
+18:32:32.793162 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 Starting external command `echo Titan_LogTest.tc_default pass'.
+18:32:32.835559 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:297->Titan_LogTest.ttcn:65 External command `echo Titan_LogTest.tc_default pass' was executed successfully (exit status: 0).
+18:32:32.835672 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:71 Starting external command `echo Titan_LogTest.tc_error1'.
+18:32:32.877267 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:71 External command `echo Titan_LogTest.tc_error1' was executed successfully (exit status: 0).
+18:32:32.877352 TESTCASE_START Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:71 Test case tc_error1 started.
+18:32:32.877385 PARALLEL_PTC Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:71 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType inside testcase tc_error1.
+18:32:32.877408 PORTEVENT_STATE Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:71 Port internal_port was started.
+18:32:32.877424 PORTEVENT_STATE Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:71 Port external_port was started.
+18:32:32.877440 PARALLEL_PTC Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:71 Component type Titan_LogTestDefinitions.MTCType was initialized.
+18:32:32.877458 USER_UNQUALIFIED Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:73 >>>tc_error1: last line before DTE<<<
+18:32:32.877473 ERROR_UNQUALIFIED Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 Titan_LogTest.ttcn:74: Dynamic test case error: Assignment of an unbound integer value. (No such file or directory)
+18:32:32.877539 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 setverdict(error): none -> error
+18:32:32.877563 EXECUTOR_RUNTIME Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 Performing error recovery.
+18:32:32.877708 PARALLEL_PTC Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 Terminating component type Titan_LogTestDefinitions.MTCType.
+18:32:32.877729 PORTEVENT_STATE Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 Port internal_port was stopped.
+18:32:32.877745 PORTEVENT_STATE Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 Port external_port was stopped.
+18:32:32.877760 PARALLEL_PTC Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 Component type Titan_LogTestDefinitions.MTCType was shut down inside testcase tc_error1.
+18:32:32.877778 EXECUTOR_RUNTIME Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 Waiting for PTCs to finish.
+18:32:32.877824 VERDICTOP_FINAL Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 Setting final verdict of the test case.
+18:32:32.877843 VERDICTOP_FINAL Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 Local verdict of MTC: error
+18:32:32.877860 VERDICTOP_FINAL Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 No PTCs were created.
+18:32:32.877876 TESTCASE_FINISH Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 Test case tc_error1 finished. Verdict: error
+18:32:32.877907 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 Starting external command `echo Titan_LogTest.tc_error1 error'.
+18:32:32.927429 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:298->Titan_LogTest.ttcn:74 External command `echo Titan_LogTest.tc_error1 error' was executed successfully (exit status: 0).
+18:32:32.927530 USER_UNQUALIFIED Titan_LogTest.ttcn:299 error
+18:32:32.927574 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:81 Starting external command `echo Titan_LogTest.tc_ex_runtime'.
+18:32:32.969125 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:81 External command `echo Titan_LogTest.tc_ex_runtime' was executed successfully (exit status: 0).
+18:32:32.969205 TESTCASE_START Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:81 Test case tc_ex_runtime started.
+18:32:32.969240 PARALLEL_PTC Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:81 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType inside testcase tc_ex_runtime.
+18:32:32.969262 PORTEVENT_STATE Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:81 Port internal_port was started.
+18:32:32.969279 PORTEVENT_STATE Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:81 Port external_port was started.
+18:32:32.969294 PARALLEL_PTC Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:81 Component type Titan_LogTestDefinitions.MTCType was initialized.
+18:32:32.969311 USER_UNQUALIFIED Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:82 >>tc_ex_runtime
+18:32:32.969326 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 setverdict(none): none -> none, component reason not changed
+18:32:32.969349 PARALLEL_PTC Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 Terminating component type Titan_LogTestDefinitions.MTCType.
+18:32:32.969367 PORTEVENT_STATE Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 Port internal_port was stopped.
+18:32:32.969383 PORTEVENT_STATE Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 Port external_port was stopped.
+18:32:32.969398 PARALLEL_PTC Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 Component type Titan_LogTestDefinitions.MTCType was shut down inside testcase tc_ex_runtime.
+18:32:32.969416 EXECUTOR_RUNTIME Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 Waiting for PTCs to finish.
+18:32:32.969462 VERDICTOP_FINAL Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 Setting final verdict of the test case.
+18:32:32.969480 VERDICTOP_FINAL Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 Local verdict of MTC: none
+18:32:32.969497 VERDICTOP_FINAL Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 No PTCs were created.
+18:32:32.969513 TESTCASE_FINISH Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 Test case tc_ex_runtime finished. Verdict: none
+18:32:32.969544 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 Starting external command `echo Titan_LogTest.tc_ex_runtime none'.
+18:32:33.011152 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:300->Titan_LogTest.ttcn:83 External command `echo Titan_LogTest.tc_ex_runtime none' was executed successfully (exit status: 0).
+18:32:33.011266 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:119 Starting external command `echo Titan_LogTest.tc_function_rnd'.
+18:32:33.053924 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:119 External command `echo Titan_LogTest.tc_function_rnd' was executed successfully (exit status: 0).
+18:32:33.054040 TESTCASE_START Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:119 Test case tc_function_rnd started.
+18:32:33.054157 PARALLEL_PTC Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:119 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType inside testcase tc_function_rnd.
+18:32:33.054253 PORTEVENT_STATE Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:119 Port internal_port was started.
+18:32:33.054274 PORTEVENT_STATE Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:119 Port external_port was started.
+18:32:33.054290 PARALLEL_PTC Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:119 Component type Titan_LogTestDefinitions.MTCType was initialized.
+18:32:33.054324 FUNCTION_RND Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:120 Random number generator was initialized with seed 1.054310: srand48(-530063101).
+18:32:33.054356 FUNCTION_RND Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:120 Function rnd() returned 0.081587.
+18:32:33.054376 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 setverdict(pass): none -> pass
+18:32:33.054397 PARALLEL_PTC Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 Terminating component type Titan_LogTestDefinitions.MTCType.
+18:32:33.054415 PORTEVENT_STATE Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 Port internal_port was stopped.
+18:32:33.054432 PORTEVENT_STATE Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 Port external_port was stopped.
+18:32:33.054448 PARALLEL_PTC Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 Component type Titan_LogTestDefinitions.MTCType was shut down inside testcase tc_function_rnd.
+18:32:33.054466 EXECUTOR_RUNTIME Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 Waiting for PTCs to finish.
+18:32:33.054550 VERDICTOP_FINAL Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 Setting final verdict of the test case.
+18:32:33.054576 VERDICTOP_FINAL Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 Local verdict of MTC: pass
+18:32:33.054600 VERDICTOP_FINAL Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 No PTCs were created.
+18:32:33.054630 TESTCASE_FINISH Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 Test case tc_function_rnd finished. Verdict: pass
+18:32:33.054679 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 Starting external command `echo Titan_LogTest.tc_function_rnd pass'.
+18:32:33.101607 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:301->Titan_LogTest.ttcn:124 External command `echo Titan_LogTest.tc_function_rnd pass' was executed successfully (exit status: 0).
+18:32:33.101761 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:136 Starting external command `echo Titan_LogTest.tc_parallel_portconn'.
+18:32:33.151543 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:136 External command `echo Titan_LogTest.tc_parallel_portconn' was executed successfully (exit status: 0).
+18:32:33.151609 TESTCASE_START Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:136 Test case tc_parallel_portconn started.
+18:32:33.151774 PARALLEL_PTC Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:136 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType inside testcase tc_parallel_portconn.
+18:32:33.151800 PORTEVENT_STATE Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:136 Port internal_port was started.
+18:32:33.151816 PORTEVENT_STATE Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:136 Port external_port was started.
+18:32:33.151832 PARALLEL_PTC Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:136 Component type Titan_LogTestDefinitions.MTCType was initialized.
+18:32:33.151850 PARALLEL_UNQUALIFIED Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:137 Creating new PTC with component type Titan_LogTestDefinitions.MTCType2.
+18:32:33.209964 PARALLEL_PTC Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:137 PTC was created. Component reference: 3, alive: no, type: Titan_LogTestDefinitions.MTCType2.
+18:32:33.209999 PARALLEL_UNQUALIFIED Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:138 Creating new PTC with component type Titan_LogTestDefinitions.MTCType2.
+18:32:33.268548 PARALLEL_PTC Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:138 PTC was created. Component reference: 4, alive: no, type: Titan_LogTestDefinitions.MTCType2.
+18:32:33.268584 USER_UNQUALIFIED Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:139 Creates finished
+18:32:33.268612 PARALLEL_UNQUALIFIED Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:140 Connecting ports 3:internal_port and 4:internal_port.
+18:32:33.268963 PARALLEL_PORTCONN Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:140 Connect operation on 3:internal_port and 4:internal_port finished.
+18:32:33.268998 USER_UNQUALIFIED Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:142 Connect finished
+18:32:33.269019 PARALLEL_PTC Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:143 Starting function f_behavior(true) on component 3.
+18:32:33.269116 PARALLEL_PTC Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:143 Function was started.
+18:32:33.269143 PARALLEL_PTC Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:144 Starting function f_behavior(false) on component 4.
+18:32:33.269224 PARALLEL_PTC Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:144 Function was started.
+18:32:33.269740 PARALLEL_PTC Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:145 PTC with component reference 3 is done.
+18:32:33.773527 PARALLEL_PTC Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:146 PTC with component reference 4 is done.
+18:32:33.773559 USER_UNQUALIFIED Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:147 tc_parallel_portconn done finished
+18:32:33.773581 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 setverdict(pass): none -> pass
+18:32:33.773611 PARALLEL_PTC Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 Terminating component type Titan_LogTestDefinitions.MTCType.
+18:32:33.773637 PORTEVENT_STATE Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 Port internal_port was stopped.
+18:32:33.773655 PORTEVENT_STATE Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 Port external_port was stopped.
+18:32:33.773670 PARALLEL_PTC Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 Component type Titan_LogTestDefinitions.MTCType was shut down inside testcase tc_parallel_portconn.
+18:32:33.773689 EXECUTOR_RUNTIME Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 Waiting for PTCs to finish.
+18:32:33.773774 VERDICTOP_FINAL Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 Setting final verdict of the test case.
+18:32:33.773799 VERDICTOP_FINAL Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 Local verdict of MTC: pass
+18:32:33.773824 VERDICTOP_FINAL Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 Local verdict of PTC with component reference 3: pass (pass -> pass)
+18:32:33.773872 VERDICTOP_FINAL Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 Local verdict of PTC with component reference 4: pass (pass -> pass)
+18:32:33.773897 TESTCASE_FINISH Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 Test case tc_parallel_portconn finished. Verdict: pass
+18:32:33.773947 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 Starting external command `echo Titan_LogTest.tc_parallel_portconn pass'.
+18:32:33.886758 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:302->Titan_LogTest.ttcn:148 External command `echo Titan_LogTest.tc_parallel_portconn pass' was executed successfully (exit status: 0).
+18:32:33.886845 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:152 Starting external command `echo Titan_LogTest.tc_parallel_portmap'.
+18:32:33.953203 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:152 External command `echo Titan_LogTest.tc_parallel_portmap' was executed successfully (exit status: 0).
+18:32:33.953284 TESTCASE_START Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:152 Test case tc_parallel_portmap started.
+18:32:33.953333 PARALLEL_PTC Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:152 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType inside testcase tc_parallel_portmap.
+18:32:33.953363 PORTEVENT_STATE Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:152 Port internal_port was started.
+18:32:33.953381 PORTEVENT_STATE Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:152 Port external_port was started.
+18:32:33.953396 PARALLEL_PTC Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:152 Component type Titan_LogTestDefinitions.MTCType was initialized.
+18:32:33.953417 PARALLEL_UNQUALIFIED Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:153 Creating new PTC with component type Titan_LogTestDefinitions.MTCTypeExternal.
+18:32:34.010211 PARALLEL_PTC Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:153 PTC was created. Component reference: 5, alive: no, type: Titan_LogTestDefinitions.MTCTypeExternal.
+18:32:34.010247 PARALLEL_UNQUALIFIED Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:154 Mapping port 5:external_port to system:external_port.
+18:32:34.010565 PARALLEL_PORTMAP Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:154 Map operation of 5:external_port to system:external_port finished.
+18:32:34.010590 PARALLEL_UNQUALIFIED Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:160 Unmapping port 5:external_port from system:external_port.
+18:32:34.010733 PARALLEL_PORTMAP Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:160 Unmap operation of 5:external_port from system:external_port finished.
+18:32:34.010769 PARALLEL_UNQUALIFIED Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:161 Stopping PTC with component reference 5.
+18:32:34.010974 PARALLEL_PTC Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:161 PTC with component reference 5 was stopped.
+18:32:34.010994 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 setverdict(none): none -> none, component reason not changed
+18:32:34.011021 PARALLEL_PTC Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 Terminating component type Titan_LogTestDefinitions.MTCType.
+18:32:34.011039 PORTEVENT_STATE Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 Port internal_port was stopped.
+18:32:34.011056 PORTEVENT_STATE Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 Port external_port was stopped.
+18:32:34.011074 PARALLEL_PTC Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 Component type Titan_LogTestDefinitions.MTCType was shut down inside testcase tc_parallel_portmap.
+18:32:34.011092 EXECUTOR_RUNTIME Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 Waiting for PTCs to finish.
+18:32:34.011168 VERDICTOP_FINAL Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 Setting final verdict of the test case.
+18:32:34.011192 VERDICTOP_FINAL Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 Local verdict of MTC: none
+18:32:34.011216 VERDICTOP_FINAL Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 Local verdict of PTC with component reference 5: none (none -> none)
+18:32:34.011243 TESTCASE_FINISH Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 Test case tc_parallel_portmap finished. Verdict: none
+18:32:34.011289 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 Starting external command `echo Titan_LogTest.tc_parallel_portmap none'.
+18:32:34.045276 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:303->Titan_LogTest.ttcn:162 External command `echo Titan_LogTest.tc_parallel_portmap none' was executed successfully (exit status: 0).
+18:32:34.045353 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:182 Starting external command `echo Titan_LogTest.tc_portevent'.
+18:32:34.095146 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:182 External command `echo Titan_LogTest.tc_portevent' was executed successfully (exit status: 0).
+18:32:34.095208 TESTCASE_START Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:182 Test case tc_portevent started.
+18:32:34.095242 PARALLEL_PTC Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:182 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCTypeExternal inside testcase tc_portevent.
+18:32:34.095264 PORTEVENT_STATE Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:182 Port external_port was started.
+18:32:34.095281 PARALLEL_PTC Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:182 Component type Titan_LogTestDefinitions.MTCTypeExternal was initialized.
+18:32:34.095303 PARALLEL_UNQUALIFIED Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:185 Creating new PTC with component type Titan_LogTestDefinitions.MTCTypeExternal.
+18:32:34.152360 PARALLEL_PTC Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:185 PTC was created. Component reference: 6, alive: no, type: Titan_LogTestDefinitions.MTCTypeExternal.
+18:32:34.152384 PARALLEL_UNQUALIFIED Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:186 Mapping port 6:external_port to system:external_port.
+18:32:34.152713 PARALLEL_PORTMAP Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:186 Map operation of 6:external_port to system:external_port finished.
+18:32:34.152743 PARALLEL_PTC Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:188 Starting function f_behavior_send_rec() on component 6.
+18:32:34.152828 PARALLEL_PTC Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:188 Function was started.
+18:32:34.153122 PARALLEL_PTC Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:189 PTC with component reference 6 is done.
+18:32:34.153141 PARALLEL_UNQUALIFIED Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:190 Unmapping port 6:external_port from system:external_port.
+18:32:34.153203 PARALLEL_PORTMAP Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:190 Unmap operation of 6:external_port from system:external_port finished.
+18:32:34.153225 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:191 setverdict(none): none -> none, component reason not changed
+18:32:34.153243 PARALLEL_PTC Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:191 Terminating component type Titan_LogTestDefinitions.MTCTypeExternal.
+18:32:34.153260 PORTEVENT_STATE Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:191 Port external_port was stopped.
+18:32:34.153276 PARALLEL_PTC Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:191 Component type Titan_LogTestDefinitions.MTCTypeExternal was shut down inside testcase tc_portevent.
+18:32:34.153294 EXECUTOR_RUNTIME Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:191 Waiting for PTCs to finish.
+18:32:34.153357 VERDICTOP_FINAL Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:191 Setting final verdict of the test case.
+18:32:34.153375 VERDICTOP_FINAL Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:191 Local verdict of MTC: none
+18:32:34.153393 VERDICTOP_FINAL Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:191 Local verdict of PTC with component reference 6: none (none -> none)
+18:32:34.153412 TESTCASE_FINISH Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:191 Test case tc_portevent finished. Verdict: none
+18:32:34.153448 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:191 Starting external command `echo Titan_LogTest.tc_portevent none'.
+18:32:34.180773 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:304->Titan_LogTest.ttcn:191 External command `echo Titan_LogTest.tc_portevent none' was executed successfully (exit status: 0).
+18:32:34.180852 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:207 Starting external command `echo Titan_LogTest.tc_timer'.
+18:32:34.244558 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:207 External command `echo Titan_LogTest.tc_timer' was executed successfully (exit status: 0).
+18:32:34.244628 TESTCASE_START Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:207 Test case tc_timer started.
+18:32:34.244662 PARALLEL_PTC Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:207 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType inside testcase tc_timer.
+18:32:34.244684 PORTEVENT_STATE Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:207 Port internal_port was started.
+18:32:34.244701 PORTEVENT_STATE Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:207 Port external_port was started.
+18:32:34.244716 PARALLEL_PTC Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:207 Component type Titan_LogTestDefinitions.MTCType was initialized.
+18:32:34.244733 TIMEROP_START Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:208 Start timer t: 0.2 s
+18:32:34.444754 TIMEROP_TIMEOUT Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:210 Timeout t: 0.2 s
+18:32:34.444776 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:210 setverdict(pass): none -> pass
+18:32:34.444799 TIMEROP_START Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:213 Start timer t1: 0.1 s
+18:32:34.444817 TIMEROP_READ Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:214 Read timer t1: 1e-06 s
+18:32:34.444834 USER_UNQUALIFIED Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:215 Mytime: 1.000000e-06 s
+18:32:34.444861 USER_UNQUALIFIED Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:217 true
+18:32:34.444878 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:218 setverdict(pass): pass -> pass, component reason not changed
+18:32:34.444894 TIMEROP_STOP Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:219 Stop timer t1: 0.1 s
+18:32:34.444911 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:221 setverdict(pass): pass -> pass, component reason not changed
+18:32:34.444928 TIMEROP_START Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 Start timer t1: 0.1 s
+18:32:34.444945 PARALLEL_PTC Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 Terminating component type Titan_LogTestDefinitions.MTCType.
+18:32:34.444962 PORTEVENT_STATE Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 Port internal_port was stopped.
+18:32:34.444977 PORTEVENT_STATE Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 Port external_port was stopped.
+18:32:34.444993 PARALLEL_PTC Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 Component type Titan_LogTestDefinitions.MTCType was shut down inside testcase tc_timer.
+18:32:34.445010 EXECUTOR_RUNTIME Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 Waiting for PTCs to finish.
+18:32:34.445089 VERDICTOP_FINAL Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 Setting final verdict of the test case.
+18:32:34.445113 VERDICTOP_FINAL Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 Local verdict of MTC: pass
+18:32:34.445136 VERDICTOP_FINAL Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 No PTCs were created.
+18:32:34.445166 TESTCASE_FINISH Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 Test case tc_timer finished. Verdict: pass
+18:32:34.445211 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 Starting external command `echo Titan_LogTest.tc_timer pass'.
+18:32:34.495504 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:305->Titan_LogTest.ttcn:222 External command `echo Titan_LogTest.tc_timer pass' was executed successfully (exit status: 0).
+18:32:34.495585 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:227 Starting external command `echo Titan_LogTest.tc_UserLog'.
+18:32:34.545558 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:227 External command `echo Titan_LogTest.tc_UserLog' was executed successfully (exit status: 0).
+18:32:34.545626 TESTCASE_START Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:227 Test case tc_UserLog started.
+18:32:34.545659 PARALLEL_PTC Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:227 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType inside testcase tc_UserLog.
+18:32:34.545682 PORTEVENT_STATE Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:227 Port internal_port was started.
+18:32:34.545698 PORTEVENT_STATE Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:227 Port external_port was started.
+18:32:34.545713 PARALLEL_PTC Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:227 Component type Titan_LogTestDefinitions.MTCType was initialized.
+18:32:34.545730 USER_UNQUALIFIED Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:228 This is a UserLog
+18:32:34.545745 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 setverdict(pass): none -> pass
+18:32:34.545761 PARALLEL_PTC Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 Terminating component type Titan_LogTestDefinitions.MTCType.
+18:32:34.545779 PORTEVENT_STATE Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 Port internal_port was stopped.
+18:32:34.545795 PORTEVENT_STATE Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 Port external_port was stopped.
+18:32:34.545810 PARALLEL_PTC Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 Component type Titan_LogTestDefinitions.MTCType was shut down inside testcase tc_UserLog.
+18:32:34.545827 EXECUTOR_RUNTIME Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 Waiting for PTCs to finish.
+18:32:34.545934 VERDICTOP_FINAL Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 Setting final verdict of the test case.
+18:32:34.545953 VERDICTOP_FINAL Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 Local verdict of MTC: pass
+18:32:34.545970 VERDICTOP_FINAL Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 No PTCs were created.
+18:32:34.545987 TESTCASE_FINISH Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 Test case tc_UserLog finished. Verdict: pass
+18:32:34.546033 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 Starting external command `echo Titan_LogTest.tc_UserLog pass'.
+18:32:34.595680 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:306->Titan_LogTest.ttcn:229 External command `echo Titan_LogTest.tc_UserLog pass' was executed successfully (exit status: 0).
+18:32:34.595755 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:250 Starting external command `echo Titan_LogTest.tc_matching'.
+18:32:34.644769 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:250 External command `echo Titan_LogTest.tc_matching' was executed successfully (exit status: 0).
+18:32:34.644828 TESTCASE_START Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:250 Test case tc_matching started.
+18:32:34.644862 PARALLEL_PTC Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:250 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType inside testcase tc_matching.
+18:32:34.644884 PORTEVENT_STATE Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:250 Port internal_port was started.
+18:32:34.644901 PORTEVENT_STATE Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:250 Port external_port was started.
+18:32:34.644916 PARALLEL_PTC Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:250 Component type Titan_LogTestDefinitions.MTCType was initialized.
+18:32:34.644940 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:253 setverdict(pass): none -> pass
+18:32:34.644958 USER_UNQUALIFIED Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 { i := 1 with ? matched, c := "a" with "a" matched }
+18:32:34.645003 PARALLEL_PTC Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 Terminating component type Titan_LogTestDefinitions.MTCType.
+18:32:34.645020 PORTEVENT_STATE Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 Port internal_port was stopped.
+18:32:34.645036 PORTEVENT_STATE Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 Port external_port was stopped.
+18:32:34.645051 PARALLEL_PTC Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 Component type Titan_LogTestDefinitions.MTCType was shut down inside testcase tc_matching.
+18:32:34.645069 EXECUTOR_RUNTIME Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 Waiting for PTCs to finish.
+18:32:34.645166 VERDICTOP_FINAL Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 Setting final verdict of the test case.
+18:32:34.645185 VERDICTOP_FINAL Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 Local verdict of MTC: pass
+18:32:34.645202 VERDICTOP_FINAL Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 No PTCs were created.
+18:32:34.645223 TESTCASE_FINISH Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 Test case tc_matching finished. Verdict: pass
+18:32:34.645259 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 Starting external command `echo Titan_LogTest.tc_matching pass'.
+18:32:34.687427 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:307->Titan_LogTest.ttcn:254 External command `echo Titan_LogTest.tc_matching pass' was executed successfully (exit status: 0).
+18:32:34.687510 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:261 Starting external command `echo Titan_LogTest.tc_verdict'.
+18:32:34.736670 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:261 External command `echo Titan_LogTest.tc_verdict' was executed successfully (exit status: 0).
+18:32:34.736736 TESTCASE_START Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:261 Test case tc_verdict started.
+18:32:34.736770 PARALLEL_PTC Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:261 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType inside testcase tc_verdict.
+18:32:34.736797 PORTEVENT_STATE Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:261 Port internal_port was started.
+18:32:34.736814 PORTEVENT_STATE Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:261 Port external_port was started.
+18:32:34.736829 PARALLEL_PTC Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:261 Component type Titan_LogTestDefinitions.MTCType was initialized.
+18:32:34.736846 VERDICTOP_GETVERDICT Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:262 getverdict: none
+18:32:34.736861 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 setverdict(pass): none -> pass
+18:32:34.736880 PARALLEL_PTC Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 Terminating component type Titan_LogTestDefinitions.MTCType.
+18:32:34.736897 PORTEVENT_STATE Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 Port internal_port was stopped.
+18:32:34.736913 PORTEVENT_STATE Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 Port external_port was stopped.
+18:32:34.736928 PARALLEL_PTC Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 Component type Titan_LogTestDefinitions.MTCType was shut down inside testcase tc_verdict.
+18:32:34.736945 EXECUTOR_RUNTIME Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 Waiting for PTCs to finish.
+18:32:34.737042 VERDICTOP_FINAL Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 Setting final verdict of the test case.
+18:32:34.737060 VERDICTOP_FINAL Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 Local verdict of MTC: pass
+18:32:34.737078 VERDICTOP_FINAL Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 No PTCs were created.
+18:32:34.737094 TESTCASE_FINISH Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 Test case tc_verdict finished. Verdict: pass
+18:32:34.737138 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 Starting external command `echo Titan_LogTest.tc_verdict pass'.
+18:32:34.787344 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:308->Titan_LogTest.ttcn:263 External command `echo Titan_LogTest.tc_verdict pass' was executed successfully (exit status: 0).
+18:32:34.787426 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:287 Starting external command `echo Titan_LogTest.tc_encdec'.
+18:32:34.837387 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:287 External command `echo Titan_LogTest.tc_encdec' was executed successfully (exit status: 0).
+18:32:34.837444 TESTCASE_START Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:287 Test case tc_encdec started.
+18:32:34.837478 PARALLEL_PTC Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:287 Initializing variables, timers and ports of component type Titan_LogTestDefinitions.MTCType inside testcase tc_encdec.
+18:32:34.837499 PORTEVENT_STATE Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:287 Port internal_port was started.
+18:32:34.837516 PORTEVENT_STATE Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:287 Port external_port was started.
+18:32:34.837531 PARALLEL_PTC Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:287 Component type Titan_LogTestDefinitions.MTCType was initialized.
+18:32:34.837548 DEBUG_ENCDEC Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:289 f_encMyArray(): Encoding @Titan_LogTest.MyArray: { i := 1, c := "a" }
+18:32:34.837612 DEBUG_ENCDEC Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:289 f_encMyArray(): Stream after encoding: '0161'O
+18:32:34.837633 DEBUG_ENCDEC Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:290 f_decMyArray(): Stream before decoding: '0161'O
+18:32:34.837656 DEBUG_ENCDEC Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:290 f_decMyArray(): Decoded @Titan_LogTest.MyArray: { i := 1, c := "a" }
+18:32:34.837674 VERDICTOP_SETVERDICT Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 setverdict(pass): none -> pass
+18:32:34.837692 PARALLEL_PTC Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 Terminating component type Titan_LogTestDefinitions.MTCType.
+18:32:34.837708 PORTEVENT_STATE Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 Port internal_port was stopped.
+18:32:34.837724 PORTEVENT_STATE Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 Port external_port was stopped.
+18:32:34.837739 PARALLEL_PTC Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 Component type Titan_LogTestDefinitions.MTCType was shut down inside testcase tc_encdec.
+18:32:34.837762 EXECUTOR_RUNTIME Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 Waiting for PTCs to finish.
+18:32:34.837868 VERDICTOP_FINAL Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 Setting final verdict of the test case.
+18:32:34.837886 VERDICTOP_FINAL Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 Local verdict of MTC: pass
+18:32:34.837903 VERDICTOP_FINAL Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 No PTCs were created.
+18:32:34.837924 TESTCASE_FINISH Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 Test case tc_encdec finished. Verdict: pass
+18:32:34.837959 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 Starting external command `echo Titan_LogTest.tc_encdec pass'.
+18:32:34.879548 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:309->Titan_LogTest.ttcn:291 External command `echo Titan_LogTest.tc_encdec pass' was executed successfully (exit status: 0).
+18:32:34.879612 STATISTICS_UNQUALIFIED Titan_LogTest.ttcn:309 Execution of control part in module Titan_LogTest finished.
+18:32:34.879646 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:309 Starting external command `echo Titan_LogTest'.
+18:32:34.929642 EXECUTOR_EXTCOMMAND Titan_LogTest.ttcn:309 External command `echo Titan_LogTest' was executed successfully (exit status: 0).
+18:32:34.930157 STATISTICS_VERDICT - Verdict statistics: 3 none (23.08 %), 9 pass (69.23 %), 0 inconc (0.00 %), 0 fail (0.00 %), 1 error (7.69 %).
+18:32:34.930210 STATISTICS_VERDICT - Test execution summary: 13 test cases were executed. Overall verdict: error
+18:32:34.930233 EXECUTOR_RUNTIME - Exit was requested from MC. Terminating MTC.
+18:32:34.930623 EXECUTOR_RUNTIME - Disconnected from MC.
+18:32:34.930645 EXECUTOR_COMPONENT - TTCN-3 Main Test Component finished.

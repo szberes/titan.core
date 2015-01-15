@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+XML Schema for JunitLogger plugin
+
+ Copyright (c) 2000-2014 Ericsson Telecom AB
+
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://schemas.ericsson.com/TXD"
+        xmlns:txd=      "http://schemas.ericsson.com/TXD"
+        elementFormDefault="qualified">
+
+  <xs:import schemaLocation="TPD.xsd"/>
+
+  <xs:element name="Titan_Execution_Descriptor" type="txd:TXD_Type"/>
+
+  <xs:complexType name="TXD_Type">
+      <xs:sequence>
+        <xs:choice>
+          <xs:annotation>
+            <xs:documentation>
+              A choice between describing how to build the project &lt;build&gt;
+              or providing the location of a pre-built &lt;executable&gt;
+              These two are mutually exclusive.
+            </xs:documentation>
+          </xs:annotation>
+
+          <xs:element name="Build">
+            <xs:annotation>
+              <xs:documentation>
+                Describes the way to build the product from source,
+                using TPDs.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Projects">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Project" minOccurs="1" maxOccurs="unbounded" type="txd:ProjectType" />
+                      <!-- see below -->
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="MasterConfiguration" type="ConfigurationType" minOccurs="0">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Override configuration settings in TPDs
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+
+          <xs:element name="Executable">
+            <xs:annotation>
+              <xs:documentation>
+                Specifies the location of an already built executable
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:attribute name="location" />
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+
+        <!--
+        Runners
+        -->
+        <xs:element name="Run" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>
+              Describes how to run the test.
+              There can be at most one "Run" which may contain various runners
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="SingleModeRun">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="WorkingDirectory"  type="xs:string"/>
+                    <xs:element name="ETS_Name"          type="xs:string" minOccurs="0"/>
+                    <!-- ETS_Name may be deduced from the build information -->
+                    <xs:element name="ConfigurationFile" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ParallelRun">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="WorkingDirectory"  type="xs:string"/>
+                    <xs:element name="ETS_Name"          type="xs:string" minOccurs="0"/>
+                    <!-- ETS_Name may be deduced from the build information -->
+                    <xs:element name="ConfigurationFile" type="xs:string"/>
+                    <xs:element name="HostControllers" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="HostController" minOccurs="1" maxOccurs="unbounded">
+                            <!--
+                            Empty <HostControllers> with no <HostController> is not allowed.
+                            Omit the entire <HostControllers> instead.
+                            -->
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="Name"/>
+                                <xs:element type="xs:string" name="HostId"     minOccurs="0"/>
+                                <xs:element type="xs:string" name="WorkingDirectory" minOccurs="0"/>
+                                <xs:element type="xs:string" name="Executable" minOccurs="0"/>
+                                <!--
+                                HostId, WorkingDir and Executable may be omitted, if not referenced by <Command>
+                                -->
+                                <xs:element type="xs:string" name="Command"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="CustomRun" type="xs:string">
+                <!-- TODO: is a simple string enough? -->
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ProjectType">
+    <xs:annotation>
+      <xs:documentation>
+        Describes a referenced project
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Configurations">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Configuration" minOccurs="0" maxOccurs="unbounded" >
+              <xs:complexType>
+                <!-- Optional: put in a <sequence> if sub-elements are needed -->
+                <xs:attribute name="name" use="required" />
+              </xs:complexType>              
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          Optional name of the project. Can be used as reference in the TXD itself.
+          The TPD is identified by the "path" attribute, below.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="path" use="required">
+      <xs:annotation>
+        <xs:documentation>
+          This is the filename of the TPD file. Paths are relative to the TXD
+          itself, or absolute.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+</xs:schema>

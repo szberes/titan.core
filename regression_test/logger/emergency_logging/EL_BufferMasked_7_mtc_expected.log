@@ -1,0 +1,5 @@
+TESTCASE_START EmergencyLoggingTest.ttcn:10 Test case tc_user_EL started.
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:15 Action: >>>>ACTION in tc_user_EL, before the loop<<<<<
+ACTION_UNQUALIFIED EmergencyLoggingTest.ttcn:19 Action: >>>>ACTION in tc_user_EL, after the loop<<<<<
+ERROR_UNQUALIFIED EmergencyLoggingTest.ttcn:22 Dynamic test case error: Assignment of an unbound integer value.
+TESTCASE_FINISH EmergencyLoggingTest.ttcn:22 Test case tc_user_EL finished. Verdict: error

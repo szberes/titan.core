@@ -1,0 +1,89 @@
+Build and install Titan on Linux
+
+1.Install required libraries: 
+(examples are given for Ubuntu 12.04/14.04; for other Linuxes, pls. use the relevant library installation method)
+
+sudo apt-get install g++ expect libssl-dev libxml2-dev libncurses5-dev flex bison
+xutils-dev is needed by makedepend:
+sudo apt-get install xutils-dev
+The following packages may be needed for titan_eclipse/automatic_build:
+sudo apt-get install ant xsltproc
+
+2.Clone the titan directory from git  into /home/<user_id>/titan
+
+3. Configure the build 
+cd titan
+check  that MakefileFOSS.cfg is present   and  has the following content:
+cat MakefileFOSS.cfg
+
+# Configurations for the Free Open Source Software version
+LICENSING := no
+USAGE_STATS := no
+
+
+Several build options are possible; for details on options , please read through the Makefile.cfg.
+Options can be overridden by the content of  a file named Makefile.personal.
+Below, a small number of typical scenarios are presented.
+
+1) JNI  disabled
+
+The JNI interface is used by the Eclipse Titan Executor or by the Java Executor API.
+If you don't need them , Titan can be compiled without JNI. ( In this case, you won't be able to execute Titan test cases from the Eclipse plug-in)
+
+Create ~/titan/Makefile.personal to override settings in Makefile.cfg with the following content:
+
+TTCN3_DIR := /home/<user id>/titan/Install
+JNI := no
+GEN_PDF := yes
+
+
+
+
+2) JNI  enabled
+
+install JDK   into /home/<user id>/jdk
+
+Create ~/titan/Makefile.personal to override settings in Makefile.cfg with the following content:
+
+TTCN3_DIR := /home/<user id>/titan/Install
+JDKDIR := /home/<user id>/jdk
+JNI := yes
+GEN_PDF := yes
+
+
+
+3. Run make
+
+make
+
+4. Run make install
+
+make install
+
+This will install Titan into  /home/<user id>/titan/Install
+
+5. Optionally , run function/regression tests
+
+set environment variable TTCN3_DIR to /home/<user id>/titan/Install
+
+(setenv  TTCN3_DIR /home/<user id>/titan/Install  for csh,
+export TTCN3_DIR=/home/<user id>/titan/Install for bash )
+
+
+
+cd /home/<user id>/titan/function_test
+make
+
+( or make |& tee outputfile if you want to save the output for verification)
+cd /home/<user id>/titan/regression_test
+make run
+( or make run |& tee outputfile if you want to save the output for verification)
+
+These tests might run for half an hour (regr.tests)  to two hours (func.tests)
+
+6. Optionally , copy Titan into its' final directory.
+From here on, you can continue with the Titan installation guide, see /Install/docs, to set environment variables etc.
+
+
+
+

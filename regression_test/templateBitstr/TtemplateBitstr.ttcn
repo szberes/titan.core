@@ -1,0 +1,328 @@
+/******************************************************************************
+ * Copyright (c) 2000-2014 Ericsson Telecom AB
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
+module TtemplateBitstr {
+type component templateBitstr_mycomp {};
+type record templateBitstr_rec {
+ bitstring x1,
+ bitstring x2,
+ bitstring x3 optional };
+template templateBitstr_rec templateBitstr_tSpec :={ //specific values
+ x1:='001'B,
+ x2:='010'B,
+ x3:='100'B };
+template templateBitstr_rec templateBitstr_tList :={ //specific value and value list
+ x1:='001'B,
+ x2:=('010'B,'011'B,'1100'B),
+ x3:='100'B };
+template templateBitstr_rec templateBitstr_tComp :={ //specific value and compl. list
+ x1:='001'B,
+ x2:=complement ('11'B,'00'B,'1000'B),
+ x3:='100'B };
+template templateBitstr_rec templateBitstr_tOmit :={ //omitting values
+ x1:='001'B,
+ x2:='010'B,
+ x3:=omit } ;
+template templateBitstr_rec templateBitstr_tAny :={ //specific and any value
+ x1:='001'B,
+ x2:='010'B,
+ x3:=? } ;
+template templateBitstr_rec templateBitstr_tAnyorNone :={ //specific and AnyorNone value
+ x1:='001'B,
+ x2:='010'B,
+ x3:=* };
+template templateBitstr_rec templateBitstr_tLength1 :={ //specific value and fix length
+ x1:='001'B,
+ x2:='010'B,
+ x3:=* length(3) };
+template templateBitstr_rec templateBitstr_tLength2 :={ //specific value and length (range)
+ x1:='001'B,
+ x2:='010'B,
+ x3:=? length(2..4) };
+template templateBitstr_rec templateBitstr_tLength3 :={ //specific value and length (range, infinity)
+ x1:='001'B,
+ x2:='010'B,
+ x3:=? length(2..infinity) };
+template templateBitstr_rec templateBitstr_tIfpresent :={ //specific value and ifpresent
+ x1:='001'B,
+ x2:='010'B,
+ x3:='100'B ifpresent };
+template templateBitstr_rec templateBitstr_tLengthIfp :={ //specific value and fix length and ifpresent
+ x1:='001'B,
+ x2:='010'B,
+ x3:= ? length(3) ifpresent};
+template templateBitstr_rec templateBitstr_tAnyEl :={ //specific value and any element inside value
+ x1:='001'B,
+ x2:='010'B,
+ x3:='10?'B } ;
+template templateBitstr_rec templateBitstr_tAnyorNoneEl :={ //specific value and Any number of elements or none inside value
+ x1:='001'B,
+ x2:='010'B,
+ x3:='10*'B };
+
+ template bitstring t_param1(templateBitstr_rec par) := substr(par.x1, 0, 1); // parameterised template
+
+testcase templateBitstrSpec() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2;		//specific value
+x1:={ x1:='001'B,  x2:='010'B,  x3:='100'B };
+x2:={ x1:='00'B,  x2:='010'B,  x3:='100'B };
+//match
+if (match(x1,templateBitstr_tSpec)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match
+if (not(match(x2,templateBitstr_tSpec))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateBitstrList() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2,x3;		//value list
+x1:={ x1:='001'B,  x2:='010'B,  x3:='100'B };
+x2:={ x1:='001'B,  x2:='00'B,  x3:='100'B };
+x3:={ x1:='1'B,  x2:='010'B,  x3:='100'B };
+//match
+if (match(x1,templateBitstr_tList)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: out of list
+if (not(match(x2,templateBitstr_tList))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateBitstr_tList))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateBitstrComp() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2,x3;		//complemented list
+x1:={ x1:='001'B,  x2:='010'B,  x3:='100'B };
+x2:={ x1:='001'B,  x2:='11'B,  x3:='100'B };
+x3:={ x1:='11'B,  x2:='010'B,  x3:='100'B };
+//match
+if (match(x1,templateBitstr_tComp)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: in the list
+if (not(match(x2,templateBitstr_tComp))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateBitstr_tComp))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateBitstrOmit() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2,x3;		//omitting value
+x1:={ x1:='001'B,  x2:='010'B,  x3:=omit };
+x2:={ x1:='001'B,  x2:='010'B,  x3:='000'B };
+x3:={ x1:='00'B,  x2:='010'B,  x3:=omit };
+//match
+if (match(x1,templateBitstr_tOmit)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: not omitted
+if (not(match(x2,templateBitstr_tOmit))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateBitstr_tOmit))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateBitstrAny() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2,x3;		//any value
+x1:={ x1:='001'B,  x2:='010'B,  x3:='111'B };
+x2:={ x1:='001'B,  x2:='010'B,  x3:=omit };
+x3:={ x1:='0'B,  x2:='010'B,  x3:='10'B };
+//match
+if (match(x1,templateBitstr_tAny)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: field omitted
+if (not(match(x2,templateBitstr_tAny))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateBitstr_tAny))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateBitstrAnyorNone() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2,x3;		//AnyorNone value
+x1:={ x1:='001'B,  x2:='010'B,  x3:=omit };
+x2:={ x1:='001'B,  x2:='010'B,  x3:='100'B };
+x3:={ x1:='1'B,  x2:='010'B,  x3:=omit };
+//match: omitted
+if (match(x1,templateBitstr_tAnyorNone)) {setverdict(pass);}
+ else {setverdict(fail);}
+//match: value
+if (match(x2,templateBitstr_tAnyorNone)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateBitstr_tAnyorNone))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateBitstrLength1() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2,x3,x4;		//length (fix)
+x1:={ x1:='001'B,  x2:='010'B,  x3:='111'B };
+x2:={ x1:='001'B,  x2:='010'B,  x3:=omit };
+x3:={ x1:='001'B,  x2:='010'B,  x3:='10'B };
+x4:={ x1:='0010'B,  x2:='010'B,  x3:='111'B };
+//match: proper length
+if (match(x1,templateBitstr_tLength1)) {setverdict(pass);}
+ else {setverdict(fail);}
+//match: omitted
+if (match(x2,templateBitstr_tLength1)) {setverdict(pass);}
+ else {setverdict(fail);}
+// no match: not proper length
+if (not(match(x3,templateBitstr_tLength1))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x4,templateBitstr_tLength1))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateBitstrLength2() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2,x3;		//length (range)
+x1:={ x1:='001'B,  x2:='010'B,  x3:='111'B };
+x2:={ x1:='001'B,  x2:='010'B,  x3:='1'B };
+x3:={ x1:='0010'B,  x2:='010'B,  x3:='111'B };
+//match
+if (match(x1,templateBitstr_tLength2)) {setverdict(pass);}
+ else {setverdict(fail);}
+// no match: not proper length
+if (not(match(x2,templateBitstr_tLength2))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateBitstr_tLength2))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateBitstrLength3() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2,x3;		//length (range, infinity)
+x1:={ x1:='001'B,  x2:='010'B,  x3:='111'B };
+x2:={ x1:='001'B,  x2:='010'B,  x3:='1'B };
+x3:={ x1:='0010'B,  x2:='010'B,  x3:='111'B };
+//match
+if (match(x1,templateBitstr_tLength3)) {setverdict(pass);}
+ else {setverdict(fail);}
+// no match: not proper length
+if (not(match(x2,templateBitstr_tLength3))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x3,templateBitstr_tLength3))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateBitstrIfpresent() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2,x3,x4;		//ifpresent
+x1:={ x1:='001'B,  x2:='010'B,  x3:='100'B };
+x2:={ x1:='001'B,  x2:='010'B,  x3:=omit };
+x3:={ x1:='001'B,  x2:='010'B,  x3:='000'B };
+x4:={ x1:='00'B,  x2:='010'B,  x3:=omit };
+//match: present and match
+if (match(x1,templateBitstr_tIfpresent)) {setverdict(pass);}
+ else {setverdict(fail);}
+//match: not present
+if (match(x2,templateBitstr_tIfpresent)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: present and not match
+if (not(match(x3,templateBitstr_tIfpresent))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x4,templateBitstr_tIfpresent))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateBitstrLengthIfp() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2,x3,x4;	      //length (fix), ifpresent
+x1:={ x1:='001'B,  x2:='010'B,  x3:='111'B };
+x2:={ x1:='001'B,  x2:='010'B,  x3:=omit };
+x3:={ x1:='001'B,  x2:='010'B,  x3:='10'B };
+x4:={ x1:='0010'B,  x2:='010'B,  x3:='111'B };
+//match: proper length
+if (match(x1,templateBitstr_tLengthIfp)) {setverdict(pass);}
+ else {setverdict(fail);}
+//match: omitted
+if (match(x2,templateBitstr_tLengthIfp)) {setverdict(pass);}
+ else {setverdict(fail);}
+// no match: not proper length
+if (not(match(x3,templateBitstr_tLengthIfp))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x4,templateBitstr_tLengthIfp))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateBitstrAnyEl() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2,x3,x4,x5;  	      //any element
+x1:={ x1:='001'B,  x2:='010'B,  x3:='101'B };
+x2:={ x1:='001'B,  x2:='010'B,  x3:='10'B };
+x3:={ x1:='001'B,  x2:='010'B,  x3:='1000'B };
+x4:={ x1:='001'B,  x2:='010'B,  x3:='001'B };
+x5:={ x1:='0'B,  x2:='010'B,  x3:='101'B };
+//match
+if (match(x1,templateBitstr_tAnyEl)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: no element
+if (not(match(x2,templateBitstr_tAnyEl))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: two element
+if (not(match(x3,templateBitstr_tAnyEl))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: wrong element
+if (not(match(x4,templateBitstr_tAnyEl))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x5,templateBitstr_tAnyEl))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase templateBitstrAnyorNoneEl() runs on templateBitstr_mycomp {
+var templateBitstr_rec x1,x2,x3,x4,x5;  	      //Any number of elements or none
+x1:={ x1:='001'B,  x2:='010'B,  x3:='10'B };
+x2:={ x1:='001'B,  x2:='010'B,  x3:='100'B };
+x3:={ x1:='001'B,  x2:='010'B,  x3:='1011'B };
+x4:={ x1:='001'B,  x2:='010'B,  x3:='110'B };
+x5:={ x1:='1'B,  x2:='010'B,  x3:='100'B };
+//match: no element
+if (match(x1,templateBitstr_tAnyorNoneEl)) {setverdict(pass);}
+ else {setverdict(fail);}
+//match: one element
+if (match(x2,templateBitstr_tAnyorNoneEl)) {setverdict(pass);}
+ else {setverdict(fail);}
+//match: two element
+if (match(x3,templateBitstr_tAnyorNoneEl)) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other element
+if (not(match(x4,templateBitstr_tAnyorNoneEl))) {setverdict(pass);}
+ else {setverdict(fail);}
+//no match: other field
+if (not(match(x5,templateBitstr_tAnyorNoneEl))) {setverdict(pass);}
+ else {setverdict(fail);}
+}
+
+testcase CR_TR00018474() runs on templateBitstr_mycomp {
+  // Indexing of string template variables.
+  var template bitstring vtb1 := '0011110000'B
+  var template bitstring vtb2 := '0*?1'B  // It's a pattern, cannot be indexed, runtime error.
+  vtb1[0] := '1'B
+  if (match('1011110000'B, vtb1)) { setverdict(pass) } else { setverdict(fail) }
+  vtb1[0] := '1'B  // Indexed assignment notation cannot be used here.
+  vtb1[1] := '0'B  // Still works, nothing special.
+  if (match('1011110000'B, vtb1)) { setverdict(pass) } else { setverdict(fail) }
+}
+
+control {
+ execute(templateBitstrSpec());
+ execute(templateBitstrList());
+ execute(templateBitstrComp());
+ execute(templateBitstrOmit());
+ execute(templateBitstrAny());
+ execute(templateBitstrAnyorNone());
+ execute(templateBitstrLength1());
+ execute(templateBitstrLength2());
+ execute(templateBitstrLength3());
+ execute(templateBitstrIfpresent());
+ execute(templateBitstrLengthIfp());
+ execute(templateBitstrAnyEl());
+ execute(templateBitstrAnyorNoneEl());
+ execute(CR_TR00018474());
+}
+}

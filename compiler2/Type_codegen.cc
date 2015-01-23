@@ -2688,6 +2688,9 @@ void Type::generate_json_schema(JSON_Tokenizer& json, bool embedded, bool as_val
       // use the JSON string type and add a pattern to only allow bits or hex digits
       json.put_next_token(JSON_TOKEN_NAME, "type");
       json.put_next_token(JSON_TOKEN_STRING, "\"string\"");
+      json.put_next_token(JSON_TOKEN_NAME, "subType");
+      json.put_next_token(JSON_TOKEN_STRING, (last->typetype == T_OSTR) ? "\"octetstring\"" :
+        ((last->typetype == T_HSTR) ? "\"hexstring\"" : "\"bitstring\""));
       json.put_next_token(JSON_TOKEN_NAME, "pattern");
       json.put_next_token(JSON_TOKEN_STRING, 
         (last->typetype == T_OSTR) ? "\"^([0-9A-Fa-f][0-9A-Fa-f])*$\"" :
@@ -2740,6 +2743,15 @@ void Type::generate_json_schema(JSON_Tokenizer& json, bool embedded, bool as_val
         char* enum_str = mprintf("\"%s\"", get_ei_byIndex(i)->get_name().get_dispname().c_str());
         json.put_next_token(JSON_TOKEN_STRING, enum_str);
         Free(enum_str);
+      }
+      json.put_next_token(JSON_TOKEN_ARRAY_END);
+      // list the numeric values for the enumerated items
+      json.put_next_token(JSON_TOKEN_NAME, "numericValues");
+      json.put_next_token(JSON_TOKEN_ARRAY_START);
+      for (size_t i = 0; i < u.enums.eis->get_nof_eis(); ++i) {
+        char* num_val_str = mprintf("%lli", get_ei_byIndex(i)->get_value()->get_val_Int()->get_val());
+        json.put_next_token(JSON_TOKEN_NUMBER, num_val_str);
+        Free(num_val_str);
       }
       json.put_next_token(JSON_TOKEN_ARRAY_END);
       break;

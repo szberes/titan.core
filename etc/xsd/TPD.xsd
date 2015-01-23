@@ -97,6 +97,7 @@ XML Schema for JunitLogger plugin
                     <xs:element name="forceXERinASN.1" minOccurs="0" maxOccurs="1" type="xs:boolean" />
                     <xs:element name="defaultasOmit" minOccurs="0" maxOccurs="1" type="xs:boolean" />
                     <xs:element name="enumHackProperty" minOccurs="0" maxOccurs="1" type="xs:boolean" />
+                    <xs:element name="forceOldFuncOutParHandling" minOccurs="0" maxOccurs="1" type="xs:boolean" />
                     <xs:element name="gccMessageFormat" minOccurs="0" maxOccurs="1" type="xs:boolean" />
                     <xs:element name="lineNumbersOnlyInMessages" minOccurs="0" maxOccurs="1" type="xs:boolean" />
                     <xs:element name="includeSourceInfo" minOccurs="0" maxOccurs="1" type="xs:boolean" />

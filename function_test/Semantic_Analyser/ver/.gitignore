@@ -3,3 +3,5 @@
 *_OK_union.cc
 goodprog
 goodprog.exe
+!Makefile
+!*.ttcn

@@ -151,8 +151,23 @@ static void check_license_signature(license_raw *lptr)
     dsa->g = BN_bin2bn(dsa_g, sizeof(dsa_g), NULL);
     dsa->pub_key = BN_bin2bn(dsa_pub_key, sizeof(dsa_pub_key), NULL);
 
+  // calculate the right len of the signiture
+  DSA_SIG *temp_sig=DSA_SIG_new();
+  int siglen = -1;
+  const unsigned char *data =lptr->dsa_signature; 
+  if (temp_sig == NULL || d2i_DSA_SIG(&temp_sig,&data,sizeof(lptr->dsa_signature)) == NULL){
+  	fprintf(stderr, "License signature verification failed: %s\n",
+	    ERR_error_string(ERR_get_error(), NULL));
+	  exit(EXIT_FAILURE);
+  }
+  unsigned char *tmp_buff= NULL;
+  siglen = i2d_DSA_SIG(temp_sig, &tmp_buff);
+  OPENSSL_cleanse(tmp_buff, siglen);
+	OPENSSL_free(tmp_buff);
+	DSA_SIG_free(temp_sig);
+
     switch(DSA_verify(0, message_digest, sizeof(message_digest),
-        lptr->dsa_signature, sizeof(lptr->dsa_signature), dsa)) {
+        lptr->dsa_signature, siglen, dsa)) {
     case 0:
 	fputs("License file is corrupted: invalid DSA signature.\n", stderr);
 	exit(EXIT_FAILURE);

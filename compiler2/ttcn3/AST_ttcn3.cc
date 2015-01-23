@@ -9526,10 +9526,17 @@ namespace Ttcn {
               // let the array object know that the index is referenced before
               // calling the function, and let it know that it's now longer
               // referenced after the function call
-              expr->preamble = mputprintf(expr->preamble, "%s.add_refd_index(%s);\n",
-                array_expr.expr, index_expr.expr);
-              expr->postamble = mputprintf(expr->postamble, "%s.remove_refd_index(%s);\n",
-                array_expr.expr, index_expr.expr);
+              string tmp_id = ref->get_my_scope()->get_scope_mod_gen()->get_temporary_id();
+              expr->preamble = mputprintf(expr->preamble, 
+                "INTEGER %s = %s;\n"
+                "%s.add_refd_index(%s);\n",
+                tmp_id.c_str(), index_expr.expr, array_expr.expr, index_expr.expr);
+              expr->postamble = mputprintf(expr->postamble, 
+                "%s.remove_refd_index(%s);\n"
+                "if (%s >= %s.size_of())  TTCN_warning(\""
+                "Warning: possibly incompatible behaviour related to TR HT24380;"
+                " for details see release notes\");\n",
+                array_expr.expr, index_expr.expr, tmp_id.c_str(), array_expr.expr);
               // insert any postambles the array object or the index might have
               if (array_expr.postamble != NULL) {
                 expr->preamble = mputstr(expr->preamble, array_expr.postamble);

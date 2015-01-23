@@ -284,6 +284,12 @@ public:
     * 'inout' or 'out' parameter to a function.
     * Redirects the call to the optional value. */
   void remove_refd_index(int index);
+  
+  /** Called before an element of an optional record of/set of is passed as an
+    * 'inout' or 'out' parameter to a function. Returns the size of the record of/
+    * set of.
+    * Redirects the call to the optional value. */
+  int size_of();
 };
 
 #if HAVE_GCC(4,6)
@@ -674,6 +680,15 @@ void OPTIONAL<T_type>::remove_refd_index(int index)
 {
   --param_refs;
   optional_value->remove_refd_index(index);
+}
+
+template<typename T_type>
+int OPTIONAL<T_type>::size_of()
+{
+  if (!is_present()) {
+    return 0;
+  }
+  return optional_value->size_of();
 }
 
 template<typename T_type>

@@ -1790,16 +1790,16 @@ void defUnionClass(struct_def const *sdef, output_struct *output)
     
     // JSON decode
     src = mputprintf(src,
-      "int %s::JSON_decode(const TTCN_Typedescriptor_t& p_td, JSON_Tokenizer& p_tok, boolean p_silent)\n"
+      "int %s::JSON_decode(const TTCN_Typedescriptor_t&, JSON_Tokenizer& p_tok, boolean p_silent)\n"
       "{\n"
-      "  json_token_t token = JSON_TOKEN_NONE;\n"
+      "  json_token_t j_token = JSON_TOKEN_NONE;\n"
       , name);
     if (sdef->jsonAsValue) {
       src = mputstr(src,
         "  size_t buf_pos = p_tok.get_buf_pos();\n"
-        "  p_tok.get_next_token(&token, NULL, NULL);\n"
+        "  p_tok.get_next_token(&j_token, NULL, NULL);\n"
         "  int ret_val = 0;\n"
-        "  switch(token) {\n"
+        "  switch(j_token) {\n"
         "  case JSON_TOKEN_NUMBER: {\n");
       for (i = 0; i < sdef->nElements; ++i) {
         if (JSON_NUMBER & sdef->elements[i].jsonValueType) {
@@ -1849,11 +1849,11 @@ void defUnionClass(struct_def const *sdef, output_struct *output)
         }
       }
       src = mputstr(src,
-        "    char* literal = mprintf(\"literal (%s)\",\n"
-        "      (JSON_TOKEN_LITERAL_TRUE == token) ? \"true\" :\n"
-        "      ((JSON_TOKEN_LITERAL_FALSE == token) ? \"false\" : \"null\"));\n"
-        "    JSON_ERROR(TTCN_EncDec::ET_INVAL_MSG, JSON_DEC_AS_VALUE_ERROR, literal);\n"
-        "    Free(literal);\n"
+        "    char* literal_str = mprintf(\"literal (%s)\",\n"
+        "      (JSON_TOKEN_LITERAL_TRUE == j_token) ? \"true\" :\n"
+        "      ((JSON_TOKEN_LITERAL_FALSE == j_token) ? \"false\" : \"null\"));\n"
+        "    JSON_ERROR(TTCN_EncDec::ET_INVAL_MSG, JSON_DEC_AS_VALUE_ERROR, literal_str);\n"
+        "    Free(literal_str);\n"
         "    clean_up();\n"
         "    return JSON_ERROR_FATAL;\n"
         "  }\n"
@@ -1901,18 +1901,18 @@ void defUnionClass(struct_def const *sdef, output_struct *output)
         "}\n\n");
     } else { // not "as value"
       src = mputprintf(src,
-        "  int dec_len = p_tok.get_next_token(&token, NULL, NULL);\n"
-        "  if (JSON_TOKEN_ERROR == token) {\n"
+        "  int dec_len = p_tok.get_next_token(&j_token, NULL, NULL);\n"
+        "  if (JSON_TOKEN_ERROR == j_token) {\n"
         "    JSON_ERROR(TTCN_EncDec::ET_INVAL_MSG, JSON_DEC_BAD_TOKEN_ERROR, \"\");\n"
         "    return JSON_ERROR_FATAL;\n"
         "  }\n"
-        "  else if (JSON_TOKEN_OBJECT_START != token) {\n"
+        "  else if (JSON_TOKEN_OBJECT_START != j_token) {\n"
         "    return JSON_ERROR_INVALID_TOKEN;\n"
         "  }\n\n"
-        "  char* name = 0;\n"
+        "  char* fld_name = 0;\n"
         "  size_t name_len = 0;"
-        "  dec_len += p_tok.get_next_token(&token, &name, &name_len);\n"
-        "  if (JSON_TOKEN_NAME != token) {\n"
+        "  dec_len += p_tok.get_next_token(&j_token, &fld_name, &name_len);\n"
+        "  if (JSON_TOKEN_NAME != j_token) {\n"
         "    JSON_ERROR(TTCN_EncDec::ET_INVAL_MSG, JSON_DEC_NAME_TOKEN_ERROR);\n"
         "    return JSON_ERROR_FATAL;\n"
         "  } else {\n"
@@ -1920,7 +1920,7 @@ void defUnionClass(struct_def const *sdef, output_struct *output)
         , unbound_value);
       for (i = 0; i < sdef->nElements; ++i) {
         src = mputprintf(src,
-          "if (0 == strncmp(name, \"%s\", name_len)) {\n"
+          "if (0 == strncmp(fld_name, \"%s\", name_len)) {\n"
           "      int ret_val = %s%s().JSON_decode(%s_descr_, p_tok, p_silent);\n"
           "      if (0 > ret_val) {\n"
           "        if (JSON_ERROR_INVALID_TOKEN) {\n"
@@ -1937,14 +1937,14 @@ void defUnionClass(struct_def const *sdef, output_struct *output)
       }
       src = mputstr(src,
         "{\n"
-        "      char* name2 = mcopystrn(name, name_len);\n"
-        "      JSON_ERROR(TTCN_EncDec::ET_INVAL_MSG, JSON_DEC_INVALID_NAME_ERROR, name2);\n"
-        "      Free(name2);\n"
+        "      char* fld_name2 = mcopystrn(fld_name, name_len);\n"
+        "      JSON_ERROR(TTCN_EncDec::ET_INVAL_MSG, JSON_DEC_INVALID_NAME_ERROR, fld_name2);\n"
+        "      Free(fld_name2);\n"
         "      return JSON_ERROR_FATAL;\n"
         "    }\n"
         "  }\n\n"
-        "  dec_len += p_tok.get_next_token(&token, NULL, NULL);\n"
-        "  if (JSON_TOKEN_OBJECT_END != token) {\n"
+        "  dec_len += p_tok.get_next_token(&j_token, NULL, NULL);\n"
+        "  if (JSON_TOKEN_OBJECT_END != j_token) {\n"
         "    JSON_ERROR(TTCN_EncDec::ET_INVAL_MSG, JSON_DEC_STATIC_OBJECT_END_TOKEN_ERROR, \"\");\n"
         "    return JSON_ERROR_FATAL;\n"
         "  }\n\n"

@@ -22,3 +22,4 @@ DFE*Test.ttcn
 Marx.ttcn
 Regressions.ttcn
 *.d
+!Flatten.cc

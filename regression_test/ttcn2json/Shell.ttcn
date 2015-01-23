@@ -14,7 +14,7 @@ import from PIPEasp_PortType all;
 import from PIPEasp_Templates all;
 
 
-modulepar float tsp_shellCmdTimeout :=1.0;
+modulepar float tsp_shellCmdTimeout := 6.0;
 
 type component PIPE_CT {
   port PIPEasp_PT PIPE_PCO;

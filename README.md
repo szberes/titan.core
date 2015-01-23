@@ -5,9 +5,9 @@
 
 https://projects.eclipse.org/projects/tools.titan
 
-# Related products
+# Related products:
  
-## Test Ports
+## Test Ports:
  
 https://github.com/eclipse/titan.TestPorts.Common_Components.Abstract_Socket
 https://github.com/eclipse/titan.TestPorts.HTTPmsg
@@ -22,7 +22,7 @@ https://github.com/eclipse/titan.TestPorts.TELNETasp
 https://github.com/eclipse/titan.TestPorts.UDPasp
  
  
-## Protocol Modules
+## Protocol Modules:
  
 https://github.com/eclipse/titan.ProtocolModules.COMMON  
 https://github.com/eclipse/titan.ProtocolModules.DHCP
